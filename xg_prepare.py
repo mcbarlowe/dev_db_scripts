@@ -102,6 +102,26 @@ def calc_rebound(pbp_df):
 
     return pbp_df
 
+def calc_rush_shot(pbp_df):
+    '''
+    This function calculates whether the corsi event was generated off the rush
+    by looking at the time difference between the last even and whether the last
+    event occured in the neutral zone
+
+    Input:
+    pbp_df - play by play dataframe
+
+    Output:
+    pbp_df - play by play dataframe with is_rush calculated
+    '''
+
+    pbp_df.loc[:, ('is_rush')] = np.where((pbp_df.time_diff < 4) &
+                                          (pbp_df.Event.isin(['SHOT', 'MISS', 'BLOCK', 'GOAL'])) &
+                                          (abs(pbp_df.xC.shift(1)) < 26),
+                                          1, 0)
+
+    return pbp_df
+
 def main():
 
     return
