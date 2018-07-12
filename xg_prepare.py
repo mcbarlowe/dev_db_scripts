@@ -81,6 +81,27 @@ def calc_time_diff(pbp_df):
 
     return pbp_df
 
+def calc_rebound(pbp_df):
+    '''
+    This function calculates whether the corsi event was generated off of a
+    goalie rebound by looking at the time difference between the current event
+    and the last event and checking that last even was a shot as well
+
+    Input:
+    pbp_df - play by play dataframe
+
+    Output:
+    pbp_df - play by play dataframe with rebound calculated
+    '''
+
+    pbp_df.loc[:, ('is_rebound')] = np.where((pbp_df.time_diff < 4) &
+                                             ((pbp_df.Event.isin(['SHOT', 'GOAL'])) &
+                                             (pbp_df.Event.shift(1) == 'SHOT') &
+                                             (pbp_df.Ev_Team == pbp_df.Ev_Team.shift(1))),
+                                             1, 0)
+
+    return pbp_df
+
 def main():
 
     return
