@@ -122,6 +122,42 @@ def calc_rush_shot(pbp_df):
 
     return pbp_df
 
+def calc_shooter_strength(pbp_df):
+    '''
+    Function calculates the team strength of the shooter such as 5v5, 5v4,
+    etc. This is done by subtracting the home and away skaters based on who is
+    shooting the puck.
+
+    Input:
+    pbp_df - play by play dataframe
+
+    Output:
+    pbp_df - play by play dataframe with shooter strength calculated
+    '''
+
+#calculates shooter strength based on who's shooting
+    pbp_df.loc[:, ('shooter_strength')] = \
+            np.where((pbp_df.Ev_Team == pbp_df.Home_Team),
+                     pbp_df.Home_Players - pbp_df.Away_Players,
+                     pbp_df.Away_Players - pbp_df.Home_Players)
+
+#handle empty net situations this time for the home team
+    pbp_df.loc[:, ('shooter_strength')] = \
+            np.where((pbp_df.Ev_Team == pbp_df.Home_Team) &
+                     (pbp_df.Home_Goalie.isnull() == True),
+                     pbp_df['shooter_strength'] + 1,
+                     pbp_df['shooter_strength'])
+
+#away team empty net situations
+    pbp_df.loc[:, ('shooter_strength')] = \
+            np.where((pbp_df.Ev_Team == pbp_df.Away_Team) &
+                     (pbp_df.Away_Goalie.isnull() == True),
+                     pbp_df['shooter_strength'] + 1,
+                     pbp_df['shooter_strength'])
+
+    return pbp_df
+
+
 def main():
 
     return
