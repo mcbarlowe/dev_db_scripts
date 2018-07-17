@@ -15,17 +15,21 @@ def switch_block_shots(pbp_df):
 
     print(pbp_df.loc[:, ('p1_name', 'p1_ID', 'p2_name', 'p2_ID')].head(15))
 #creating new columns where I switch the players around for blocked shots
-    pbp_df.loc[:, ('new_p1_name')] = np.where(pbp_df.Event == 'BLOCK', pbp_df.p2_name, pbp_df.p1_name)
-    pbp_df.loc[:, ('new_p2_name')] = np.where(pbp_df.Event == 'BLOCK', pbp_df.p1_name, pbp_df.p2_name)
-    pbp_df.loc[:, ('new_p1_ID')] = np.where(pbp_df.Event == 'BLOCK', pbp_df.p2_ID, pbp_df.p1_ID)
-    pbp_df.loc[:, ('new_p2_ID')] = np.where(pbp_df.Event == 'BLOCK', pbp_df.p1_ID, pbp_df.p2_ID)
+    pbp_df.loc[:, ('new_p1_name')] = np.where(pbp_df.Event == 'BLOCK',
+                                              pbp_df.p2_name, pbp_df.p1_name)
+    pbp_df.loc[:, ('new_p2_name')] = np.where(pbp_df.Event == 'BLOCK',
+                                              pbp_df.p1_name, pbp_df.p2_name)
+    pbp_df.loc[:, ('new_p1_ID')] = np.where(pbp_df.Event == 'BLOCK',
+                                            pbp_df.p2_ID, pbp_df.p1_ID)
+    pbp_df.loc[:, ('new_p2_ID')] = np.where(pbp_df.Event == 'BLOCK',
+                                            pbp_df.p1_ID, pbp_df.p2_ID)
 
     print(pbp_df.iloc[:, -5:].head(20))
 #saving the new columns as the old ones
-    pbp_df.loc[:,('p1_name')] = pbp_df['new_p1_name']
-    pbp_df.loc[:,('p2_name')] = pbp_df['new_p2_name']
-    pbp_df.loc[:,('p1_ID')] = pbp_df['new_p1_ID']
-    pbp_df.loc[:,('p2_ID')] = pbp_df['new_p2_ID']
+    pbp_df.loc[:, ('p1_name')] = pbp_df['new_p1_name']
+    pbp_df.loc[:, ('p2_name')] = pbp_df['new_p2_name']
+    pbp_df.loc[:, ('p1_ID')] = pbp_df['new_p1_ID']
+    pbp_df.loc[:, ('p2_ID')] = pbp_df['new_p2_ID']
 
 #drop unused new columns
     pbp_df = pbp_df.drop(['new_p1_name', 'new_p2_name',
@@ -44,7 +48,8 @@ def calc_distance(pbp_df):
     Output:
     pbp_df - play by play dataframe with distance calculated
     '''
-    pbp_df.loc[:,('distance')] = np.sqrt((87.95-abs(pbp_df.xC))**2 + pbp_df.yC**2)
+    pbp_df.loc[:, ('distance')] = np.sqrt((87.95-abs(pbp_df.xC))**2
+                                          + pbp_df.yC**2)
 
     return pbp_df
 
@@ -77,7 +82,10 @@ def calc_time_diff(pbp_df):
     pbp_df - play by play dataframe with time difference calculated
     '''
 
-    pbp_df.loc[:, ('time_diff')] = pbp_df.Seconds_Elapsed - pbp_df.Seconds_Elapsed.shift(1)
+    pbp_df.loc[:, ('time_diff')] = pbp_df.Seconds_Elapsed -\
+                                   pbp_df.Seconds_Elapsed.shift(1)
+
+    pbp_df.loc[:, ('time_diff')] = np.where(pbp_df.time_diff == -1200, 0, pbp_df.time_diff)
 
     return pbp_df
 
@@ -96,8 +104,8 @@ def calc_rebound(pbp_df):
 
     pbp_df.loc[:, ('is_rebound')] = np.where((pbp_df.time_diff < 4) &
                                              ((pbp_df.Event.isin(['SHOT', 'GOAL'])) &
-                                             (pbp_df.Event.shift(1) == 'SHOT') &
-                                             (pbp_df.Ev_Team == pbp_df.Ev_Team.shift(1))),
+                                              (pbp_df.Event.shift(1) == 'SHOT') &
+                                              (pbp_df.Ev_Team == pbp_df.Ev_Team.shift(1))),
                                              1, 0)
 
     return pbp_df
@@ -144,19 +152,146 @@ def calc_shooter_strength(pbp_df):
 #handle empty net situations this time for the home team
     pbp_df.loc[:, ('shooter_strength')] = \
             np.where((pbp_df.Ev_Team == pbp_df.Home_Team) &
-                     (pbp_df.Home_Goalie.isnull() == True),
+                     (pbp_df.Home_Goalie.isnull()),
                      pbp_df['shooter_strength'] + 1,
                      pbp_df['shooter_strength'])
 
 #away team empty net situations
     pbp_df.loc[:, ('shooter_strength')] = \
             np.where((pbp_df.Ev_Team == pbp_df.Away_Team) &
-                     (pbp_df.Away_Goalie.isnull() == True),
+                     (pbp_df.Away_Goalie.isnull()),
                      pbp_df['shooter_strength'] + 1,
                      pbp_df['shooter_strength'])
 
     return pbp_df
 
+def calc_rebound_angle(pbp_df):
+    '''
+    Function calculates the angle between two shots if the second shot
+    is flagged as a rebound else the value is zero
+
+    Input:
+    pbp_df - play by play dataframe
+
+    Output:
+    pbp_df - play by play dataframe
+    '''
+    pbp_df.loc[:, ('rebound_angle')] = \
+            np.where(pbp_df.is_rebound == 1,
+                     pbp_df.angle + pbp_df.angle.shift(1), 0)
+
+    return pbp_df
+
+
+def calc_is_goal(pbp_df):
+    '''
+    Function calculates if shot is a goal or not and denotes by a 1 and zero
+    repsectively
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    pbp_df - play by play dataframe
+    '''
+
+    pbp_df.loc[:, ('is_goal')] = np.where(pbp_df.Event == 'GOAL', 1, 0)
+
+    return pbp_df
+
+def calc_zone(pbp_df):
+    '''
+    Function parses event description to determine zone of the event
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    pbp_df same df but with zone column calculated.
+    '''
+
+    pbp_df.loc[:, ('zone')] = np.where(pbp_df.Description.str\
+                                       .contains('neu. zone', case=False)
+                                       , 'neu', 0)
+
+    pbp_df.loc[:, ('zone')] = np.where(pbp_df.Description.str\
+                                       .contains('off. zone', case=False),
+                                       'off', pbp_df.zone)
+
+    pbp_df.loc[:, ('zone')] = np.where(pbp_df.Description.str\
+                                       .contains('def. zone', case=False),
+                                       'def', pbp_df.zone)
+
+    pbp_df.loc[:, ('zone')] = np.where((pbp_df.zone == 'def')
+                                       & (pbp_df.Event == 'BLOCK'), 'off',
+                                       pbp_df.zone)
+
+    pbp_df.loc[:, ('zone')] = np.where((pbp_df.Event.\
+                                       isin(['SHOT', 'MISS',
+                                             'BLOCK', 'GOAL'])) &
+                                       (pbp_df.zone == 'def') &
+                                       (pbp_df.distance <= 64),
+                                       'off', pbp_df.zone)
+
+    return pbp_df
+
+def calc_shot_metrics(pbp_df):
+    '''
+    function to calculate whether an event is a corsi or fenwick event
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    pbp_df - play by play dataframe with corsi and fenwick columns calculated
+    '''
+
+    corsi = ['SHOT', 'BLOCK', 'MISS', 'GOAL']
+    fenwick = ['SHOT', 'MISS', 'GOAL']
+    shot = ['SHOT', 'GOAL']
+
+    pbp_df.loc[:, ('is_corsi')] = np.where(pbp_df.Event.isin(corsi), 1, 0)
+    pbp_df.loc[:, ('is_fenwick')] = np.where(pbp_df.Event.isin(fenwick), 1, 0)
+    pbp_df.loc[:, ('is_shot')] = np.where(pbp_df.Event.isin(shot), 1, 0)
+
+    return pbp_df
+
+def calc_is_home(pbp_df):
+    '''
+    Function determines whether event was taken by the home team or not
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    pbp_df - play by play dataframe
+    '''
+
+    pbp_df.loc[:, ('is_home')] = np.where(pbp_df.Ev_Team == pbp_df.Home_Team,
+                                          1, 0)
+
+def calc_score_diff(pbp_df):
+    '''
+    Function to calculate score differential for score adjustment caps at
+    +/- 3 due to Micah Blake McCurdy's (@Ineffectivemath on Twitter) adjustment
+    method.
+
+    Input:
+    pbp_df - play by play df
+
+    Output:
+    pbp_df - play by play df with score diff calculated
+    '''
+
+    pbp_df.loc[:, ('score_diff')] = pbp_df.Home_Score - pbp_df.Away_Score
+
+    pbp_df.loc[:, ('score_diff')] = np.where(pbp_df.score_diff < -3, -3,
+                                             pbp_df.score_diff)
+
+    pbp_df.loc[:, ('score_diff')] = np.where(pbp_df.score_diff > 3, 3,
+                                             pbp_df.score_diff)
+
+    return pbp_df
 
 def main():
 
