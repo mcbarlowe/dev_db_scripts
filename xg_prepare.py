@@ -1,6 +1,30 @@
 import pandas as pd
 import numpy as np
 
+score_venue_adj_dic = {-3: {'home_weight': .850, 'away_weight': 1.214},
+                       -2: {'home_weight': .882, 'away_weight': 1.154},
+                       -1: {'home_weight': .915, 'away_weight': 1.103},
+                       0: {'home_weight': .970, 'away_weight': 1.032},
+                       1: {'home_weight': 1.026, 'away_weight': .975},
+                       2: {'home_weight': 1.074, 'away_weight': .936},
+                       3: {'home_weight': 1.132, 'away_weight': .895}}
+
+wght_shots_goals = {-3: {'home_weight': .943, 'away_weight': 1.057},
+                    -2: {'home_weight': .976, 'away_weight': 1.024},
+                    -1: {'home_weight': .936, 'away_weight': 1.064},
+                    0: {'home_weight': .942, 'away_weight': 1.058},
+                    1: {'home_weight': .995, 'away_weight': 1.005},
+                    2: {'home_weight': 1.01, 'away_weight': .990},
+                    3: {'home_weight': 1.017, 'away_weight': .983}}
+
+wght_shots_shot = {-3: {'home_weight': .163, 'away_weight': .237},
+                   -2: {'home_weight': .171, 'away_weight': .229},
+                   -1: {'home_weight': .180, 'away_weight': .220},
+                   0: {'home_weight': .196, 'away_weight': .204},
+                   1: {'home_weight': .213, 'away_weight': .187},
+                   2: {'home_weight': .221, 'away_weight': .179},
+                   3: {'home_weight': .227, 'away_weight': .173}}
+
 def switch_block_shots(pbp_df):
     '''
     This function switches the p1 and p2 of blocked shots because Harry's
@@ -292,6 +316,86 @@ def calc_score_diff(pbp_df):
                                              pbp_df.score_diff)
 
     return pbp_df
+
+def calc_is_penalty(pbp_df):
+    '''
+    calculates whether an event is a penalty
+
+    Input:
+    pbp_df - play by play df
+
+    Output:
+    pbp_df - play by play df with is_penalty column created
+    '''
+
+
+def calc_ind_metrics(pbp_df):
+    '''
+    this function calculates the individual metrics of each players
+    contribution during the game
+
+    Input:
+    pbp_df - play by play df
+
+    Output:
+    player_df - individual player stats df
+    '''
+
+    def calc_ind_points(pbp_df):
+        '''
+        function calculates individual points for each player in the data
+        frame and returns a dataframe with those stats
+
+        Inputs:
+        pbp_df - play by play dataframe
+
+        Outputs:
+        points_df - dataframe with individual points of players
+        '''
+
+        goal_df = pbp_df[pbp_df.Event == 'GOAL']\
+                  .groupby(['Game_Id', 'Date', 'Ev_Team',
+                            'p1_ID', 'p1_name'])['is_goal'].sum().reset_index()
+
+        a1_df = pbp_df[pbp_df.Event == 'GOAL']\
+                .groupby(['Game_Id', 'Date', 'Ev_Team',
+                          'p2_ID', 'p2_name'])['is_goal'].sum().reset_index()
+
+
+        a2_df = pbp_df[pbp_df.Event == 'GOAL']\
+                .groupby(['Game_Id', 'Date', 'Ev_Team',
+                          'p3_ID', 'p3_name'])['is_goal'].sum().reset_index()
+
+
+
+        goal_df.columns = ['Game_Id', 'Date', 'Ev_Team', 'player_id',
+                           'player_name', 'goals']
+
+        a1_df.columns = ['Game_Id', 'Date', 'Ev_Team',
+                         'player_id', 'player_name', 'a1']
+
+        a2_df.columns = ['Game_Id', 'Date', 'Ev_Team',
+                         'player_id', 'player_name', 'a2']
+
+        points_df = goal_df.merge(a1_df, on=['Game_Id', 'Date', 'Ev_Team',
+                                             'player_id', 'player_name'],
+                                  how='outer')
+
+        points_df = points_df.merge(a2_df, on=['Game_Id', 'Date', 'Ev_Team',
+                                               'player_id', 'player_name'],
+                                    how='outer')
+
+        points_df = points_df.fillna(0)
+
+        points_df.loc[:, ('player_id', 'goals', 'a1', 'a2')] = \
+            points_df.loc[:, ('player_id', 'goals', 'a1', 'a2')].astype(int)
+
+
+        return points_df
+
+    points_df = calc_ind_points(pbp_df)
+
+    return points_df
 
 def main():
 
