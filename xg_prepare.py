@@ -393,9 +393,73 @@ def calc_ind_metrics(pbp_df):
 
         return points_df
 
-    points_df = calc_ind_points(pbp_df)
+    def calc_ind_shot_metrics(pbp_df):
+        '''
+        function to calculate individual shot metrics and return a data
+        frame with them
 
-    return points_df
+        Inputs:
+        pbp_df - play by play dataframe
+
+        Ouputs:
+        ind_shots_df - df with calculated iSF, iCF, iFF need to add ixG to
+                       this later once xg model is finished
+        '''
+
+        corsi = ['SHOT', 'BLOCK', 'MISS', 'GOAL']
+        fenwick = ['SHOT', 'MISS', 'GOAL']
+
+        corsi_df = pbp_df[pbp_df.Event.isin(corsi)]\
+                  .groupby(['Game_Id', 'Date', 'Ev_Team',
+                            'p1_ID', 'p1_name'])['is_corsi'].sum().reset_index()
+
+        fenwick_df = pbp_df[pbp_df.Event.isin(fenwick)]\
+                     .groupby(['Game_Id', 'Date', 'Ev_Team',
+                               'p1_ID', 'p1_name'])['is_fenwick'].sum().reset_index()
+
+        shot_df = pbp_df[pbp_df.Event.isin(fenwick)]\
+                     .groupby(['Game_Id', 'Date', 'Ev_Team',
+                               'p1_ID', 'p1_name'])['is_shot'].sum().reset_index()
+
+        corsi_df.columns = ['Game_Id', 'Date', 'Ev_Team', 'player_id',
+                            'player_name', 'iCF']
+
+        fenwick_df.columns = ['Game_Id', 'Date', 'Ev_Team',
+                         'player_id', 'player_name', 'iFF']
+
+        shot_df.columns = ['Game_Id', 'Date', 'Ev_Team',
+                         'player_id', 'player_name', 'iSF']
+
+        metrics_df = corsi_df.merge(fenwick_df,
+                                    on=['Game_Id', 'Date', 'Ev_Team',
+                                        'player_id', 'player_name'],
+                                    how='outer')
+
+        metrics_df = metrics_df.merge(shot_df,
+                                      on=['Game_Id', 'Date', 'Ev_Team',
+                                          'player_id', 'player_name'],
+                                    how='outer')
+
+        metrics_df = metrics_df.fillna(0)
+
+        metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')] = \
+            metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')].astype(int)
+
+        print(metrics_df)
+
+        return metrics_df
+
+
+
+    points_df = calc_ind_points(pbp_df)
+    metrics_df = calc_ind_shot_metrics(pbp_df)
+
+    ind_stats_df = metrics_df.merge(points_df,
+                                      on=['Game_Id', 'Date', 'Ev_Team',
+                                          'player_id', 'player_name'],
+                                    how='outer')
+
+    return ind_stats_df
 
 def main():
 
