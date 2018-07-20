@@ -317,6 +317,7 @@ def calc_score_diff(pbp_df):
 
     return pbp_df
 
+#probably move these functions into a new file
 def calc_is_penalty(pbp_df):
     '''
     calculates whether an event is a penalty
@@ -354,34 +355,34 @@ def calc_ind_metrics(pbp_df):
         '''
 
         goal_df = pbp_df[pbp_df.Event == 'GOAL']\
-                  .groupby(['Game_Id', 'Date', 'Ev_Team',
+                  .groupby(['Game_Id', 'Date',
                             'p1_ID', 'p1_name'])['is_goal'].sum().reset_index()
 
         a1_df = pbp_df[pbp_df.Event == 'GOAL']\
-                .groupby(['Game_Id', 'Date', 'Ev_Team',
+                .groupby(['Game_Id', 'Date',
                           'p2_ID', 'p2_name'])['is_goal'].sum().reset_index()
 
 
         a2_df = pbp_df[pbp_df.Event == 'GOAL']\
-                .groupby(['Game_Id', 'Date', 'Ev_Team',
+                .groupby(['Game_Id', 'Date',
                           'p3_ID', 'p3_name'])['is_goal'].sum().reset_index()
 
 
 
-        goal_df.columns = ['Game_Id', 'Date', 'Ev_Team', 'player_id',
+        goal_df.columns = ['Game_Id', 'Date',  'player_id',
                            'player_name', 'goals']
 
-        a1_df.columns = ['Game_Id', 'Date', 'Ev_Team',
+        a1_df.columns = ['Game_Id', 'Date',
                          'player_id', 'player_name', 'a1']
 
-        a2_df.columns = ['Game_Id', 'Date', 'Ev_Team',
+        a2_df.columns = ['Game_Id', 'Date',
                          'player_id', 'player_name', 'a2']
 
-        points_df = goal_df.merge(a1_df, on=['Game_Id', 'Date', 'Ev_Team',
+        points_df = goal_df.merge(a1_df, on=['Game_Id', 'Date',
                                              'player_id', 'player_name'],
                                   how='outer')
 
-        points_df = points_df.merge(a2_df, on=['Game_Id', 'Date', 'Ev_Team',
+        points_df = points_df.merge(a2_df, on=['Game_Id', 'Date',
                                                'player_id', 'player_name'],
                                     how='outer')
 
@@ -410,54 +411,121 @@ def calc_ind_metrics(pbp_df):
         fenwick = ['SHOT', 'MISS', 'GOAL']
 
         corsi_df = pbp_df[pbp_df.Event.isin(corsi)]\
-                  .groupby(['Game_Id', 'Date', 'Ev_Team',
+                  .groupby(['Game_Id', 'Date',
                             'p1_ID', 'p1_name'])['is_corsi'].sum().reset_index()
 
         fenwick_df = pbp_df[pbp_df.Event.isin(fenwick)]\
-                     .groupby(['Game_Id', 'Date', 'Ev_Team',
+                     .groupby(['Game_Id', 'Date',
                                'p1_ID', 'p1_name'])['is_fenwick'].sum().reset_index()
 
         shot_df = pbp_df[pbp_df.Event.isin(fenwick)]\
-                     .groupby(['Game_Id', 'Date', 'Ev_Team',
+                     .groupby(['Game_Id', 'Date',
                                'p1_ID', 'p1_name'])['is_shot'].sum().reset_index()
 
-        corsi_df.columns = ['Game_Id', 'Date', 'Ev_Team', 'player_id',
+        corsi_df.columns = ['Game_Id', 'Date',  'player_id',
                             'player_name', 'iCF']
 
-        fenwick_df.columns = ['Game_Id', 'Date', 'Ev_Team',
-                         'player_id', 'player_name', 'iFF']
+        fenwick_df.columns = ['Game_Id', 'Date',
+                              'player_id', 'player_name', 'iFF']
 
-        shot_df.columns = ['Game_Id', 'Date', 'Ev_Team',
-                         'player_id', 'player_name', 'iSF']
+        shot_df.columns = ['Game_Id', 'Date',
+                           'player_id', 'player_name', 'iSF']
 
         metrics_df = corsi_df.merge(fenwick_df,
-                                    on=['Game_Id', 'Date', 'Ev_Team',
+                                    on=['Game_Id', 'Date',
                                         'player_id', 'player_name'],
                                     how='outer')
 
         metrics_df = metrics_df.merge(shot_df,
-                                      on=['Game_Id', 'Date', 'Ev_Team',
+                                      on=['Game_Id', 'Date',
                                           'player_id', 'player_name'],
-                                    how='outer')
+                                      how='outer')
 
         metrics_df = metrics_df.fillna(0)
 
         metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')] = \
             metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')].astype(int)
 
-        print(metrics_df)
-
         return metrics_df
 
+    def calc_ind_penalties(pbp_df):
+        '''
+        function calculates penalties drawn and taken from the pbp_df. It
+        excludes fighting and miscounduct penalties
+
+        Input:
+        pbp_df - play by play dataframe
+
+        Output:
+        penalty_df - dataframe of each players penalties taken and drawn
+        '''
+
+        pbp_df['is_penalty'] = np.where((pbp_df.Event == 'PENL') &
+                                        (~pbp_df.Description.str.\
+                                         contains('ps \\-|match|fighting|major',
+                                                  case=False)),
+                                        1, 0)
+
+        pbp_df['is_penalty'] = np.where((pbp_df.Event == 'PENL') &
+                                        (pbp_df.Description.str.\
+                                               contains('double minor',
+                                                        case=False)),
+                                        2, pbp_df.is_penalty)
+
+        penalty_taken = pbp_df[pbp_df.Event == 'PENL'].\
+                     groupby(['Game_Id', 'Date',
+                              'p1_ID', 'p1_name'])['is_penalty'].sum().\
+                     reset_index()
+
+        penalty_taken.columns = ['Game_Id', 'Date',
+                                 'player_id', 'player_name', 'PENT']
+
+        penalty_drawn = pbp_df[pbp_df.Event == 'PENL'].\
+                     groupby(['Game_Id', 'Date',
+                              'p2_ID', 'p2_name'])['is_penalty'].sum().\
+                     reset_index()
+
+        penalty_drawn.columns = ['Game_Id', 'Date',
+                                 'player_id', 'player_name', 'PEND']
+
+        penalty_df = penalty_taken.merge(penalty_drawn,
+                                         on=['Game_Id', 'Date',
+                                             'player_id', 'player_name'],
+                                         how='outer')
+
+        penalty_df = penalty_df.fillna(0)
+
+        penalty_df = penalty_df.groupby(['Game_Id', 'Date',
+                                         'player_id', 'player_name'])['PENT', 'PEND'].sum().reset_index()
+
+        penalty_df.loc[:, ('PENT', 'PEND')] = penalty_df.loc[:, ('PENT', 'PEND')].astype(int)
+        return penalty_df
 
 
     points_df = calc_ind_points(pbp_df)
+    print(points_df)
     metrics_df = calc_ind_shot_metrics(pbp_df)
+    print(metrics_df)
+    penalty_df = calc_ind_penalties(pbp_df)
+    print(penalty_df)
 
     ind_stats_df = metrics_df.merge(points_df,
-                                      on=['Game_Id', 'Date', 'Ev_Team',
+                                      on=['Game_Id', 'Date',
                                           'player_id', 'player_name'],
                                     how='outer')
+
+    ind_stats_df = ind_stats_df.merge(penalty_df,
+                                      on=['Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.fillna(0)
+
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'goals',
+                         'a1', 'a2', 'PENT', 'PEND')] = \
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'goals',
+                         'a1', 'a2', 'PENT', 'PEND')].astype(int)
+
 
     return ind_stats_df
 
