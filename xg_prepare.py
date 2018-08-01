@@ -206,59 +206,6 @@ def calc_rebound_angle(pbp_df):
 
     return pbp_df
 
-
-def calc_is_goal(pbp_df):
-    '''
-    Function calculates if shot is a goal or not and denotes by a 1 and zero
-    repsectively
-
-    Inputs:
-    pbp_df - play by play dataframe
-
-    Outputs:
-    pbp_df - play by play dataframe
-    '''
-
-    pbp_df.loc[:, ('is_goal')] = np.where(pbp_df.Event == 'GOAL', 1, 0)
-
-    return pbp_df
-
-def calc_zone(pbp_df):
-    '''
-    Function parses event description to determine zone of the event
-
-    Inputs:
-    pbp_df - play by play dataframe
-
-    Outputs:
-    pbp_df same df but with zone column calculated.
-    '''
-
-    pbp_df.loc[:, ('zone')] = np.where(pbp_df.Description.str\
-                                       .contains('neu. zone', case=False)
-                                       , 'neu', 0)
-
-    pbp_df.loc[:, ('zone')] = np.where(pbp_df.Description.str\
-                                       .contains('off. zone', case=False),
-                                       'off', pbp_df.zone)
-
-    pbp_df.loc[:, ('zone')] = np.where(pbp_df.Description.str\
-                                       .contains('def. zone', case=False),
-                                       'def', pbp_df.zone)
-
-    pbp_df.loc[:, ('zone')] = np.where((pbp_df.zone == 'def')
-                                       & (pbp_df.Event == 'BLOCK'), 'off',
-                                       pbp_df.zone)
-
-    pbp_df.loc[:, ('zone')] = np.where((pbp_df.Event.\
-                                       isin(['SHOT', 'MISS',
-                                             'BLOCK', 'GOAL'])) &
-                                       (pbp_df.zone == 'def') &
-                                       (pbp_df.distance <= 64),
-                                       'off', pbp_df.zone)
-
-    return pbp_df
-
 def calc_shot_metrics(pbp_df):
     '''
     function to calculate whether an event is a corsi or fenwick event
@@ -277,6 +224,7 @@ def calc_shot_metrics(pbp_df):
     pbp_df.loc[:, ('is_corsi')] = np.where(pbp_df.Event.isin(corsi), 1, 0)
     pbp_df.loc[:, ('is_fenwick')] = np.where(pbp_df.Event.isin(fenwick), 1, 0)
     pbp_df.loc[:, ('is_shot')] = np.where(pbp_df.Event.isin(shot), 1, 0)
+    pbp_df.loc[:, ('is_goal')] = np.where(pbp_df.Event == 'GOAL', 1, 0)
 
     return pbp_df
 
@@ -293,6 +241,8 @@ def calc_is_home(pbp_df):
 
     pbp_df.loc[:, ('is_home')] = np.where(pbp_df.Ev_Team == pbp_df.Home_Team,
                                           1, 0)
+
+    return pbp_df
 
 def calc_score_diff(pbp_df):
     '''
@@ -317,7 +267,20 @@ def calc_score_diff(pbp_df):
 
     return pbp_df
 
-#probably move these functions into a new file
+def calc_is_hit(pbp_df):
+    '''
+    determines whether event is a hit or not
+
+    Input:
+    pbp_df - play by play df
+
+    Output:
+    pbp_df - play by play df with is_hit column calculated
+    '''
+    pbp_df['is_hit'] = np.where(pbp_df.Event == 'HIT', 1, 0)
+
+    return pbp_df
+
 def calc_is_penalty(pbp_df):
     '''
     calculates whether an event is a penalty
@@ -328,6 +291,20 @@ def calc_is_penalty(pbp_df):
     Output:
     pbp_df - play by play df with is_penalty column created
     '''
+
+    pbp_df['is_penalty'] = np.where((pbp_df.Event == 'PENL') &
+                                    (~pbp_df.Description.str.\
+                                     contains('ps \\-|match|fighting|major',
+                                              case=False)),
+                                    1, 0)
+
+    pbp_df['is_penalty'] = np.where((pbp_df.Event == 'PENL') &
+                                    (pbp_df.Description.str.\
+                                           contains('double minor',
+                                                    case=False)),
+                                    2, pbp_df.is_penalty)
+
+    return pbp_df
 
 
 def calc_ind_metrics(pbp_df):
@@ -355,41 +332,41 @@ def calc_ind_metrics(pbp_df):
         '''
 
         goal_df = pbp_df[pbp_df.Event == 'GOAL']\
-                  .groupby(['Game_Id', 'Date',
+                  .groupby(['season', 'Game_Id', 'Date',
                             'p1_ID', 'p1_name'])['is_goal'].sum().reset_index()
 
         a1_df = pbp_df[pbp_df.Event == 'GOAL']\
-                .groupby(['Game_Id', 'Date',
+                .groupby(['season', 'Game_Id', 'Date',
                           'p2_ID', 'p2_name'])['is_goal'].sum().reset_index()
 
 
         a2_df = pbp_df[pbp_df.Event == 'GOAL']\
-                .groupby(['Game_Id', 'Date',
+                .groupby(['season', 'Game_Id', 'Date',
                           'p3_ID', 'p3_name'])['is_goal'].sum().reset_index()
 
 
 
-        goal_df.columns = ['Game_Id', 'Date',  'player_id',
-                           'player_name', 'goals']
+        goal_df.columns = ['season', 'Game_Id', 'Date',  'player_id',
+                           'player_name', 'g']
 
-        a1_df.columns = ['Game_Id', 'Date',
+        a1_df.columns = ['season', 'Game_Id', 'Date',
                          'player_id', 'player_name', 'a1']
 
-        a2_df.columns = ['Game_Id', 'Date',
+        a2_df.columns = ['season', 'Game_Id', 'Date',
                          'player_id', 'player_name', 'a2']
 
-        points_df = goal_df.merge(a1_df, on=['Game_Id', 'Date',
+        points_df = goal_df.merge(a1_df, on=['season', 'Game_Id', 'Date',
                                              'player_id', 'player_name'],
                                   how='outer')
 
-        points_df = points_df.merge(a2_df, on=['Game_Id', 'Date',
+        points_df = points_df.merge(a2_df, on=['season', 'Game_Id', 'Date',
                                                'player_id', 'player_name'],
                                     how='outer')
 
         points_df = points_df.fillna(0)
 
-        points_df.loc[:, ('player_id', 'goals', 'a1', 'a2')] = \
-            points_df.loc[:, ('player_id', 'goals', 'a1', 'a2')].astype(int)
+        points_df.loc[:, ('player_id', 'g', 'a1', 'a2')] = \
+            points_df.loc[:, ('player_id', 'g', 'a1', 'a2')].astype(int)
 
 
         return points_df
@@ -411,33 +388,33 @@ def calc_ind_metrics(pbp_df):
         fenwick = ['SHOT', 'MISS', 'GOAL']
 
         corsi_df = pbp_df[pbp_df.Event.isin(corsi)]\
-                  .groupby(['Game_Id', 'Date',
+                  .groupby(['season', 'Game_Id', 'Date',
                             'p1_ID', 'p1_name'])['is_corsi'].sum().reset_index()
 
         fenwick_df = pbp_df[pbp_df.Event.isin(fenwick)]\
-                     .groupby(['Game_Id', 'Date',
+                     .groupby(['season', 'Game_Id', 'Date',
                                'p1_ID', 'p1_name'])['is_fenwick'].sum().reset_index()
 
         shot_df = pbp_df[pbp_df.Event.isin(fenwick)]\
-                     .groupby(['Game_Id', 'Date',
+                     .groupby(['season', 'Game_Id', 'Date',
                                'p1_ID', 'p1_name'])['is_shot'].sum().reset_index()
 
-        corsi_df.columns = ['Game_Id', 'Date',  'player_id',
+        corsi_df.columns = ['season', 'Game_Id', 'Date',  'player_id',
                             'player_name', 'iCF']
 
-        fenwick_df.columns = ['Game_Id', 'Date',
+        fenwick_df.columns = ['season', 'Game_Id', 'Date',
                               'player_id', 'player_name', 'iFF']
 
-        shot_df.columns = ['Game_Id', 'Date',
+        shot_df.columns = ['season', 'Game_Id', 'Date',
                            'player_id', 'player_name', 'iSF']
 
         metrics_df = corsi_df.merge(fenwick_df,
-                                    on=['Game_Id', 'Date',
+                                    on=['season', 'Game_Id', 'Date',
                                         'player_id', 'player_name'],
                                     how='outer')
 
         metrics_df = metrics_df.merge(shot_df,
-                                      on=['Game_Id', 'Date',
+                                      on=['season', 'Game_Id', 'Date',
                                           'player_id', 'player_name'],
                                       how='outer')
 
@@ -447,6 +424,70 @@ def calc_ind_metrics(pbp_df):
             metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')].astype(int)
 
         return metrics_df
+
+    def calc_ind_gata(pbp_df):
+        '''
+        function calculates giveaways and takeaways from the pbp_df.
+
+        Input:
+        pbp_df - play by play dataframe
+
+        Output:
+        hit_df - dataframe of each players GA/TA stats
+        '''
+        ga_df = pbp_df[pbp_df.Event == 'GIVE'].groupby(['season', 'Game_Id', 'Date', 'p1_ID', 'p1_name']).size().reset_index()
+
+        ta_df = pbp_df[pbp_df.Event == 'TAKE'].groupby(['season', 'Game_Id', 'Date', 'p1_ID', 'p1_name']).size().reset_index()
+
+
+        ga_df.columns = ['season', 'Game_Id', 'Date', 'player_id', 'player_name', 'iGA']
+        ta_df.columns = ['season', 'Game_Id', 'Date', 'player_id', 'player_name', 'iTA']
+        gata_df = ga_df.merge(ta_df, on= ['season', 'Game_Id', 'Date', 'player_id', 'player_name'], how='outer')
+
+        gata_df = gata_df.fillna(0)
+
+        return gata_df
+
+    def calc_ind_hits(pbp_df):
+        '''
+        function calculates hits for and against from the pbp_df.
+
+        Input:
+        pbp_df - play by play dataframe
+
+        Output:
+        hit_df - dataframe of each players hits stats
+        '''
+
+
+        hit_for = pbp_df[pbp_df.Event == 'HIT'].\
+                     groupby(['season', 'Game_Id', 'Date',
+                              'p1_ID', 'p1_name'])['is_hit'].sum().\
+                     reset_index()
+
+        hit_for.columns = ['season', 'Game_Id', 'Date',
+                           'player_id', 'player_name', 'iHF']
+
+        hit_against = pbp_df[pbp_df.Event == 'HIT'].\
+                     groupby(['season', 'Game_Id', 'Date',
+                              'p2_ID', 'p2_name'])['is_hit'].sum().\
+                     reset_index()
+
+        hit_against.columns = ['season', 'Game_Id', 'Date',
+                               'player_id', 'player_name', 'iHA']
+
+        hit_df = hit_for.merge(hit_against, on=['season', 'Game_Id', 'Date',
+                                                'player_id', 'player_name'],
+                               how='outer')
+
+        hit_df = hit_df.fillna(0)
+
+        hit_df = hit_df.groupby(['season', 'Game_Id', 'Date',
+                                 'player_id', 'player_name'])['iHF', 'iHA'].sum().reset_index()
+
+        hit_df.loc[:, ('iHF', 'iHA')] = hit_df.loc[:, ('iHF', 'iHA')].astype(int)
+
+        return hit_df
 
     def calc_ind_penalties(pbp_df):
         '''
@@ -460,47 +501,88 @@ def calc_ind_metrics(pbp_df):
         penalty_df - dataframe of each players penalties taken and drawn
         '''
 
-        pbp_df['is_penalty'] = np.where((pbp_df.Event == 'PENL') &
-                                        (~pbp_df.Description.str.\
-                                         contains('ps \\-|match|fighting|major',
-                                                  case=False)),
-                                        1, 0)
-
-        pbp_df['is_penalty'] = np.where((pbp_df.Event == 'PENL') &
-                                        (pbp_df.Description.str.\
-                                               contains('double minor',
-                                                        case=False)),
-                                        2, pbp_df.is_penalty)
 
         penalty_taken = pbp_df[pbp_df.Event == 'PENL'].\
-                     groupby(['Game_Id', 'Date',
+                     groupby(['season', 'Game_Id', 'Date',
                               'p1_ID', 'p1_name'])['is_penalty'].sum().\
                      reset_index()
 
-        penalty_taken.columns = ['Game_Id', 'Date',
-                                 'player_id', 'player_name', 'PENT']
+        penalty_taken.columns = ['season', 'Game_Id', 'Date',
+                                 'player_id', 'player_name', 'iPENT']
 
         penalty_drawn = pbp_df[pbp_df.Event == 'PENL'].\
-                     groupby(['Game_Id', 'Date',
+                     groupby(['season', 'Game_Id', 'Date',
                               'p2_ID', 'p2_name'])['is_penalty'].sum().\
                      reset_index()
 
-        penalty_drawn.columns = ['Game_Id', 'Date',
-                                 'player_id', 'player_name', 'PEND']
+        penalty_drawn.columns = ['season', 'Game_Id', 'Date',
+                                 'player_id', 'player_name', 'iPEND']
 
         penalty_df = penalty_taken.merge(penalty_drawn,
-                                         on=['Game_Id', 'Date',
+                                         on=['season', 'Game_Id', 'Date',
                                              'player_id', 'player_name'],
                                          how='outer')
 
         penalty_df = penalty_df.fillna(0)
 
-        penalty_df = penalty_df.groupby(['Game_Id', 'Date',
-                                         'player_id', 'player_name'])['PENT', 'PEND'].sum().reset_index()
+        penalty_df = penalty_df.groupby(['season', 'Game_Id', 'Date',
+                                         'player_id', 'player_name'])['iPENT', 'iPEND'].sum().reset_index()
 
-        penalty_df.loc[:, ('PENT', 'PEND')] = penalty_df.loc[:, ('PENT', 'PEND')].astype(int)
+        penalty_df.loc[:, ('iPENT', 'iPEND')] = penalty_df.loc[:, ('iPENT', 'iPEND')].astype(int)
+
         return penalty_df
 
+    def calc_faceoffs(pbp_df):
+        '''
+        function calculates faceoffs wond and lost
+
+        Input:
+        pbp_df - play by play dataframe
+
+        Output:
+        penalty_df - dataframe of each players faceoff stats
+        '''
+
+
+        fo_won = pbp_df[pbp_df.Event == 'FAC'].\
+                     groupby(['season', 'Game_Id', 'Date',
+                              'p1_ID', 'p1_name']).size().\
+                     reset_index()
+
+        fo_won.columns = ['season', 'Game_Id', 'Date',
+                          'player_id', 'player_name', 'FOW']
+
+        fo_lost = pbp_df[pbp_df.Event == 'FAC'].\
+                     groupby(['season', 'Game_Id', 'Date',
+                              'p2_ID', 'p2_name']).size().\
+                     reset_index()
+
+        fo_lost.columns = ['season', 'Game_Id', 'Date',
+                                 'player_id', 'player_name', 'FOL']
+
+        fo_df = fo_won.merge(fo_lost, on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                             how='outer')
+
+        fo_df = fo_df.fillna(0)
+
+        fo_df = fo_df.groupby(['season', 'Game_Id', 'Date',
+                                         'player_id', 'player_name'])['FOW', 'FOL'].sum().reset_index()
+
+        fo_df.loc[:, ('FOW', 'FOL')] = fo_df.loc[:, ('FOW', 'FOL')].astype(int)
+
+        return fo_df
+
+    def calc_blocks(pbp_df):
+
+        blk_df = pbp_df[pbp_df.Event == 'BLOCK'].\
+                     groupby(['season', 'Game_Id', 'Date',
+                              'p2_ID', 'p2_name']).size().\
+                     reset_index()
+
+        blk_df.columns = ['season', 'Game_Id', 'Date',
+                          'player_id', 'player_name', 'BLK']
+        return blk_df
 
     points_df = calc_ind_points(pbp_df)
     print(points_df)
@@ -508,26 +590,106 @@ def calc_ind_metrics(pbp_df):
     print(metrics_df)
     penalty_df = calc_ind_penalties(pbp_df)
     print(penalty_df)
+    hit_df = calc_ind_hits(pbp_df)
+    print(hit_df)
+    gata_df = calc_ind_gata(pbp_df)
+    print(gata_df)
+    fo_df = calc_faceoffs(pbp_df)
+    print(fo_df)
+    blk_df = calc_blocks(pbp_df)
+    print(blk_df)
 
     ind_stats_df = metrics_df.merge(points_df,
-                                      on=['Game_Id', 'Date',
+                                      on=['season', 'Game_Id', 'Date',
                                           'player_id', 'player_name'],
                                     how='outer')
 
     ind_stats_df = ind_stats_df.merge(penalty_df,
-                                      on=['Game_Id', 'Date',
+                                      on=['season', 'Game_Id', 'Date',
                                           'player_id', 'player_name'],
                                       how='outer')
 
+    ind_stats_df = ind_stats_df.merge(hit_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(gata_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(fo_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(blk_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
     ind_stats_df = ind_stats_df.fillna(0)
 
-    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'goals',
-                         'a1', 'a2', 'PENT', 'PEND')] = \
-    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'goals',
-                         'a1', 'a2', 'PENT', 'PEND')].astype(int)
+    print(ind_stats_df)
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
 
 
     return ind_stats_df
+
+def calc_season(pbp_df):
+    '''
+    this function calculates the season from the date of the game
+
+    Inputs:
+    pbp_df - pbp_df without a season column
+
+    Outputs - pbp_df with the season of the game calculated
+    '''
+
+    pbp_df.loc[:, ('season')] = np.where(pbp_df.Date.dt.month.isin([10, 11, 12]),
+                                        pbp_df.Date.dt.year + 1, pbp_df.Date.dt.year)
+
+    return pbp_df
+
+def clean_pbp_values(pbp_df):
+    '''
+    this function cleans the pbp_df and casts columns as the proper variable
+    type and calculates all the neccesary columns needed to calculate xG, on
+    ice stats, and individual stats
+
+    Input:
+    pbp_df - uncleaned pbp_df
+
+    Output:
+    pbp_df - pbp dataframe cleaned and ready for further processing
+    '''
+
+    columns_to_cast = ('p1_ID', 'p2_ID', 'p3_ID', 'awayplayer1_id',
+                       'awayplayer2_id', 'awayplayer3_id', 'awayplayer4_id',
+                       'awayplayer5_id', 'awayplayer6_id', 'homeplayer1_id',
+                       'homeplayer2_id', 'homeplayer3_id', 'homeplayer4_id',
+                       'homeplayer5_id', 'homeplayer6_id', 'Away_Goalie_Id',
+                       'Home_Goalie_Id', 'xC', 'yC', 'Seconds_Elapsed')
+
+
+    pbp_df.loc[:, ('Date')] = pbp_df.Date.astype('datetime64[ns]')
+    #pbp_df.loc[:, columns_to_cast] = pbp_df.loc[:, columns_to_cast].astype(int)
+    pbp_df = switch_block_shots(pbp_df)
+    pbp_df = calc_time_diff(pbp_df)
+    pbp_df = calc_shot_metrics(pbp_df)
+    pbp_df = calc_season(pbp_df)
+    pbp_df = calc_score_diff(pbp_df)
+    pbp_df = calc_is_home(pbp_df)
+    pbp_df = calc_is_penalty(pbp_df)
+    pbp_df = calc_is_hit(pbp_df)
+
+    return pbp_df
+
 
 def main():
 
