@@ -45,8 +45,6 @@ def calc_ind_points(pbp_df):
                                            'player_id', 'player_name'],
                                 how='outer')
 
-    points_df.columns = ['season', 'Game_Id', 'Date', 'player_id',
-                         'player_name', 'g', 'a1', 'a2']
 
     points_df = points_df.fillna(0)
 
@@ -188,7 +186,7 @@ def calc_ind_penalties(pbp_df):
     '''
 
 
-    penalty_taken = pbp_df[pbp_df.Event == 'PENL'].\
+    penalty_taken = pbp_df[(pbp_df.Event == 'PENL') & (pbp_df.is_penalty > 0)].\
                  groupby(['season', 'Game_Id', 'Date',
                           'p1_ID', 'p1_name'])['is_penalty'].sum().\
                  reset_index()
@@ -196,7 +194,7 @@ def calc_ind_penalties(pbp_df):
     penalty_taken.columns = ['season', 'Game_Id', 'Date',
                              'player_id', 'player_name', 'iPENT']
 
-    penalty_drawn = pbp_df[pbp_df.Event == 'PENL'].\
+    penalty_drawn = pbp_df[(pbp_df.Event == 'PENL') & (pbp_df.is_penalty > 0)].\
                  groupby(['season', 'Game_Id', 'Date',
                           'p2_ID', 'p2_name'])['is_penalty'].sum().\
                  reset_index()
