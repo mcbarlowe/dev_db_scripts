@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import calc_es_ind_metrics as es_metrics
+import calc_all_sits_ind_stats as es_metrics
 
 
 def calc_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
@@ -568,7 +568,7 @@ def calc_pp_penalties(pbp_df, pp_skaters_num, pk_skaters_num):
                  reset_index()
 
     home_pent.columns = ['season', 'Game_Id', 'Date',
-                         'player_id', 'player_name', 'PENT']
+                         'player_id', 'player_name', 'iPENT']
 
     home_pend = home_pp_df[(home_pp_df.Event == 'PENL') &
                     ((home_pp_df.p2_ID == home_pp_df.homePlayer1_id) |
@@ -582,7 +582,7 @@ def calc_pp_penalties(pbp_df, pp_skaters_num, pk_skaters_num):
                  reset_index()
 
     home_pend.columns = ['season', 'Game_Id', 'Date',
-                         'player_id', 'player_name', 'PEND']
+                         'player_id', 'player_name', 'iPEND']
 
     home_pp_penl = home_pent.merge(home_pend,
                                        on=['season', 'Game_Id', 'Date',
@@ -601,7 +601,7 @@ def calc_pp_penalties(pbp_df, pp_skaters_num, pk_skaters_num):
                  reset_index()
 
     away_pent.columns = ['season', 'Game_Id', 'Date',
-                         'player_id', 'player_name', 'PENT']
+                         'player_id', 'player_name', 'iPENT']
 
     away_pend = away_pp_df[(away_pp_df.Event == 'PENL') &
                     ((away_pp_df.p2_ID == away_pp_df.awayPlayer1_id) |
@@ -615,7 +615,7 @@ def calc_pp_penalties(pbp_df, pp_skaters_num, pk_skaters_num):
                  reset_index()
 
     away_pend.columns = ['season', 'Game_Id', 'Date',
-                         'player_id', 'player_name', 'PEND']
+                         'player_id', 'player_name', 'iPEND']
 
     away_pp_penl = away_pent.merge(away_pend, on=['season', 'Game_Id', 'Date',
                                                   'player_id', 'player_name'],
@@ -628,13 +628,89 @@ def calc_pp_penalties(pbp_df, pp_skaters_num, pk_skaters_num):
     pp_penl_dfs = pp_penl_dfs.fillna(0)
 
     pp_penl_dfs = pp_penl_dfs[['season', 'Game_Id', 'Date', 'player_id',
-                               'player_name', 'PENT', 'PEND']]
+                               'player_name', 'iPENT', 'iPEND']]
 
-    pp_penl_dfs.loc[:, ('season', 'Game_Id', 'player_id', 'PENT', 'PEND')] = \
-    pp_penl_dfs.loc[:, ('season', 'Game_Id', 'player_id', 'PENT', 'PEND')].astype(int)
+    pp_penl_dfs.loc[:, ('season', 'Game_Id', 'player_id', 'iPENT', 'iPEND')] = \
+    pp_penl_dfs.loc[:, ('season', 'Game_Id', 'player_id', 'iPENT', 'iPEND')].astype(int)
 
     return pp_penl_dfs
 
+
+def calc_ppespk_ind_metrics(pbp_df, pp_skaters_num,
+                            pk_skaters_num, calc_blk=calc_pp_blocks, \
+                            calc_fo=calc_pp_faceoffs,
+                            calc_points=calc_pp_ind_points,
+                            calc_penalties=calc_pp_penalties,
+                            calc_hits=calc_ind_hits,
+                            calc_shot_metrics=calc_ind_shot_metrics,
+                            calc_gata=calc_pp_gata):
+    '''
+    this function calculates the individual metrics of each players
+    contribution during the game
+
+    Input:
+    pbp_df - play by play df
+
+    Output:
+    player_df - individual player stats df
+    '''
+
+
+
+
+#calculate each individual stats data frames and then join them all together
+#will pull in teams with the on ice measures
+    points_df = calc_points(pbp_df, pp_skaters_num, pk_skaters_num)
+    metrics_df = calc_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num)
+    penalty_df = calc_penalties(pbp_df, pp_skaters_num, pk_skaters_num)
+    hit_df = calc_hits(pbp_df, pp_skaters_num, pk_skaters_num)
+    gata_df = calc_gata(pbp_df, pp_skaters_num, pk_skaters_num)
+    fo_df = calc_fo(pbp_df, pp_skaters_num, pk_skaters_num)
+    blk_df = calc_blk(pbp_df, pp_skaters_num, pk_skaters_num)
+
+    ind_stats_df = metrics_df.merge(points_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                    how='outer')
+
+    ind_stats_df = ind_stats_df.merge(penalty_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(hit_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(gata_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(fo_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(blk_df,
+                                      on=['season', 'Game_Id', 'Date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.fillna(0)
+
+    print(ind_stats_df)
+
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
+
+
+    return ind_stats_df
 
 def main():
 
