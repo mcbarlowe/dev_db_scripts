@@ -69,6 +69,7 @@ def calc_ind_shot_metrics(pbp_df):
 
     corsi = ['SHOT', 'BLOCK', 'MISS', 'GOAL']
     fenwick = ['SHOT', 'MISS', 'GOAL']
+    shot = ['SHOT', 'GOAL']
 
     corsi_df = pbp_df[pbp_df.Event.isin(corsi)]\
               .groupby(['season', 'Game_Id', 'Date',
@@ -78,7 +79,7 @@ def calc_ind_shot_metrics(pbp_df):
                  .groupby(['season', 'Game_Id', 'Date',
                            'p1_ID', 'p1_name'])['is_fenwick'].sum().reset_index()
 
-    shot_df = pbp_df[pbp_df.Event.isin(fenwick)]\
+    shot_df = pbp_df[pbp_df.Event.isin(shot)]\
                  .groupby(['season', 'Game_Id', 'Date',
                            'p1_ID', 'p1_name'])['is_shot'].sum().reset_index()
 
