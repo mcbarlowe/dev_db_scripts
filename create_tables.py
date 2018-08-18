@@ -35,6 +35,7 @@ def create_tables(cursor, connection):
     None
     '''
 
+#create schedule table of the results of every nhl game
     cursor.execute("""
                    CREATE TABLE nhl_tables.nhl_schedule(
                    game_id integer primary key,
@@ -50,6 +51,30 @@ def create_tables(cursor, connection):
                 """
                   )
 
+#create table to store all nhl teams
+    cursor.execute("""
+                   CREATE TABLE nhl_tables.nhl_teams(
+                   team_id integer primary key,
+                   name text,
+                   abbrev text,
+                   division text,
+                   conference text,
+                   active text)
+                   """)
+
+#create table to store all nhl players past and present
+    cursor.execute("""
+                   CREATE TABLE nhl_tables.nhl_players(
+                   id integer primary key,
+                   name text,
+                   birth_date date,
+                   nationality text,
+                   height text,
+                   weight integer,
+                   active text,
+                   shoot_catches text,
+                   position text)
+                   """)
 def main():
 
     '''

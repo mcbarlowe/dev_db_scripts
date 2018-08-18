@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 scraped_files/
+test_player_toi.csv
+test_team_toi.csv
