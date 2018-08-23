@@ -25,6 +25,22 @@ wght_shots_shot = {-3: {'home_weight': .163, 'away_weight': .237},
                    2: {'home_weight': .221, 'away_weight': .179},
                    3: {'home_weight': .227, 'away_weight': .173}}
 
+def fixed_seconds_elapsed(pbp_df):
+    '''
+    This function fixes the seconds elapsed column to tally the total seconds
+    elapsed for the whole game instead of just seconds elapsed for the period
+
+    Inputs:
+    pbp_df - pbp_df without seconds_elapsed fixed
+
+    Outputs:
+    pbp_df - pbp_df with seconds_elapsed correctly calculated
+    '''
+
+    pbp_df['Seconds_Elapsed'] = pbp_df.Seconds_Elapsed + (1200 * (pbp_df.Period -1))
+
+    return pbp_df
+
 def switch_block_shots(pbp_df):
     '''
     This function switches the p1 and p2 of blocked shots because Harry's
