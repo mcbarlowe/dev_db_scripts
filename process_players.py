@@ -13,7 +13,6 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from sqlalchemy import create_engine
-#from db_info import *
 
 
 def get_page(url):

@@ -5,8 +5,28 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
     '''
     function to merge the shift changes and the pbp_df into one data frame
     like Emmanuel Perry's scraper
+
+    Trash this function just calculate TOI from the shifts_df and calculate
+    strength state there as well
     '''
 
+    def label_priority(row):
+        if row.event in ['TAKE', 'GIVE', 'MISS', 'HIT', 'SHOT', 'BLOCK']:
+            return 1
+        elif row.event == "GOAL":
+            return 2
+        elif row.event == "STOP":
+            return 3
+        elif row.event == "PENL":
+            return 4
+        elif row.event == "OFF":
+            return 5
+        elif row.event == 'ON':
+            return 6
+        elif row.event == 'FAC':
+            return 7
+        else:
+            return 0
 #merge pbp_df and line_change_df into one dataframe
     pbp_w_shifts = pd.merge(pbp_df, line_change_df, how='outer',
                             on=['seconds_elapsed', 'event', 'awayplayer1_id',
@@ -19,20 +39,15 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
                                 'homeplayer4_id', 'homeplayer5', 'homeplayer5_id',
                                 'homeplayer6', 'homeplayer6_id'])
 
+#applying priority to events so that they will be properly ordered in the dataframe
+    pbp_w_shifts['priority'] = pbp_w_shifts.apply(label_priority, axis=1)
+
 #sorts the dataframe by elapsed seconds and then index as shift changes often
 #take place at the same time by the play by play data
-    pbp_w_shifts = pbp_w_shifts.sort_values(['seconds_elapsed','period'],
+    pbp_w_shifts = pbp_w_shifts.sort_values(['seconds_elapsed','period', 'priority'],
                                             kind='mergesort',
                                             na_position='first').reset_index(drop=True)
 
-#need to switch PEND so they occur before the shift change on to start the next
-#period
-    pend_list = pbp_w_shifts[pbp_w_shifts.event == 'PEND'].index.values
-    for x in pend_list:
-        a, b = pbp_w_shifts.iloc[x, :].copy(), pbp_w_shifts.iloc[x-1, :].copy()
-        pbp_w_shifts.iloc[x, :], pbp_w_shifts.iloc[x-1, :] = b, a
-#this avoids mislabeling the initial on shift for next period as the period before
-        pbp_w_shifts.loc[x, 'period'] = np.ceil(shifts_test.seconds_elapsed/1200) + 1
 
 #cleaning up and the NaNs with appropriate values
     pbp_w_shifts.game_id = pbp_w_shifts.game_id.fillna(pbp_w_shifts.game_id.values[0])

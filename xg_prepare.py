@@ -361,7 +361,6 @@ def clean_pbp_values(pbp_df):
 
 
     pbp_df.loc[:, ('Date')] = pbp_df.Date.astype('datetime64[ns]')
-    #pbp_df.loc[:, columns_to_cast] = pbp_df.loc[:, columns_to_cast].astype(int)
     pbp_df = switch_block_shots(pbp_df)
     pbp_df = calc_time_diff(pbp_df)
     pbp_df = calc_shot_metrics(pbp_df)
