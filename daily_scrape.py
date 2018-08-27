@@ -61,5 +61,31 @@ def main():
         logging.info("Game Ids succesfully scraped")
         logging.info(f"{date} of NHL games: {game_ids}")
 
+    #TODO scrape all the game_ids in the list returned from the API
+
+    #TODO process all players in the pbp/shift dataframe and add the ones
+    #who aren't in the player table to the table
+
+    #TODO process the pbp to get line change shifts and merge them into the pbp
+
+    #TODO clean the pbp and fix block shots and calc columns to be used to calc
+    #other stats
+
+    #TODO adjust the coordinates of shots to adjust for rink bias
+
+    #TODO calc xg features and xg values for each fenwick envent
+
+    #TODO calc all adjusted stat columns for corsi, fenwick and xg
+
+    #TODO calc all player individual, on-ice, and relative stats for all strengths
+    #both adjusted and unadjusted
+
+    #TODO calc team stats for all strengths adjusted/unadjusted
+
+    #TODO calc goalie stats for all strengths adjusted/unadjusted and xg
+
+    #TODO Insert all stats to the appropriate database tables
+
+
 if __name__ == '__main__':
     main()
