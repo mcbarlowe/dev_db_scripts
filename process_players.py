@@ -13,7 +13,8 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from sqlalchemy import create_engine
-
+import logging
+logger = logging.getLogger(__name__)
 
 def get_page(url):
     """
@@ -26,7 +27,6 @@ def get_page(url):
     response = requests.Session()
     retries = Retry(total=10, backoff_factor=.1)
     response.mount('http://', HTTPAdapter(max_retries=retries))
-
     response = response.get(url, timeout=5)
     response.raise_for_status()
 
@@ -97,7 +97,7 @@ def process_players(df):
     # Make columns lowercase...so it's in line with the db
     df.columns = map(str.lower, df.columns)
 
-    print(df.head())
+#TODO need to change this to prod database once everything is working
     engine = create_engine(os.environ.get('DEV_DB_CONNECT'))
     player_df = pd.read_sql_table('nhl_players', engine, schema='nhl_tables')
 
@@ -120,8 +120,9 @@ def process_players(df):
 
         df.to_sql('nhl_players', engine, schema='nhl_tables',
                   if_exists='append', index=False)
+        logger.info(f"{players_info} added to players table")
     else:
-        print("No new players added to db\n")
+        logger.info(f"No new players added to db from game {df.game_id.unique()}")
 
 
 

@@ -91,7 +91,7 @@ def main():
 
 
 #setup logger to write out stuff to log file for debugging/warnings
-#TODO changing logging level once script is ready
+#TODO changing logging level to info once script is ready
     logging.basicConfig(filename='daily_nhl_scraper.log',
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.DEBUG)
@@ -115,10 +115,9 @@ def main():
     games_dict, error_games = scrape_daily_games(game_ids)
 
 
-    #TODO process all players in the pbp/shift dataframe and add the ones
-    #who aren't in the player table to the table
     for key, value in games_dict.items():
-        process_players.process_players(value['pbp']
+        process_players.process_players(value['shifts'])
+
     #TODO process the pbp to get line change shifts and merge them into the pbp
 
     #TODO clean the pbp and fix block shots and calc columns to be used to calc
