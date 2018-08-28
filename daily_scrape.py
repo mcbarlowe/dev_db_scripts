@@ -1,6 +1,8 @@
 import requests
 import datetime
 import logging
+import hockey_scraper
+import process_players
 
 def get_yest_games(date):
     '''
@@ -33,6 +35,50 @@ def get_yest_games(date):
 
     return game_ids
 
+def scrape_daily_games(game_id_list):
+    '''
+    this function scrapes the game ids provided in the list and returns a dict
+    with all the pbp and shift data for each game with game_id serving as the
+    key. It will also return a error_games list of the game where an error
+    occured in the scraping
+
+    Inputs:
+    game_id_list - a list of game ids to scrape
+
+    Outputs:
+    game_dict - dictionary containing shift and pbp data for each game
+    error_games - a list of game_ids where the scraper encountered errors
+    '''
+
+#setup games dictionary to store the pbp of the games scraped from the day
+#before
+    games_dict = {}
+
+#create list to add games that errored out to write to file
+    error_games = []
+
+    for game in game_id_list:
+        scraped_data = hockey_scraper.scrape_games([game],
+                                                   True, data_format='Pandas')
+
+#pull pbp, and shifts from the scraped data and write errors to the log
+        games_dict[str(game)] = {}
+        games_dict[str(game)]['pbp'] = scraped_data['pbp']
+        games_dict[str(game)]['shifts'] = scraped_data['shifts']
+
+#if an error occurs from scraping the game, log the errors and save the game id
+#to rescrape latter. Delete the key from the dictionary so the data is not
+#mistakenly added to the database
+        if scraped_data['errors']:
+            error_games.append(game)
+            logging.debug(f"Errors are {scraped_data['errors']}")
+            del games_dict[str(game)]
+
+    logging.info("All games scrapped")
+    logging.debug(games_dict.keys())
+
+    return games_dict, error_games
+
 def main():
     '''
     This script pulls the NHL games played from the day before parses the data
@@ -43,7 +89,9 @@ def main():
     package found at https://github.com/HarryShomer/Hockey-Scraper.
     '''
 
+
 #setup logger to write out stuff to log file for debugging/warnings
+#TODO changing logging level once script is ready
     logging.basicConfig(filename='daily_nhl_scraper.log',
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.DEBUG)
@@ -53,19 +101,24 @@ def main():
     date = datetime.datetime.now() - datetime.timedelta(1)
     date = date.strftime('%Y-%m-%d')
 
-    game_ids = get_yest_games(date)
+#TODO remove test date once script is fully functional
+    test_date = "2018-01-09"
+    game_ids = get_yest_games(test_date)
 
     if game_ids == None:
         logging.info("No games played today")
+        return
     else:
         logging.info("Game Ids succesfully scraped")
-        logging.info(f"{date} of NHL games: {game_ids}")
+        logging.info(f"{date} NHL games: {game_ids}")
 
-    #TODO scrape all the game_ids in the list returned from the API
+    games_dict, error_games = scrape_daily_games(game_ids)
+
 
     #TODO process all players in the pbp/shift dataframe and add the ones
     #who aren't in the player table to the table
-
+    for key, value in games_dict.items():
+        process_players.process_players(value['pbp']
     #TODO process the pbp to get line change shifts and merge them into the pbp
 
     #TODO clean the pbp and fix block shots and calc columns to be used to calc
@@ -85,6 +138,9 @@ def main():
     #TODO calc goalie stats for all strengths adjusted/unadjusted and xg
 
     #TODO Insert all stats to the appropriate database tables
+
+    #TODO write code to write all the games with erros to a file that another
+    #script will rescrape periodically until all data is clean
 
 
 if __name__ == '__main__':
