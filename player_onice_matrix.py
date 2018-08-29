@@ -1,6 +1,32 @@
 import pandas as pd
 import math
 
+def return_pbp_w_shifts(pbp_df, shifts_df):
+    '''
+    This funciton combines the other functions in this scripts to return a
+    dataframe that contains all the pbp events along with the line changes as
+    well
+
+    Inputs:
+    pbp_df - play by play dataframe
+    shifts_df - dataframe of player shifts
+
+    Outputs:
+    pbp_w_shifts - play by play dataframe with the line changes incorporated
+    '''
+
+    pbp_df.columns = map(str.lower, pbp_df.columns)
+    shifts_df.columns = map(str.lower, shifts_df.columns)
+#creates the player dict of players on and off the ice for every second of the
+#game
+    player_matrix = player_onice_matrix(shifts_df)
+    line_chage_df = create_shifts_df(player_matrix, pbp_df.home_team.unique(),
+                                     pbp_df.away_team.unique())
+
+    pbp_w_shifts_df = merge_pbp_and_shifts(line_change_df, pbp_df)
+
+    return pbp_w_shifts_df
+
 def merge_pbp_and_shifts(line_change_df, pbp_df):
     '''
     function to merge the shift changes and the pbp_df into one data frame
@@ -27,9 +53,47 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
             return 7
         else:
             return 0
+
+    def add_cols_to_shifts(line_change_df, pbp_df):
+        '''
+        This function adds in extra columns to help make the joins cleaner
+        between the line change dataframe and the pbp dataframe
+
+        Input:
+        pbp_df - play by play dataframe
+        line_change_df - data frame of line changes
+
+        Output:
+        line_change_df - dataframe with extra columns added
+        '''
+        line_change_df['home_team'] = pbp_df['home_team'].unique()[0]
+        line_change_df['away_team'] = pbp_df['away_team'].unique()[0]
+
+#change the on shifts with the same seconds elapsed as the period start/ends
+#are moved to the next period so they can be sorted properly once the data
+#frames are merged
+        period_ends = []
+
+        if int(pbp_df.game_id.unique()[0]) > 30000:
+            for x in range(pbp_df.period.max()):
+                period_ends.append((x+1) * 1200)
+        else:
+            period_ends = [1200, 2400, 3600]
+
+        for seconds in period_ends:
+            line_change_df.loc[(line_change_df.seconds_elapsed == seconds) &
+                                (line_change_df.event == 'ON'), 'period'] = \
+                               line_change_df.loc[(line_change_df.seconds_elapsed == seconds)
+                                       & (line_change_df.event == 'ON'), 'period'] + 1
+
+        return line_change_df
+
+    line_change_df = add_cols_to_shifts(line_change_df, pbp_df)
+
 #merge pbp_df and line_change_df into one dataframe
     pbp_w_shifts = pd.merge(pbp_df, line_change_df, how='outer',
-                            on=['seconds_elapsed', 'event', 'awayplayer1_id',
+                            on=['seconds_elapsed', 'event', 'awayplayer1_id', 'period',
+                                'home_team', 'away_team',
                                 'awayplayer1', 'awayplayer2_id', 'awayplayer2',
                                 'awayplayer3', 'awayplayer3_id', 'awayplayer4',
                                 'awayplayer4_id', 'awayplayer5', 'awayplayer5_id',
@@ -52,8 +116,6 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
 #cleaning up and the NaNs with appropriate values
     pbp_w_shifts.game_id = pbp_w_shifts.game_id.fillna(pbp_w_shifts.game_id.values[0])
     pbp_w_shifts.date = pbp_w_shifts.date.fillna(pbp_w_shifts.game_id.values[0])
-#filling nans with period numbers
-    pbp_w_shifts.period = pbp_w_shifts.period.fillna(np.ceil(pbp_w_shifts.seconds_elapsed/1200))
 
     return pbp_w_shifts
 
@@ -139,7 +201,6 @@ def create_shifts_df(player_matrix, home_team, away_team):
                 shift_line.append(line[x][1])
             else:
                 shift_line.append(line[x])
-        print(shift_line)
         line_change_df_list.append(shift_line)
 
     columns = ['seconds_elapsed', 'event', 'awayplayer1', 'awayplayer1_id',
@@ -214,7 +275,8 @@ def add_toi(row, onice_matrix):
 
 def get_game_length(game_df, game, teams):
     """
-    Gets a list with the length equal to the amount of seconds in that game
+    Gets a list with the length equal to the amount of seconds in that game.
+    This code written by Harry Shomer.
 
     :param game_df: DataFrame with shift info for game
     :param game: game_id

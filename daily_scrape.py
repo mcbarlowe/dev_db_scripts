@@ -3,6 +3,7 @@ import datetime
 import logging
 import hockey_scraper
 import process_players
+import player_onice_matrix as oi_matrix
 
 def get_yest_games(date):
     '''
