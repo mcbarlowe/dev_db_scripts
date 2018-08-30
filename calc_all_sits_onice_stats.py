@@ -1,6 +1,77 @@
 import pandas as pd
 import numpy as np
 
+def calc_toi(pbp_df):
+    '''
+    This will calculate a players TOI for all situations in the game
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    toi_df - dataframe with each players TOI calculated
+    '''
+
+#compiling toi for each player column in the pbp_df to make sure that every
+#player is accounted for as the player columns are not any set position
+    home_1 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer1_id',
+                             'homeplayer1'])['time_diff'].sum().reset_index()
+    home_2 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer2_id',
+                             'homeplayer2'])['time_diff'].sum().reset_index()
+    home_3 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer3_id',
+                             'homeplayer3'])['time_diff'].sum().reset_index()
+    home_4 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer4_id',
+                             'homeplayer4'])['time_diff'].sum().reset_index()
+    home_5 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer5_id',
+                             'homeplayer5'])['time_diff'].sum().reset_index()
+    home_6 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer6_id',
+                             'homeplayer6'])['time_diff'].sum().reset_index()
+
+    away_1 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer1_id',
+                             'awayplayer1'])['time_diff'].sum().reset_index()
+    away_2 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer2_id',
+                             'awayplayer2'])['time_diff'].sum().reset_index()
+    away_3 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer3_id',
+                             'awayplayer3'])['time_diff'].sum().reset_index()
+    away_4 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer4_id',
+                             'awayplayer4'])['time_diff'].sum().reset_index()
+    away_5 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer5_id',
+                             'awayplayer5'])['time_diff'].sum().reset_index()
+    away_6 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer6_id',
+                             'awayplayer6'])['time_diff'].sum().reset_index()
+
+    print(home_1.head())
+#making all the dataframes the same to that I can concat them
+    home_1.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    home_2.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    home_3.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    home_4.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    home_5.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    home_6.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+
+    away_1.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    away_2.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    away_3.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    away_4.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    away_5.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    away_6.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+
+#joining all the seperate toi dataframes into one big dataframe that I will
+#group by and sum their TOI
+    home_toi = pd.concat([home_1, home_2, home_3, home_4, home_5, home_6])
+
+    print(home_toi.columns)
+    away_toi = pd.concat([away_1, away_2, away_3, away_4, away_5, away_6])
+    print(away_toi.columns)
+    #away_toi = away_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
+    #home_toi = home_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
+
+    toi_df = pd.concat([home_toi, away_toi])
+
+    #toi_df = toi_df.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
+
+    return toi_df
+
 def calc_on_ice_shots(pbp_df):
     '''
     function to calculate on ice shot metrics for all situations
@@ -381,8 +452,8 @@ def calc_on_ice_shots(pbp_df):
                                          'player_id', 'player_name'])\
                                 ['CF', 'CA', 'FF', 'FA', 'SF', 'SA', 'GF', 'GA'].sum().reset_index()
 
-    away_metrics['team'] = pbp_df.Away_Team
-    home_metrics['team'] = pbp_df.Home_Team
+    away_metrics['team'] = pbp_df.away_team
+    home_metrics['team'] = pbp_df.aome_team
 
     shot_metrics = [away_metrics, home_metrics]
 

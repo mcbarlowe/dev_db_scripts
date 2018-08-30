@@ -122,10 +122,9 @@ def calc_time_diff(pbp_df):
     pbp_df - play by play dataframe with time difference calculated
     '''
 
-    pbp_df.loc[:, ('time_diff')] = pbp_df.Seconds_Elapsed -\
-                                   pbp_df.Seconds_Elapsed.shift(1)
+    pbp_df.loc[:, ('time_diff')] = pbp_df.seconds_elapsed.shift(-1) - pbp_df.seconds_elapsed
 
-    pbp_df.loc[:, ('time_diff')] = np.where(pbp_df.time_diff == -1200, 0, pbp_df.time_diff)
+    #pbp_df.loc[:, ('time_diff')] = np.where(pbp_df.time_diff == -1200, 0, pbp_df.time_diff)
 
     return pbp_df
 
@@ -334,8 +333,8 @@ def calc_season(pbp_df):
     Outputs - pbp_df with the season of the game calculated
     '''
 
-    pbp_df.loc[:, ('season')] = np.where(pbp_df.Date.dt.month.isin([10, 11, 12]),
-                                        pbp_df.Date.dt.year + 1, pbp_df.Date.dt.year)
+    pbp_df.loc[:, ('season')] = np.where(pbp_df.date.dt.month.isin([10, 11, 12]),
+                                        pbp_df.date.dt.year + 1, pbp_df.date.dt.year)
 
     return pbp_df
 
@@ -360,7 +359,7 @@ def clean_pbp_values(pbp_df):
                        'Home_Goalie_Id', 'xC', 'yC', 'Seconds_Elapsed')
 
 
-    pbp_df.loc[:, ('Date')] = pbp_df.Date.astype('datetime64[ns]')
+    pbp_df.loc[:, ('date')] = pbp_df.date.astype('datetime64[ns]')
     pbp_df = switch_block_shots(pbp_df)
     pbp_df = calc_time_diff(pbp_df)
     pbp_df = calc_shot_metrics(pbp_df)

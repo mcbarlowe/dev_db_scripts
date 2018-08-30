@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+
 def calc_ind_points(pbp_df):
     '''
     function calculates individual points for each player in the data
