@@ -1,5 +1,6 @@
 """
 Process any new players and add to db
+Code written by Harry Shomer with some additions by Matthew Barlowe
 
 All runs through - process_players
 """
