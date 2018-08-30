@@ -120,6 +120,8 @@ def main():
         process_players.process_players(value['shifts'])
 
     #TODO process the pbp to get line change shifts and merge them into the pbp
+    for key, value in games_dict.items():
+        new_pbp_df = oi_matrix.return_pbp_w_shifts(value['pbp'], value['shifts')
 
     #TODO clean the pbp and fix block shots and calc columns to be used to calc
     #other stats

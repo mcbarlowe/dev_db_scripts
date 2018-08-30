@@ -1,5 +1,6 @@
 import pandas as pd
-import math
+import numpy as np
+
 
 def return_pbp_w_shifts(pbp_df, shifts_df):
     '''
@@ -20,8 +21,8 @@ def return_pbp_w_shifts(pbp_df, shifts_df):
 #creates the player dict of players on and off the ice for every second of the
 #game
     player_matrix = player_onice_matrix(shifts_df)
-    line_chage_df = create_shifts_df(player_matrix, pbp_df.home_team.unique(),
-                                     pbp_df.away_team.unique())
+    line_change_df = create_shifts_df(player_matrix, pbp_df.home_team.unique()[0],
+                                     pbp_df.away_team.unique()[0])
 
     pbp_w_shifts_df = merge_pbp_and_shifts(line_change_df, pbp_df)
 
@@ -80,6 +81,8 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
         else:
             period_ends = [1200, 2400, 3600]
 
+        line_change_df['period'] = np.ceil(line_change_df.seconds_elapsed / 1200)
+
         for seconds in period_ends:
             line_change_df.loc[(line_change_df.seconds_elapsed == seconds) &
                                 (line_change_df.event == 'ON'), 'period'] = \
@@ -115,7 +118,7 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
 
 #cleaning up and the NaNs with appropriate values
     pbp_w_shifts.game_id = pbp_w_shifts.game_id.fillna(pbp_w_shifts.game_id.values[0])
-    pbp_w_shifts.date = pbp_w_shifts.date.fillna(pbp_w_shifts.game_id.values[0])
+    pbp_w_shifts.date = pbp_w_shifts.date.fillna(pbp_w_shifts.date.values[0])
 
     return pbp_w_shifts
 
