@@ -4,6 +4,7 @@ import logging
 import hockey_scraper
 import process_players
 import player_onice_matrix as oi_matrix
+import xg_prepare as xg
 
 def get_yest_games(date):
     '''
@@ -121,7 +122,16 @@ def main():
 
     #TODO process the pbp to get line change shifts and merge them into the pbp
     for key, value in games_dict.items():
-        new_pbp_df = oi_matrix.return_pbp_w_shifts(value['pbp'], value['shifts')
+
+#pulling pbp and shifts data for each game out of the dictionary
+        pbp_df = value['pbp']
+        shifts_df = value['shifts']
+
+#fixing the seconds elapsed column
+        pbp_df = xg.fixed_seconds_elapsed(pbp_df)
+
+#merging the shifts and pbp dataframes
+        new_pbp_df = oi_matrix.return_pbp_w_shifts(pbp_df, shifts_df)
 
     #TODO clean the pbp and fix block shots and calc columns to be used to calc
     #other stats

@@ -60,15 +60,15 @@ def calc_toi(pbp_df):
 #group by and sum their TOI
     home_toi = pd.concat([home_1, home_2, home_3, home_4, home_5, home_6])
 
-    print(home_toi.columns)
+    print(home_toi.dtypes)
     away_toi = pd.concat([away_1, away_2, away_3, away_4, away_5, away_6])
-    print(away_toi.columns)
-    #away_toi = away_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
-    #home_toi = home_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
+    print(away_toi.dtypes)
+    away_toi = away_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
+    home_toi = home_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
 
     toi_df = pd.concat([home_toi, away_toi])
 
-    #toi_df = toi_df.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
+    toi_df = toi_df.groupby(['player_id', 'player'])['toi'].sum().reset_index()
 
     return toi_df
 

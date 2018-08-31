@@ -1,7 +1,7 @@
 '''
 This script calculates individual stats for both home and away team given
 the strength state passed to the functions. It works for all strength states
-except for all situations. Harry Shomers skater totals include the numbers so
+except for all situations. Harry Shomers skater totals include the goalie so
 if you wanted 5v5 you would actually pass 6 for each skaters. In cases where
 the strength state is not even the first number passed will be the first number
 in the strength state i.e. 5 and 6 would be equivalent to 4v5 and 6 and 5 is
