@@ -3,8 +3,8 @@ import datetime
 import logging
 import hockey_scraper
 import process_players
-import player_onice_matrix as oi_matrix
 import xg_prepare as xg
+import merge_shift_and_pbp as oi_matrix
 
 def get_yest_games(date):
     '''
@@ -120,7 +120,6 @@ def main():
     for key, value in games_dict.items():
         process_players.process_players(value['shifts'])
 
-    #TODO process the pbp to get line change shifts and merge them into the pbp
     for key, value in games_dict.items():
 
 #pulling pbp and shifts data for each game out of the dictionary

@@ -122,9 +122,24 @@ def calc_time_diff(pbp_df):
     pbp_df - play by play dataframe with time difference calculated
     '''
 
-    pbp_df.loc[:, ('time_diff')] = pbp_df.seconds_elapsed.shift(-1) - pbp_df.seconds_elapsed
+    pbp_df.loc[:, ('time_diff')] = ppbp_df.seconds_elapsed - bp_df.seconds_elapsed.shift(1)  
 
     #pbp_df.loc[:, ('time_diff')] = np.where(pbp_df.time_diff == -1200, 0, pbp_df.time_diff)
+
+    return pbp_df
+
+def calc_event_length(pbp_df):
+    '''
+    This function calculates the time difference between events
+
+    Input:
+    pbp_df - play by play dataframe
+
+    Output:
+    pbp_df - play by play dataframe with time difference calculated
+    '''
+
+    pbp_df.loc[:, ('time_diff')] = pbp_df.seconds_elapsed.shift(-1) - pbp_df.seconds_elapsed
 
     return pbp_df
 
