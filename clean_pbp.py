@@ -11,20 +11,32 @@ def clean_pbp(new_pbp):
     this function cleans the new_pbp and gets it ready for xg and stat
     calculation
     '''
+#fills na values in the coordinate with zeros
     new_pbp.loc[:, ('xc')] = new_pbp.loc[:, ('xc')].fillna(0)
     new_pbp.loc[:, ('yc')] = new_pbp.loc[:, ('yc')].fillna(0)
+#fills na values with the names of the appropriate coaches
     new_pbp.loc[:, ('away_coach')] = new_pbp.loc[:, ('away_coach')].fillna(new_pbp.away_coach.unique()[0])
     new_pbp.loc[:, ('home_coach')] = new_pbp.loc[:, ('home_coach')].fillna(new_pbp.home_coach.unique()[0])
+#fills na values with the names of the appropriate teams
     new_pbp.loc[:, ('away_team')] = new_pbp.loc[:, ('away_team')].fillna(new_pbp.away_team.unique()[0])
     new_pbp.loc[:, ('home_team')] = new_pbp.loc[:, ('home_team')].fillna(new_pbp.home_team.unique()[0])
+#calculates new running scores to fill in the NaNs
     new_pbp.loc[:, ('away_score')] = np.where((new_pbp.event == 'GOAL') & (new_pbp.ev_team == new_pbp.away_team.unique()[0]), 1, 0).cumsum()
     new_pbp.loc[:, ('home_score')] = np.where((new_pbp.event == 'GOAL') & (new_pbp.ev_team == new_pbp.home_team.unique()[0]), 1, 0).cumsum()
 
-    #TODO clean home and away goalies
+    #clean home and away goalies
+    new_pbp = new_pbp.apply(clean_goalie,
+                            args=(new_pbp.away_goalie.unique(),
+                                  new_pbp.away_goalie_id.unique(),
+                                  new_pbp.home_goalie.unique(),
+                                  new_pbp.home_goalie_id.unique()),
+                            axis=1)
 
-    #TODO clean home and away skaters
+    #clean home and away skaters
+    new_pbp = new_pbp.apply(clean_skaters, axis=1)
 
     return new_pbp
+
 def main():
     return
 
@@ -72,6 +84,16 @@ def clean_skaters(row):
     Outputs:
     row - row with amount of skaters for each team calculated
     '''
+    away_players = row[['awayplayer1', 'awayplayer2', 'awayplayer3',
+                        'awayplayer4', 'awayplayer5', 'awayplayer6']]
+
+    home_players = row[['homeplayer1', 'homeplayer2', 'homeplayer3',
+                        'homeplayer4', 'homeplayer5', 'homeplayer6']]
+
+    row.away_players = len(away_players[away_players.nonzero()[0]])
+    row.home_players = len(home_players[home_players.nonzero()[0]])
+
+    return row
 
 if __name__ == '__main__':
     main()

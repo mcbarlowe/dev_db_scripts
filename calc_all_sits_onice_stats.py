@@ -15,30 +15,30 @@ def calc_toi(pbp_df):
 #compiling toi for each player column in the pbp_df to make sure that every
 #player is accounted for as the player columns are not any set position
     home_1 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer1_id',
-                             'homeplayer1'])['time_diff'].sum().reset_index()
+                             'homeplayer1'])['event_length'].sum().reset_index()
     home_2 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer2_id',
-                             'homeplayer2'])['time_diff'].sum().reset_index()
+                             'homeplayer2'])['event_length'].sum().reset_index()
     home_3 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer3_id',
-                             'homeplayer3'])['time_diff'].sum().reset_index()
+                             'homeplayer3'])['event_length'].sum().reset_index()
     home_4 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer4_id',
-                             'homeplayer4'])['time_diff'].sum().reset_index()
+                             'homeplayer4'])['event_length'].sum().reset_index()
     home_5 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer5_id',
-                             'homeplayer5'])['time_diff'].sum().reset_index()
+                             'homeplayer5'])['event_length'].sum().reset_index()
     home_6 = pbp_df.groupby(['season', 'game_id', 'date', 'homeplayer6_id',
-                             'homeplayer6'])['time_diff'].sum().reset_index()
+                             'homeplayer6'])['event_length'].sum().reset_index()
 
     away_1 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer1_id',
-                             'awayplayer1'])['time_diff'].sum().reset_index()
+                             'awayplayer1'])['event_length'].sum().reset_index()
     away_2 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer2_id',
-                             'awayplayer2'])['time_diff'].sum().reset_index()
+                             'awayplayer2'])['event_length'].sum().reset_index()
     away_3 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer3_id',
-                             'awayplayer3'])['time_diff'].sum().reset_index()
+                             'awayplayer3'])['event_length'].sum().reset_index()
     away_4 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer4_id',
-                             'awayplayer4'])['time_diff'].sum().reset_index()
+                             'awayplayer4'])['event_length'].sum().reset_index()
     away_5 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer5_id',
-                             'awayplayer5'])['time_diff'].sum().reset_index()
+                             'awayplayer5'])['event_length'].sum().reset_index()
     away_6 = pbp_df.groupby(['season', 'game_id', 'date', 'awayplayer6_id',
-                             'awayplayer6'])['time_diff'].sum().reset_index()
+                             'awayplayer6'])['event_length'].sum().reset_index()
 
     print(home_1.head())
 #making all the dataframes the same to that I can concat them
