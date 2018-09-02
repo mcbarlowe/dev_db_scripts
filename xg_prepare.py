@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 
-
 def fixed_seconds_elapsed(pbp_df):
     '''
     This function fixes the seconds elapsed column to tally the total seconds
@@ -167,6 +166,18 @@ def calc_prior_coords(pbp_df):
 
     pbp_df['prior_x_coords'] = pbp_df['xc'].shift(1)
     pbp_df['prior_y_coords'] = pbp_df['yc'].shift(1)
+
+    pbp_df['prior_x_coords'] = pbp_df['prior_x_coords'].fillna(0)
+    pbp_df['prior_y_coords'] = pbp_df['prior_y_coords'].fillna(0)
+
+    return pbp_df
+
+def calc_prior_distance(pbp_df):
+    '''
+    this function calculates the distance from the current event to the
+    event prior
+    '''
+    pbp_df['dist_to_prior'] = np.sqrt(((pbp_df['xc'] - pbp_df['prior_x_coords'])**2 + (pbp_df['yc'] - pbp_df['prior_y_coords'])**2))
 
     return pbp_df
 

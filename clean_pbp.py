@@ -12,8 +12,10 @@ def clean_pbp(new_pbp):
     calculation
     '''
 #fills na values in the coordinate with zeros
-    new_pbp.loc[:, ('xc')] = new_pbp.loc[:, ('xc')].fillna(0)
-    new_pbp.loc[:, ('yc')] = new_pbp.loc[:, ('yc')].fillna(0)
+    new_pbp['xc'] = new_pbp['xc'].replace('', '0', regex=False)
+    new_pbp['yc'] = new_pbp['yc'].replace('', '0', regex=False)
+    new_pbp.loc[:, ('xc')] = new_pbp.loc[:, ('xc')].fillna(0).astype(int)
+    new_pbp.loc[:, ('yc')] = new_pbp.loc[:, ('yc')].fillna(0).astype(int)
 #fills na values with the names of the appropriate coaches
     new_pbp.loc[:, ('away_coach')] = new_pbp.loc[:, ('away_coach')].fillna(new_pbp.away_coach.unique()[0])
     new_pbp.loc[:, ('home_coach')] = new_pbp.loc[:, ('home_coach')].fillna(new_pbp.home_coach.unique()[0])
@@ -35,6 +37,12 @@ def clean_pbp(new_pbp):
     #clean home and away skaters
     new_pbp = new_pbp.apply(clean_skaters, axis=1)
 
+#cast columns to the appropirate values
+    new_pbp['seconds_elapsed'] = new_pbp['seconds_elapsed'].astype(int)
+    new_pbp['game_id'] = new_pbp['game_id'].astype(int)
+    new_pbp.loc[:, ('p1_id')] = new_pbp.loc[:, ('p1_id')].fillna(0).astype(int)
+    new_pbp.loc[:, ('p2_id')] = new_pbp.loc[:, ('p2_id')].fillna(0).astype(int)
+    new_pbp.loc[:, ('p3_id')] = new_pbp.loc[:, ('p3_id')].fillna(0).astype(int)
     return new_pbp
 
 def main():
@@ -58,17 +66,17 @@ def clean_goalie(row, away_goalie, away_goalie_id, home_goalie, home_goalie_id):
     '''
 
     away_goalie = away_goalie[~pd.isnull(away_goalie)]
-    away_goalie_id = away_goalie_id[~pd.isnull(away_goalie_id)]
+    away_goalie_id = away_goalie_id[~pd.isnull(away_goalie_id)].astype(int)
     home_goalie = home_goalie[~pd.isnull(home_goalie)]
-    home_goalie_id = home_goalie_id[~pd.isnull(home_goalie_id)]
+    home_goalie_id = home_goalie_id[~pd.isnull(home_goalie_id)].astype(int)
 
     for goalie, goalie_id in zip(away_goalie, away_goalie_id):
         if np.where(row[['awayplayer1', 'awayplayer2', 'awayplayer3', 'awayplayer4', 'awayplayer5', 'awayplayer6']].isin([goalie]), 1, 0).sum() > 0:
-            row.loc[('away_goalie', 'away_goalie_id')] = goalie, goalie_id
+            row.loc[('away_goalie', 'away_goalie_id')] = goalie, int(goalie_id)
 
     for goalie, goalie_id in zip(home_goalie, home_goalie_id):
         if np.where(row[['homeplayer1', 'homeplayer2', 'homeplayer3', 'homeplayer4', 'homeplayer5', 'homeplayer6']].isin([goalie]), 1, 0).sum() > 0:
-            row.loc[('home_goalie', 'home_goalie_id')] = goalie, goalie_id
+            row.loc[('home_goalie', 'home_goalie_id')] = goalie, int(goalie_id)
 
     return row
 
