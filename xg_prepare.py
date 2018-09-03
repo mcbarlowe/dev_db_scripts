@@ -29,7 +29,6 @@ def switch_block_shots(pbp_df):
     pbp_df - cleaned dataframe
     '''
 
-    print(pbp_df.loc[:, ('p1_name', 'p1_id', 'p2_name', 'p2_id')].head(15))
 #creating new columns where I switch the players around for blocked shots
     pbp_df.loc[:, ('new_p1_name')] = np.where(pbp_df.event == 'BLOCK',
                                               pbp_df.p2_name, pbp_df.p1_name)
@@ -40,7 +39,6 @@ def switch_block_shots(pbp_df):
     pbp_df.loc[:, ('new_p2_id')] = np.where(pbp_df.event == 'BLOCK',
                                             pbp_df.p1_id, pbp_df.p2_id)
 
-    print(pbp_df.iloc[:, -5:].head(20))
 #saving the new columns as the old ones
     pbp_df.loc[:, ('p1_name')] = pbp_df['new_p1_name']
     pbp_df.loc[:, ('p2_name')] = pbp_df['new_p2_name']
@@ -64,8 +62,8 @@ def calc_distance(pbp_df):
     Output:
     pbp_df - play by play dataframe with distance calculated
     '''
-    pbp_df.loc[:, ('distance')] = np.sqrt((87.95-abs(pbp_df.xC))**2
-                                          + pbp_df.yC**2)
+    pbp_df.loc[:, ('distance')] = np.sqrt((87.95-abs(pbp_df.xc))**2
+                                          + pbp_df.yc**2)
 
     return pbp_df
 
@@ -81,9 +79,9 @@ def calc_angle(pbp_df):
     pbp_df - play by play dataframe with shooter angle calculated
     '''
 
-    pbp_df.loc[:, ('angle')] = (np.arcsin(abs(pbp_df.yC)/np.sqrt((87.95-abs(pbp_df.xC))**2 + pbp_df.yC**2)) * 180) / 3.14
+    pbp_df.loc[:, ('angle')] = (np.arcsin(abs(pbp_df.yc)/np.sqrt((87.95-abs(pbp_df.xc))**2 + pbp_df.yc**2)) * 180) / 3.14
 
-    pbp_df.loc[:, ('angle')] = np.where((pbp_df.xC > 88) | (pbp_df.xC < -88), 90 + (180-(90 + pbp_df.angle)), pbp_df.angle)
+    pbp_df.loc[:, ('angle')] = np.where((pbp_df.xc > 88) | (pbp_df.xc < -88), 90 + (180-(90 + pbp_df.angle)), pbp_df.angle)
 
     return pbp_df
 
@@ -132,8 +130,8 @@ def calc_rebound(pbp_df):
 
     pbp_df.loc[:, ('is_rebound')] = np.where((pbp_df.time_diff < 4) &
                                              ((pbp_df.event.isin(['SHOT', 'GOAL'])) &
-                                              (pbp_df.vent.shift(1) == 'SHOT') &
-                                              (pbp_df.ev_Team == pbp_df.ev_Team.shift(1))),
+                                              (pbp_df.event.shift(1) == 'SHOT') &
+                                              (pbp_df.ev_team == pbp_df.ev_team.shift(1))),
                                              1, 0)
 
     return pbp_df
@@ -152,8 +150,8 @@ def calc_rush_shot(pbp_df):
     '''
 
     pbp_df.loc[:, ('is_rush')] = np.where((pbp_df.time_diff < 4) &
-                                          (pbp_df.Event.isin(['SHOT', 'MISS', 'BLOCK', 'GOAL'])) &
-                                          (abs(pbp_df.xC.shift(1)) < 26),
+                                          (pbp_df.event.isin(['SHOT', 'MISS', 'BLOCK', 'GOAL'])) &
+                                          (abs(pbp_df.xc.shift(1)) < 26),
                                           1, 0)
 
     return pbp_df
@@ -333,7 +331,13 @@ def calc_is_penalty(pbp_df):
 
     return pbp_df
 
+def calc_is_goal(pbp_df):
+    '''
+    determines whether an event is a goal or not
+    '''
+    pbp_df['is_goal'] = np.where(pbp_df.event == 'GOAL', 1, 0)
 
+    return pbp_df
 
 def calc_season(pbp_df):
     '''
@@ -373,6 +377,15 @@ def create_stat_features(pbp_df):
     pbp_df = calc_is_home(pbp_df)
     pbp_df = calc_is_penalty(pbp_df)
     pbp_df = calc_is_hit(pbp_df)
+    pbp_df = calc_prior_coords(pbp_df)
+    pbp_df = calc_prior_distance(pbp_df)
+    pbp_df = calc_is_goal(pbp_df)
+    pbp_df = calc_distance(pbp_df)
+    pbp_df = calc_angle(pbp_df)
+    pbp_df = calc_rebound(pbp_df)
+    pbp_df = calc_rebound_angle(pbp_df)
+    pbp_df = calc_rush_shot(pbp_df)
+    pbp_df = calc_shooter_strength(pbp_df)
 
     return pbp_df
 
