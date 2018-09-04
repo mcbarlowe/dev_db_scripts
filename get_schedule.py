@@ -5,7 +5,7 @@ import pandas as pd
 import psycopg2
 from sqlalchemy import create_engine
 
-def get_schedule(start_date, end_date):
+def get_schedule(game_id):
     '''
     This function gets the NHL schedule from the NHL api and
     returns a dictionary
@@ -18,8 +18,7 @@ def get_schedule(start_date, end_date):
     schedule_dict - dictionary created from api JSON
     '''
 
-    api_url = ('https://statsapi.web.nhl.com/api/v1/schedule?'
-               'startDate={}&endDate={}').format(start_date, end_date)
+    api_url = f'http://statsapi.web.nhl.com/api/v1/game/{game_id}/feed/live'
 
     print(api_url)
     req = requests.get(api_url)
@@ -27,8 +26,8 @@ def get_schedule(start_date, end_date):
 
     return schedule_dict
 
+'''
 def create_sched_df(schedule_dict):
-    '''
     This function flatten out the API json into a flat table scructure
     with the relevant stats for the SQL table
 
@@ -37,7 +36,6 @@ def create_sched_df(schedule_dict):
 
     Outputs
     sched_df - pandas dataframe to be inserted into schedule table
-    '''
 
     master_sched = []
     for item in schedule_dict['dates']:
@@ -67,6 +65,58 @@ def create_sched_df(schedule_dict):
 
     print('Dataframe created')
     return sched_df
+'''
+
+def create_sched_df(pbp_dict):
+    '''
+    this function takes a pbp JSON object and converts it into a list of values
+    that will be compiled into a dataframe to be inserted into SQL table
+
+    Inputs:
+    game_dict - pbp JSON
+
+    Outputs:
+    outcome - list of results of game that will become row in data frame
+    '''
+
+    outcome = []
+    linescore = pbp_dict['liveData']['linescore']
+
+    outcome.append(pbp_dict['gamePk'])
+    outcome.append(pbp_dict['gameData']['game']['type'])
+    outcome.append(pbp_dict['gameData']['game']['season'])
+    outcome.append(pbp_dict['gameData']['datetime']['dateTime'][:10])
+    outcome.append(pbp_dict['liveData']['linescore']['teams']['home']['team']['id'])
+    outcome.append(pbp_dict['liveData']['linescore']['teams']['home']['team']['name'])
+    outcome.append(pbp_dict['liveData']['linescore']['teams']['home']['goals'])
+    outcome.append(pbp_dict['liveData']['linescore']['teams']['away']['team']['id'])
+    outcome.append(pbp_dict['liveData']['linescore']['teams']['away']['team']['name'])
+    outcome.append(pbp_dict['liveData']['linescore']['teams']['away']['goals'])
+    if pbp_dict['liveData']['linescore']['currentPeriod'] == 4:
+        outcome.append(1)
+    else:
+        outcome.append(0)
+    if pbp_dict['liveData']['linescore']['currentPeriod'] == 5:
+        outcome.append(1)
+    else:
+        outcome.append(0)
+    if pbp_dict['liveData']['linescore']['currentPeriod'] == 4:
+        try:
+            game_end_time = pbp_dict['liveData']['plays']['currentPlay']['about']['periodTime'].split(':')
+            seconds = int(game_end_time[0]) * 60 + int(game_end_time[1])
+            outcome.append(seconds)
+        except KeyError:
+            print('Error in NHL pbp')
+            outcome.append(0)
+    else:
+        outcome.append(0)
+    if outcome[6] > outcome[9]:
+        outcome.append(1)
+    else:
+        outcome.append(0)
+
+    return outcome
+
 
 def sched_insert(df):
 
@@ -80,11 +130,27 @@ def main():
     This script pulls the schedule data of past games and the results
     of each game and inserts them into an Postgres table
     '''
-    start_date = sys.argv[1]
-    end_date = sys.argv[2]
 
-    schedule_dict = get_schedule(start_date, end_date)
-    sched_df = create_sched_df(schedule_dict)
+    rows = []
+    years = [2015, 2016, 2017]
+    for year in years:
+        if year == 2017:
+            games = list(range(20001, 21272))
+        else:
+            games = list(range(20001, 21231))
+        for game in games:
+            print(f'{year}{game}')
+            game_json = get_schedule(f'{year}0{game}')
+            rows.append(create_sched_df(game_json))
+
+    sched_df_columns = ['game_id', 'game_type', 'season', 'game_date',
+                        'home_team_id', 'home_team', 'home_score',
+                        'away_team_id', 'away_team', 'away_score',
+                        'ot_flag', 'shootout_flag', 'seconds_in_ot',
+                        'home_win']
+
+    sched_df = pd.DataFrame(rows, columns=sched_df_columns)
+
     sched_insert(sched_df)
 
 
