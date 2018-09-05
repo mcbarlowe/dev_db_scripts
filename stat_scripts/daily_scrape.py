@@ -5,6 +5,7 @@ import hockey_scraper
 import process_players
 import xg_prepare as xg
 import merge_shift_and_pbp as oi_matrix
+import clean_pbp
 
 def get_yest_games(date):
     '''
@@ -104,9 +105,10 @@ def main():
     date = date.strftime('%Y-%m-%d')
 
 #TODO remove test date once script is fully functional
-    test_date = "2018-01-09"
-    game_ids = get_yest_games(test_date)
+    #test_date = "2018-01-09"
+    #game_ids = get_yest_games(test_date)
 
+    game_ids = [2017020001]
     if game_ids == None:
         logging.info("No games played today")
         return
@@ -122,9 +124,16 @@ def main():
 
     for key, value in games_dict.items():
 
+#TODO insert code to insert raw pbp into a rawpbptable in the database to create
+#CDF for rink coordinates for the rink adjustment functions if i have time
+
 #pulling pbp and shifts data for each game out of the dictionary
         pbp_df = value['pbp']
         shifts_df = value['shifts']
+
+#change all columns to lower case
+        pbp_df.columns = map(str.lower, pbp_df.columns)
+        shifts_df.columns = map(str.lower, shifts_df.columns)
 
 #fixing the seconds elapsed column
         pbp_df = xg.fixed_seconds_elapsed(pbp_df)
@@ -132,12 +141,15 @@ def main():
 #merging the shifts and pbp dataframes
         new_pbp_df = oi_matrix.return_pbp_w_shifts(pbp_df, shifts_df)
 
-    #TODO clean the pbp and fix block shots and calc columns to be used to calc
+    #clean the pbp and fix block shots and calc columns to be used to calc
     #other stats
+        new_pbp_df = clean_pbp.clean_pbp(new_pbp_df)
 
-    #TODO adjust the coordinates of shots to adjust for rink bias
+    #TODO adjust the coordinates of shots to adjust for rink bias add this later
+    # if i have time
 
     #TODO calc xg features and xg values for each fenwick envent
+        new_pbp_df = xg.create_stat_features(new_pbp_df)
 
     #TODO calc all adjusted stat columns for corsi, fenwick and xg
 
@@ -152,6 +164,7 @@ def main():
 
     #TODO write code to write all the games with erros to a file that another
     #script will rescrape periodically until all data is clean
+    return new_pbp_df
 
 
 if __name__ == '__main__':

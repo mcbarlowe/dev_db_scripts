@@ -75,6 +75,14 @@ def create_tables(cursor, connection):
                    shoot_catches text,
                    position text)
                    """)
+
+#TODO Create Table to store raw pbp
+
+#TODO create table to store cleaned pbp
+
+#TODO create tables to store player stats
+
+#TODO create tables to store team stats
 def main():
 
     '''

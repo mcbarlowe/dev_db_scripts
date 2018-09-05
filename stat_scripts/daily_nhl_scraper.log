@@ -1,0 +1,1664 @@
+2018-08-26 22:28:04,411:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:28:04,538:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2018-01-09 HTTP/1.1" 200 220
+2018-08-26 22:28:04,542:DEBUG:No games played today
+2018-08-26 22:29:54,318:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:29:54,439:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 1204
+2018-08-26 22:31:59,457:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:31:59,578:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-26 22:32:53,504:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:32:53,625:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 1204
+2018-08-26 22:36:05,224:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:36:05,369:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-26 22:37:37,200:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:37:37,315:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-26 22:37:37,319:DEBUG:Game Ids succesfully scraped
+2018-08-26 22:40:19,939:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:40:20,063:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 1204
+2018-08-26 22:40:20,068:INFO:Game Ids succesfully scraped
+2018-08-26 22:40:20,068:INFO:[2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-26 22:41:23,893:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-26 22:41:24,019:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-08-25 HTTP/1.1" 200 None
+2018-08-26 22:41:24,023:INFO:No games played today
+2018-08-27 22:07:03,568:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:07:03,684:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-27 22:07:03,689:INFO:Game Ids succesfully scraped
+2018-08-27 22:07:03,689:INFO:2018-08-26 of NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 22:09:15,015:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:09:15,143:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-27 22:09:15,147:INFO:Game Ids succesfully scraped
+2018-08-27 22:09:15,147:INFO:2018-08-26 of NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 22:09:15,153:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:09:15,351:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:09:16,564:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:09:16,688:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 22:09:17,721:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:09:17,801:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 27354
+2018-08-27 22:09:18,833:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:09:19,028:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 22:09:21,464:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:09:21,616:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 22:10:03,049:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:03,174:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-27 22:10:03,178:INFO:Game Ids succesfully scraped
+2018-08-27 22:10:03,178:INFO:2018-08-26 of NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 22:10:03,184:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:03,309:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:10:04,524:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:04,563:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 22:10:05,597:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:10:05,686:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 None
+2018-08-27 22:10:06,716:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:06,748:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 22:10:09,198:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:09,324:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 22:10:10,409:DEBUG:Errors are 
+2018-08-27 22:10:10,411:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:10,503:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:10:11,566:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:11,668:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020654.HTM HTTP/1.1" 200 2796
+2018-08-27 22:10:12,696:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:10:12,798:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020654/feed/live HTTP/1.1" 200 None
+2018-08-27 22:10:13,834:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:13,976:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020654.HTM HTTP/1.1" 200 None
+2018-08-27 22:10:16,607:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:16,751:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020654 HTTP/1.1" 200 12487
+2018-08-27 22:10:17,834:DEBUG:Errors are 
+2018-08-27 22:10:17,837:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:17,943:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:10:19,005:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:19,108:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020655.HTM HTTP/1.1" 200 2827
+2018-08-27 22:10:20,141:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:10:20,226:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020655/feed/live HTTP/1.1" 200 None
+2018-08-27 22:10:21,261:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:21,426:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020655.HTM HTTP/1.1" 200 None
+2018-08-27 22:10:24,134:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:24,266:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020655 HTTP/1.1" 200 14207
+2018-08-27 22:10:25,351:DEBUG:Errors are 
+2018-08-27 22:10:25,354:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:25,466:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:10:26,596:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:26,701:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020656.HTM HTTP/1.1" 200 2838
+2018-08-27 22:10:27,734:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:10:27,826:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020656/feed/live HTTP/1.1" 200 None
+2018-08-27 22:10:28,856:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:29,066:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020656.HTM HTTP/1.1" 200 55430
+2018-08-27 22:10:31,505:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:31,643:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020656 HTTP/1.1" 200 13413
+2018-08-27 22:10:32,726:DEBUG:Errors are 
+2018-08-27 22:10:32,731:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:32,827:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:10:33,975:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:34,060:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020657.HTM HTTP/1.1" 200 2848
+2018-08-27 22:10:35,094:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:10:35,176:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020657/feed/live HTTP/1.1" 200 None
+2018-08-27 22:10:36,207:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:36,341:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020657.HTM HTTP/1.1" 200 57967
+2018-08-27 22:10:38,873:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:38,998:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020657 HTTP/1.1" 200 14194
+2018-08-27 22:10:40,082:DEBUG:Errors are 
+2018-08-27 22:10:40,085:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:40,196:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:10:41,257:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:41,352:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020658.HTM HTTP/1.1" 200 2844
+2018-08-27 22:10:42,385:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:10:42,479:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020658/feed/live HTTP/1.1" 200 25325
+2018-08-27 22:10:43,508:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:43,666:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020658.HTM HTTP/1.1" 200 None
+2018-08-27 22:10:45,927:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:46,041:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020658 HTTP/1.1" 200 12967
+2018-08-27 22:10:47,122:DEBUG:Errors are 
+2018-08-27 22:10:47,125:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:10:47,229:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:10:48,414:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:48,526:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020659.HTM HTTP/1.1" 200 2800
+2018-08-27 22:10:49,555:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:10:49,644:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020659/feed/live HTTP/1.1" 200 28419
+2018-08-27 22:10:50,674:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:50,844:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020659.HTM HTTP/1.1" 200 51795
+2018-08-27 22:10:53,268:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:10:53,399:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020659 HTTP/1.1" 200 13003
+2018-08-27 22:10:54,479:DEBUG:Errors are 
+2018-08-27 22:10:54,479:INFO:All games scrapped
+2018-08-27 22:10:54,480:DEBUG:dict_keys(['2017020653', '2017020654', '2017020655', '2017020656', '2017020657', '2017020658', '2017020659'])
+2018-08-27 22:32:59,905:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:00,038:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-27 22:33:00,042:INFO:Game Ids succesfully scraped
+2018-08-27 22:33:00,042:INFO:2018-08-26 of NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 22:33:00,047:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:00,293:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:33:01,431:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:01,507:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 22:33:02,542:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:33:02,630:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 27354
+2018-08-27 22:33:03,661:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:03,737:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 22:33:06,245:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:06,376:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 22:33:07,457:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:07,569:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:33:08,638:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:08,710:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020654.HTM HTTP/1.1" 200 2796
+2018-08-27 22:33:09,743:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:33:09,844:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020654/feed/live HTTP/1.1" 200 None
+2018-08-27 22:33:10,876:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:11,005:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020654.HTM HTTP/1.1" 200 59352
+2018-08-27 22:33:13,684:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:13,800:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020654 HTTP/1.1" 200 12487
+2018-08-27 22:33:14,881:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:14,984:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:33:16,053:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:16,375:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020655.HTM HTTP/1.1" 200 2827
+2018-08-27 22:33:17,810:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:33:17,910:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020655/feed/live HTTP/1.1" 200 None
+2018-08-27 22:33:18,938:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:19,123:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020655.HTM HTTP/1.1" 200 60530
+2018-08-27 22:33:22,018:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:22,160:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020655 HTTP/1.1" 200 14207
+2018-08-27 22:33:23,248:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:23,365:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:33:24,496:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:24,614:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020656.HTM HTTP/1.1" 200 2838
+2018-08-27 22:33:25,646:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:33:25,790:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020656/feed/live HTTP/1.1" 200 None
+2018-08-27 22:33:26,849:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:27,058:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020656.HTM HTTP/1.1" 200 55430
+2018-08-27 22:33:29,850:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:30,004:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020656 HTTP/1.1" 200 13413
+2018-08-27 22:33:31,098:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:31,183:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:33:32,312:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:32,378:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020657.HTM HTTP/1.1" 200 2848
+2018-08-27 22:33:33,407:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:33:33,495:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020657/feed/live HTTP/1.1" 200 None
+2018-08-27 22:33:34,527:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:34,605:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020657.HTM HTTP/1.1" 200 57967
+2018-08-27 22:33:37,262:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:37,412:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020657 HTTP/1.1" 200 14194
+2018-08-27 22:33:38,500:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:38,605:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:33:39,668:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:39,747:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020658.HTM HTTP/1.1" 200 2844
+2018-08-27 22:33:40,777:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:33:40,870:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020658/feed/live HTTP/1.1" 200 25325
+2018-08-27 22:33:41,898:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:41,967:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020658.HTM HTTP/1.1" 200 46125
+2018-08-27 22:33:44,321:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:44,435:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020658 HTTP/1.1" 200 12967
+2018-08-27 22:33:45,515:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 22:33:45,620:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 22:33:46,682:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:46,783:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020659.HTM HTTP/1.1" 200 2800
+2018-08-27 22:33:47,812:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 22:33:47,913:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020659/feed/live HTTP/1.1" 200 28419
+2018-08-27 22:33:48,944:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:49,093:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020659.HTM HTTP/1.1" 200 51795
+2018-08-27 22:33:51,669:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 22:33:51,787:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020659 HTTP/1.1" 200 13003
+2018-08-27 22:33:52,866:INFO:All games scrapped
+2018-08-27 22:33:52,866:DEBUG:dict_keys(['2017020653', '2017020654', '2017020655', '2017020656', '2017020657', '2017020658', '2017020659'])
+2018-08-27 23:00:23,459:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:00:23,591:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 1204
+2018-08-27 23:00:23,595:INFO:Game Ids succesfully scraped
+2018-08-27 23:00:23,595:INFO:2018-08-26 NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 23:00:23,601:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:00:23,814:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:00:25,032:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:25,124:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 23:00:26,153:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:00:26,236:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 None
+2018-08-27 23:00:27,265:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:27,331:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 23:00:29,679:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:29,801:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 23:00:30,886:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:00:31,012:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:00:32,080:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:32,151:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020654.HTM HTTP/1.1" 200 2796
+2018-08-27 23:00:33,181:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:00:33,284:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020654/feed/live HTTP/1.1" 200 30547
+2018-08-27 23:00:34,321:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:34,445:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020654.HTM HTTP/1.1" 200 59352
+2018-08-27 23:00:37,067:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:37,207:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020654 HTTP/1.1" 200 12487
+2018-08-27 23:00:38,284:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:00:38,386:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:00:39,447:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:39,537:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020655.HTM HTTP/1.1" 200 3236
+2018-08-27 23:00:40,564:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:00:40,656:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020655/feed/live HTTP/1.1" 200 None
+2018-08-27 23:00:41,716:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:41,785:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020655.HTM HTTP/1.1" 200 60530
+2018-08-27 23:00:44,569:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:44,688:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020655 HTTP/1.1" 200 14207
+2018-08-27 23:00:45,774:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:00:45,866:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:00:46,930:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:47,116:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020656.HTM HTTP/1.1" 200 2838
+2018-08-27 23:00:49,843:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:00:49,935:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020656/feed/live HTTP/1.1" 200 29022
+2018-08-27 23:00:50,959:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:51,024:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020656.HTM HTTP/1.1" 200 55430
+2018-08-27 23:00:53,639:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:53,758:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020656 HTTP/1.1" 200 13413
+2018-08-27 23:00:54,840:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:00:54,948:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:00:56,016:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:56,099:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020657.HTM HTTP/1.1" 200 2848
+2018-08-27 23:00:57,128:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:00:57,216:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020657/feed/live HTTP/1.1" 200 30814
+2018-08-27 23:00:58,251:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:00:58,320:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020657.HTM HTTP/1.1" 200 57967
+2018-08-27 23:01:00,983:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:01:01,104:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020657 HTTP/1.1" 200 14194
+2018-08-27 23:01:02,190:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:01:02,289:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:01:03,424:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:01:03,507:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020658.HTM HTTP/1.1" 200 3247
+2018-08-27 23:01:04,536:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:01:04,625:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020658/feed/live HTTP/1.1" 200 25325
+2018-08-27 23:01:05,652:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:01:05,719:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020658.HTM HTTP/1.1" 200 46125
+2018-08-27 23:01:07,977:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:01:08,094:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020658 HTTP/1.1" 200 12967
+2018-08-27 23:01:09,173:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:01:09,271:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:01:10,335:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:01:10,456:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020659.HTM HTTP/1.1" 200 2800
+2018-08-27 23:01:11,484:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:01:11,577:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020659/feed/live HTTP/1.1" 200 28419
+2018-08-27 23:01:12,609:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:01:12,687:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020659.HTM HTTP/1.1" 200 51795
+2018-08-27 23:01:15,127:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:01:15,249:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020659 HTTP/1.1" 200 13003
+2018-08-27 23:01:16,323:INFO:All games scrapped
+2018-08-27 23:01:16,323:DEBUG:dict_keys(['2017020653', '2017020654', '2017020655', '2017020656', '2017020657', '2017020658', '2017020659'])
+2018-08-27 23:03:34,728:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:03:34,845:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-27 23:03:34,849:INFO:Game Ids succesfully scraped
+2018-08-27 23:03:34,850:INFO:2018-08-26 NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 23:03:34,855:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:03:35,056:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:03:36,208:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:36,275:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 23:03:37,304:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:03:37,383:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 27354
+2018-08-27 23:03:38,412:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:38,483:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 23:03:40,890:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:41,025:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 23:03:42,107:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:03:42,210:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:03:43,272:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:43,345:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020654.HTM HTTP/1.1" 200 2796
+2018-08-27 23:03:44,373:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:03:44,468:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020654/feed/live HTTP/1.1" 200 None
+2018-08-27 23:03:45,506:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:45,584:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020654.HTM HTTP/1.1" 200 59352
+2018-08-27 23:03:48,307:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:48,403:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020654 HTTP/1.1" 200 12487
+2018-08-27 23:03:49,485:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:03:49,580:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:03:50,645:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:50,715:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020655.HTM HTTP/1.1" 200 2827
+2018-08-27 23:03:51,746:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:03:51,830:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020655/feed/live HTTP/1.1" 200 None
+2018-08-27 23:03:52,865:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:52,943:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020655.HTM HTTP/1.1" 200 60530
+2018-08-27 23:03:55,630:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:55,731:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020655 HTTP/1.1" 200 14207
+2018-08-27 23:03:56,817:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:03:56,925:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:03:57,997:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:03:58,065:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020656.HTM HTTP/1.1" 200 2838
+2018-08-27 23:03:59,099:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:03:59,190:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020656/feed/live HTTP/1.1" 200 None
+2018-08-27 23:04:00,219:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:00,348:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020656.HTM HTTP/1.1" 200 55430
+2018-08-27 23:04:02,845:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:02,973:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020656 HTTP/1.1" 200 13413
+2018-08-27 23:04:04,062:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:04:04,153:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:04:05,218:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:05,290:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020657.HTM HTTP/1.1" 200 2848
+2018-08-27 23:04:06,320:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:04:06,400:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020657/feed/live HTTP/1.1" 200 None
+2018-08-27 23:04:07,431:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:07,495:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020657.HTM HTTP/1.1" 200 57967
+2018-08-27 23:04:10,230:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:10,332:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020657 HTTP/1.1" 200 14194
+2018-08-27 23:04:11,421:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:04:11,509:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:04:12,639:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:12,707:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020658.HTM HTTP/1.1" 200 2844
+2018-08-27 23:04:13,742:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:04:13,827:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020658/feed/live HTTP/1.1" 200 None
+2018-08-27 23:04:14,858:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:14,928:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020658.HTM HTTP/1.1" 200 46125
+2018-08-27 23:04:17,151:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:17,273:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020658 HTTP/1.1" 200 12967
+2018-08-27 23:04:18,352:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:04:18,449:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:04:19,513:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:19,591:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020659.HTM HTTP/1.1" 200 2800
+2018-08-27 23:04:20,623:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:04:20,715:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020659/feed/live HTTP/1.1" 200 None
+2018-08-27 23:04:21,747:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:21,828:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020659.HTM HTTP/1.1" 200 51795
+2018-08-27 23:04:24,277:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:04:24,396:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020659 HTTP/1.1" 200 13003
+2018-08-27 23:04:25,491:INFO:All games scrapped
+2018-08-27 23:04:25,491:DEBUG:dict_keys(['2017020653', '2017020654', '2017020655', '2017020656', '2017020657', '2017020658', '2017020659'])
+2018-08-27 23:04:26,236:INFO:No new players added to db
+2018-08-27 23:04:26,868:INFO:No new players added to db
+2018-08-27 23:04:27,475:INFO:No new players added to db
+2018-08-27 23:04:28,123:INFO:No new players added to db
+2018-08-27 23:04:28,719:INFO:No new players added to db
+2018-08-27 23:04:29,306:INFO:No new players added to db
+2018-08-27 23:04:29,928:INFO:No new players added to db
+2018-08-27 23:05:22,649:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:05:22,769:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 1204
+2018-08-27 23:05:22,773:INFO:Game Ids succesfully scraped
+2018-08-27 23:05:22,773:INFO:2018-08-26 NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 23:05:22,778:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:05:22,871:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:05:24,086:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:24,151:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 23:05:25,182:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:05:25,271:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 None
+2018-08-27 23:05:26,303:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:26,376:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 23:05:28,786:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:28,884:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 23:05:29,961:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:05:30,064:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:05:31,129:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:31,198:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020654.HTM HTTP/1.1" 200 2796
+2018-08-27 23:05:32,229:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:05:32,329:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020654/feed/live HTTP/1.1" 200 None
+2018-08-27 23:05:33,360:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:33,439:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020654.HTM HTTP/1.1" 200 59352
+2018-08-27 23:05:36,147:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:36,282:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020654 HTTP/1.1" 200 12487
+2018-08-27 23:05:37,365:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:05:37,574:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:05:38,634:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:38,703:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020655.HTM HTTP/1.1" 200 2827
+2018-08-27 23:05:39,734:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:05:39,826:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020655/feed/live HTTP/1.1" 200 None
+2018-08-27 23:05:40,858:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:40,924:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020655.HTM HTTP/1.1" 200 60530
+2018-08-27 23:05:44,125:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:44,249:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020655 HTTP/1.1" 200 14207
+2018-08-27 23:05:45,350:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:05:45,464:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:05:46,541:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:46,626:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020656.HTM HTTP/1.1" 200 2838
+2018-08-27 23:05:47,655:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:05:47,762:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020656/feed/live HTTP/1.1" 200 29022
+2018-08-27 23:05:48,791:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:48,863:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020656.HTM HTTP/1.1" 200 55430
+2018-08-27 23:05:51,465:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:51,562:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020656 HTTP/1.1" 200 13413
+2018-08-27 23:05:52,649:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:05:52,749:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:05:53,815:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:53,886:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020657.HTM HTTP/1.1" 200 2848
+2018-08-27 23:05:54,916:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:05:55,012:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020657/feed/live HTTP/1.1" 200 None
+2018-08-27 23:05:56,040:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:56,114:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020657.HTM HTTP/1.1" 200 57967
+2018-08-27 23:05:58,766:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:05:58,884:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020657 HTTP/1.1" 200 14194
+2018-08-27 23:05:59,970:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:06:00,071:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:06:01,242:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:06:01,309:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020658.HTM HTTP/1.1" 200 2844
+2018-08-27 23:06:02,340:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:06:02,426:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020658/feed/live HTTP/1.1" 200 None
+2018-08-27 23:06:03,456:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:06:03,521:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020658.HTM HTTP/1.1" 200 46125
+2018-08-27 23:06:05,748:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:06:05,848:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020658 HTTP/1.1" 200 12967
+2018-08-27 23:06:06,935:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:06:07,036:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:06:08,097:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:06:08,164:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020659.HTM HTTP/1.1" 200 2800
+2018-08-27 23:06:09,194:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:06:09,286:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020659/feed/live HTTP/1.1" 200 28419
+2018-08-27 23:06:10,314:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:06:10,386:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020659.HTM HTTP/1.1" 200 51795
+2018-08-27 23:06:12,876:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:06:13,066:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020659 HTTP/1.1" 200 13003
+2018-08-27 23:06:14,405:INFO:All games scrapped
+2018-08-27 23:06:14,405:DEBUG:dict_keys(['2017020653', '2017020654', '2017020655', '2017020656', '2017020657', '2017020658', '2017020659'])
+2018-08-27 23:06:15,240:INFO:No new players added to db from game {df.game_id}
+2018-08-27 23:06:15,804:INFO:No new players added to db from game {df.game_id}
+2018-08-27 23:06:16,440:INFO:No new players added to db from game {df.game_id}
+2018-08-27 23:06:17,047:INFO:No new players added to db from game {df.game_id}
+2018-08-27 23:06:17,626:INFO:No new players added to db from game {df.game_id}
+2018-08-27 23:06:18,295:INFO:No new players added to db from game {df.game_id}
+2018-08-27 23:06:18,841:INFO:No new players added to db from game {df.game_id}
+2018-08-27 23:07:23,767:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:07:23,885:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 None
+2018-08-27 23:07:23,890:INFO:Game Ids succesfully scraped
+2018-08-27 23:07:23,890:INFO:2018-08-26 NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 23:07:23,896:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:07:23,987:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:07:25,129:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:25,212:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 23:07:26,247:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:07:26,324:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 27354
+2018-08-27 23:07:27,361:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:27,680:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 23:07:30,636:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:30,731:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 23:07:31,818:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:07:31,925:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:07:32,988:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:33,050:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020654.HTM HTTP/1.1" 200 2796
+2018-08-27 23:07:34,077:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:07:34,164:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020654/feed/live HTTP/1.1" 200 None
+2018-08-27 23:07:35,202:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:35,262:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020654.HTM HTTP/1.1" 200 59352
+2018-08-27 23:07:38,410:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:38,554:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020654 HTTP/1.1" 200 12487
+2018-08-27 23:07:39,637:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:07:39,843:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:07:40,908:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:40,970:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020655.HTM HTTP/1.1" 200 2827
+2018-08-27 23:07:42,004:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:07:42,087:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020655/feed/live HTTP/1.1" 200 None
+2018-08-27 23:07:43,119:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:43,202:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020655.HTM HTTP/1.1" 200 60530
+2018-08-27 23:07:46,387:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:47,957:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020655 HTTP/1.1" 200 14207
+2018-08-27 23:07:49,627:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:07:49,738:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:07:50,798:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:50,870:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020656.HTM HTTP/1.1" 200 2838
+2018-08-27 23:07:51,900:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:07:51,987:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020656/feed/live HTTP/1.1" 200 29022
+2018-08-27 23:07:53,016:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:53,080:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020656.HTM HTTP/1.1" 200 55430
+2018-08-27 23:07:55,701:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:55,813:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020656 HTTP/1.1" 200 13413
+2018-08-27 23:07:56,915:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:07:57,010:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:07:58,070:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:07:58,137:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020657.HTM HTTP/1.1" 200 2848
+2018-08-27 23:07:59,168:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:07:59,528:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020657/feed/live HTTP/1.1" 200 None
+2018-08-27 23:08:00,798:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:00,905:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020657.HTM HTTP/1.1" 200 57967
+2018-08-27 23:08:03,600:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:03,730:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020657 HTTP/1.1" 200 14194
+2018-08-27 23:08:04,820:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:08:04,933:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:08:06,065:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:06,152:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020658.HTM HTTP/1.1" 200 2844
+2018-08-27 23:08:07,181:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:08:07,272:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020658/feed/live HTTP/1.1" 200 25325
+2018-08-27 23:08:08,299:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:08,365:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020658.HTM HTTP/1.1" 200 46125
+2018-08-27 23:08:10,703:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:10,807:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020658 HTTP/1.1" 200 12967
+2018-08-27 23:08:11,889:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:08:12,001:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:08:13,067:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:13,137:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020659.HTM HTTP/1.1" 200 2800
+2018-08-27 23:08:14,166:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:08:14,267:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020659/feed/live HTTP/1.1" 200 None
+2018-08-27 23:08:15,298:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:15,367:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020659.HTM HTTP/1.1" 200 51795
+2018-08-27 23:08:17,877:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:08:18,018:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020659 HTTP/1.1" 200 13003
+2018-08-27 23:08:19,094:INFO:All games scrapped
+2018-08-27 23:08:19,094:DEBUG:dict_keys(['2017020653', '2017020654', '2017020655', '2017020656', '2017020657', '2017020658', '2017020659'])
+2018-08-27 23:08:19,878:INFO:No new players added to db from game 0      20653
+1      20653
+2      20653
+3      20653
+4      20653
+5      20653
+6      20653
+7      20653
+8      20653
+9      20653
+10     20653
+11     20653
+12     20653
+13     20653
+14     20653
+15     20653
+16     20653
+17     20653
+18     20653
+19     20653
+20     20653
+21     20653
+22     20653
+23     20653
+24     20653
+25     20653
+26     20653
+27     20653
+28     20653
+29     20653
+       ...  
+729    20653
+730    20653
+731    20653
+732    20653
+733    20653
+734    20653
+735    20653
+736    20653
+737    20653
+738    20653
+739    20653
+740    20653
+741    20653
+742    20653
+743    20653
+744    20653
+745    20653
+746    20653
+747    20653
+748    20653
+749    20653
+750    20653
+751    20653
+752    20653
+753    20653
+754    20653
+755    20653
+756    20653
+757    20653
+758    20653
+Name: game_id, Length: 759, dtype: object
+2018-08-27 23:08:20,448:INFO:No new players added to db from game 0      20654
+1      20654
+2      20654
+3      20654
+4      20654
+5      20654
+6      20654
+7      20654
+8      20654
+9      20654
+10     20654
+11     20654
+12     20654
+13     20654
+14     20654
+15     20654
+16     20654
+17     20654
+18     20654
+19     20654
+20     20654
+21     20654
+22     20654
+23     20654
+24     20654
+25     20654
+26     20654
+27     20654
+28     20654
+29     20654
+       ...  
+693    20654
+694    20654
+695    20654
+696    20654
+697    20654
+698    20654
+699    20654
+700    20654
+701    20654
+702    20654
+703    20654
+704    20654
+705    20654
+706    20654
+707    20654
+708    20654
+709    20654
+710    20654
+711    20654
+712    20654
+713    20654
+714    20654
+715    20654
+716    20654
+717    20654
+718    20654
+719    20654
+720    20654
+721    20654
+722    20654
+Name: game_id, Length: 723, dtype: object
+2018-08-27 23:08:21,023:INFO:No new players added to db from game 0      20655
+1      20655
+2      20655
+3      20655
+4      20655
+5      20655
+6      20655
+7      20655
+8      20655
+9      20655
+10     20655
+11     20655
+12     20655
+13     20655
+14     20655
+15     20655
+16     20655
+17     20655
+18     20655
+19     20655
+20     20655
+21     20655
+22     20655
+23     20655
+24     20655
+25     20655
+26     20655
+27     20655
+28     20655
+29     20655
+       ...  
+763    20655
+764    20655
+765    20655
+766    20655
+767    20655
+768    20655
+769    20655
+770    20655
+771    20655
+772    20655
+773    20655
+774    20655
+775    20655
+776    20655
+777    20655
+778    20655
+779    20655
+780    20655
+781    20655
+782    20655
+783    20655
+784    20655
+785    20655
+786    20655
+787    20655
+788    20655
+789    20655
+790    20655
+791    20655
+792    20655
+Name: game_id, Length: 793, dtype: object
+2018-08-27 23:08:21,592:INFO:No new players added to db from game 0      20656
+1      20656
+2      20656
+3      20656
+4      20656
+5      20656
+6      20656
+7      20656
+8      20656
+9      20656
+10     20656
+11     20656
+12     20656
+13     20656
+14     20656
+15     20656
+16     20656
+17     20656
+18     20656
+19     20656
+20     20656
+21     20656
+22     20656
+23     20656
+24     20656
+25     20656
+26     20656
+27     20656
+28     20656
+29     20656
+       ...  
+774    20656
+775    20656
+776    20656
+777    20656
+778    20656
+779    20656
+780    20656
+781    20656
+782    20656
+783    20656
+784    20656
+785    20656
+786    20656
+787    20656
+788    20656
+789    20656
+790    20656
+791    20656
+792    20656
+793    20656
+794    20656
+795    20656
+796    20656
+797    20656
+798    20656
+799    20656
+800    20656
+801    20656
+802    20656
+803    20656
+Name: game_id, Length: 804, dtype: object
+2018-08-27 23:08:22,142:INFO:No new players added to db from game 0      20657
+1      20657
+2      20657
+3      20657
+4      20657
+5      20657
+6      20657
+7      20657
+8      20657
+9      20657
+10     20657
+11     20657
+12     20657
+13     20657
+14     20657
+15     20657
+16     20657
+17     20657
+18     20657
+19     20657
+20     20657
+21     20657
+22     20657
+23     20657
+24     20657
+25     20657
+26     20657
+27     20657
+28     20657
+29     20657
+       ...  
+751    20657
+752    20657
+753    20657
+754    20657
+755    20657
+756    20657
+757    20657
+758    20657
+759    20657
+760    20657
+761    20657
+762    20657
+763    20657
+764    20657
+765    20657
+766    20657
+767    20657
+768    20657
+769    20657
+770    20657
+771    20657
+772    20657
+773    20657
+774    20657
+775    20657
+776    20657
+777    20657
+778    20657
+779    20657
+780    20657
+Name: game_id, Length: 781, dtype: object
+2018-08-27 23:08:22,719:INFO:No new players added to db from game 0      20658
+1      20658
+2      20658
+3      20658
+4      20658
+5      20658
+6      20658
+7      20658
+8      20658
+9      20658
+10     20658
+11     20658
+12     20658
+13     20658
+14     20658
+15     20658
+16     20658
+17     20658
+18     20658
+19     20658
+20     20658
+21     20658
+22     20658
+23     20658
+24     20658
+25     20658
+26     20658
+27     20658
+28     20658
+29     20658
+       ...  
+736    20658
+737    20658
+738    20658
+739    20658
+740    20658
+741    20658
+742    20658
+743    20658
+744    20658
+745    20658
+746    20658
+747    20658
+748    20658
+749    20658
+750    20658
+751    20658
+752    20658
+753    20658
+754    20658
+755    20658
+756    20658
+757    20658
+758    20658
+759    20658
+760    20658
+761    20658
+762    20658
+763    20658
+764    20658
+765    20658
+Name: game_id, Length: 766, dtype: object
+2018-08-27 23:08:23,383:INFO:No new players added to db from game 0      20659
+1      20659
+2      20659
+3      20659
+4      20659
+5      20659
+6      20659
+7      20659
+8      20659
+9      20659
+10     20659
+11     20659
+12     20659
+13     20659
+14     20659
+15     20659
+16     20659
+17     20659
+18     20659
+19     20659
+20     20659
+21     20659
+22     20659
+23     20659
+24     20659
+25     20659
+26     20659
+27     20659
+28     20659
+29     20659
+       ...  
+722    20659
+723    20659
+724    20659
+725    20659
+726    20659
+727    20659
+728    20659
+729    20659
+730    20659
+731    20659
+732    20659
+733    20659
+734    20659
+735    20659
+736    20659
+737    20659
+738    20659
+739    20659
+740    20659
+741    20659
+742    20659
+743    20659
+744    20659
+745    20659
+746    20659
+747    20659
+748    20659
+749    20659
+750    20659
+751    20659
+Name: game_id, Length: 752, dtype: object
+2018-08-27 23:10:53,533:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:10:53,681:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?date=2018-01-09 HTTP/1.1" 200 1204
+2018-08-27 23:10:53,685:INFO:Game Ids succesfully scraped
+2018-08-27 23:10:53,685:INFO:2018-08-26 NHL games: [2017020653, 2017020654, 2017020655, 2017020656, 2017020657, 2017020658, 2017020659]
+2018-08-27 23:10:53,690:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:10:53,888:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:10:55,024:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:10:55,111:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020653.HTM HTTP/1.1" 200 2839
+2018-08-27 23:10:56,147:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:10:56,231:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020653/feed/live HTTP/1.1" 200 27354
+2018-08-27 23:10:57,261:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:10:57,326:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020653.HTM HTTP/1.1" 200 48378
+2018-08-27 23:10:59,791:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:10:59,887:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020653 HTTP/1.1" 200 13068
+2018-08-27 23:11:00,967:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:11:01,065:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:11:02,125:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:02,194:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020654.HTM HTTP/1.1" 200 2796
+2018-08-27 23:11:03,225:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:11:03,323:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020654/feed/live HTTP/1.1" 200 30547
+2018-08-27 23:11:04,356:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:04,457:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020654.HTM HTTP/1.1" 200 39496
+2018-08-27 23:11:07,416:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:07,511:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020654 HTTP/1.1" 200 12487
+2018-08-27 23:11:08,599:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:11:08,696:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:11:09,757:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:09,851:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020655.HTM HTTP/1.1" 200 2827
+2018-08-27 23:11:10,882:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:11:10,969:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020655/feed/live HTTP/1.1" 200 None
+2018-08-27 23:11:12,074:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:12,134:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020655.HTM HTTP/1.1" 200 60530
+2018-08-27 23:11:15,100:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:15,197:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020655 HTTP/1.1" 200 14207
+2018-08-27 23:11:16,288:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:11:16,393:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:11:17,458:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:17,524:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020656.HTM HTTP/1.1" 200 2838
+2018-08-27 23:11:18,555:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:11:18,644:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020656/feed/live HTTP/1.1" 200 None
+2018-08-27 23:11:19,672:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:19,735:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020656.HTM HTTP/1.1" 200 55430
+2018-08-27 23:11:22,355:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:22,474:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020656 HTTP/1.1" 200 13413
+2018-08-27 23:11:23,558:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:11:23,662:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:11:24,721:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:24,801:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020657.HTM HTTP/1.1" 200 2848
+2018-08-27 23:11:25,831:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:11:25,929:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020657/feed/live HTTP/1.1" 200 None
+2018-08-27 23:11:26,960:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:27,034:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020657.HTM HTTP/1.1" 200 57967
+2018-08-27 23:11:29,767:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:29,878:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020657 HTTP/1.1" 200 14194
+2018-08-27 23:11:30,968:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:11:31,059:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:11:32,201:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:32,294:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020658.HTM HTTP/1.1" 200 2844
+2018-08-27 23:11:33,323:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:11:33,484:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020658/feed/live HTTP/1.1" 200 25325
+2018-08-27 23:11:34,513:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:34,597:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020658.HTM HTTP/1.1" 200 46125
+2018-08-27 23:11:36,877:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:36,989:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020658 HTTP/1.1" 200 12967
+2018-08-27 23:11:38,071:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-08-27 23:11:38,167:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-08-27 23:11:39,232:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:39,319:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020659.HTM HTTP/1.1" 200 2800
+2018-08-27 23:11:40,348:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-08-27 23:11:40,442:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020659/feed/live HTTP/1.1" 200 None
+2018-08-27 23:11:41,472:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:41,549:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020659.HTM HTTP/1.1" 200 51795
+2018-08-27 23:11:44,063:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-08-27 23:11:44,171:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020659 HTTP/1.1" 200 13003
+2018-08-27 23:11:45,252:INFO:All games scrapped
+2018-08-27 23:11:45,252:DEBUG:dict_keys(['2017020653', '2017020654', '2017020655', '2017020656', '2017020657', '2017020658', '2017020659'])
+2018-08-27 23:11:45,922:INFO:No new players added to db from game ['20653']
+2018-08-27 23:11:46,514:INFO:No new players added to db from game ['20654']
+2018-08-27 23:11:47,108:INFO:No new players added to db from game ['20655']
+2018-08-27 23:11:47,674:INFO:No new players added to db from game ['20656']
+2018-08-27 23:11:48,255:INFO:No new players added to db from game ['20657']
+2018-08-27 23:11:48,829:INFO:No new players added to db from game ['20658']
+2018-08-27 23:11:49,401:INFO:No new players added to db from game ['20659']
+2018-09-01 23:01:59,942:INFO:Game Ids succesfully scraped
+2018-09-01 23:01:59,944:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:02:00,037:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:02:00,334:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:02:01,559:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:02:01,622:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:02:02,656:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:02:02,803:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:02:03,841:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:02:03,916:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:02:06,376:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:02:06,512:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:02:07,600:INFO:All games scrapped
+2018-09-01 23:02:07,600:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:02:08,508:INFO:No new players added to db from game ['20001']
+2018-09-01 23:06:20,551:INFO:Game Ids succesfully scraped
+2018-09-01 23:06:20,552:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:06:20,665:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:06:20,993:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:06:23,733:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:06:24,368:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:06:25,575:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:06:25,728:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-01 23:06:26,760:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:06:26,825:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:06:29,331:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:06:29,425:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:06:30,519:INFO:All games scrapped
+2018-09-01 23:06:30,519:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:06:31,245:INFO:No new players added to db from game ['20001']
+2018-09-01 23:07:03,419:INFO:Game Ids succesfully scraped
+2018-09-01 23:07:03,419:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:07:03,423:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:07:03,610:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:07:04,728:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:07:04,762:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:07:05,795:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:07:05,926:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-01 23:07:06,961:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:07:06,991:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:07:09,478:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:07:09,573:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:07:10,657:INFO:All games scrapped
+2018-09-01 23:07:10,657:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:07:11,290:INFO:No new players added to db from game ['20001']
+2018-09-01 23:10:41,044:INFO:Game Ids succesfully scraped
+2018-09-01 23:10:41,044:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:10:41,103:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:10:41,389:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:10:42,614:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:10:42,689:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 3181
+2018-09-01 23:10:43,719:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:10:43,904:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:10:44,933:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:10:44,996:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:10:47,483:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:10:47,617:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:10:48,704:INFO:All games scrapped
+2018-09-01 23:10:48,704:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:10:49,673:INFO:No new players added to db from game ['20001']
+2018-09-01 23:14:43,584:INFO:Game Ids succesfully scraped
+2018-09-01 23:14:43,584:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:14:43,630:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:14:43,923:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:14:45,160:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:14:45,241:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:14:46,273:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:14:46,418:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:14:47,448:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:14:47,645:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:14:50,058:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:14:50,148:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:14:51,240:INFO:All games scrapped
+2018-09-01 23:14:51,241:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:14:51,897:INFO:No new players added to db from game ['20001']
+2018-09-01 23:16:38,539:INFO:Game Ids succesfully scraped
+2018-09-01 23:16:38,539:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:16:38,651:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:16:38,853:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:16:40,079:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:16:40,141:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:16:41,174:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:16:41,314:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-01 23:16:42,364:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:16:42,426:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:16:44,804:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:16:44,899:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:16:45,988:INFO:All games scrapped
+2018-09-01 23:16:45,988:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:16:46,629:INFO:No new players added to db from game ['20001']
+2018-09-01 23:22:44,464:INFO:Game Ids succesfully scraped
+2018-09-01 23:22:44,464:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:22:44,518:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:22:44,827:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:22:45,969:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:22:46,036:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:22:47,088:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:22:47,239:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:22:48,278:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:22:48,347:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:22:50,727:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:22:50,865:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:22:51,961:INFO:All games scrapped
+2018-09-01 23:22:51,961:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:22:52,619:INFO:No new players added to db from game ['20001']
+2018-09-01 23:30:56,090:INFO:Game Ids succesfully scraped
+2018-09-01 23:30:56,090:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:30:56,147:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:30:56,489:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:30:57,645:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:30:57,707:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:30:58,757:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:30:58,939:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-01 23:30:59,979:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:31:00,040:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:31:02,442:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:31:02,565:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:31:03,652:INFO:All games scrapped
+2018-09-01 23:31:03,652:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:31:04,321:INFO:No new players added to db from game ['20001']
+2018-09-01 23:31:56,589:INFO:Game Ids succesfully scraped
+2018-09-01 23:31:56,589:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:31:56,593:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:31:56,847:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:31:58,031:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:31:58,104:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:31:59,135:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:31:59,321:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:32:00,359:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:32:00,447:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:32:02,830:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:32:02,926:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:32:04,016:INFO:All games scrapped
+2018-09-01 23:32:04,016:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:32:04,843:INFO:No new players added to db from game ['20001']
+2018-09-01 23:34:16,841:INFO:Game Ids succesfully scraped
+2018-09-01 23:34:16,842:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:34:16,894:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:34:17,365:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:34:18,583:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:34:18,645:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:34:19,679:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:34:19,860:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:34:20,896:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:34:20,975:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:34:23,367:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:34:23,460:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:34:24,548:INFO:All games scrapped
+2018-09-01 23:34:24,549:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:34:25,190:INFO:No new players added to db from game ['20001']
+2018-09-01 23:34:59,857:INFO:Game Ids succesfully scraped
+2018-09-01 23:34:59,857:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:34:59,861:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:35:00,111:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:35:01,382:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:35:01,424:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:35:02,458:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:35:02,684:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-01 23:35:03,734:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:35:03,767:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:35:06,175:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:35:06,270:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:35:07,361:INFO:All games scrapped
+2018-09-01 23:35:07,361:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:35:08,001:INFO:No new players added to db from game ['20001']
+2018-09-01 23:36:34,166:INFO:Game Ids succesfully scraped
+2018-09-01 23:36:34,166:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:36:34,210:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:36:34,557:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:36:35,770:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:36:35,838:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:36:36,867:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:36:37,041:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:36:38,074:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:36:38,138:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:36:40,523:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:36:40,666:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:36:41,751:INFO:All games scrapped
+2018-09-01 23:36:41,752:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:36:42,496:INFO:No new players added to db from game ['20001']
+2018-09-01 23:37:22,396:INFO:Game Ids succesfully scraped
+2018-09-01 23:37:22,396:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:37:22,400:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:37:22,645:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:37:23,874:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:37:23,903:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:37:24,936:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:37:25,132:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:37:26,194:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:37:26,227:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:37:28,613:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:37:28,747:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:37:29,841:INFO:All games scrapped
+2018-09-01 23:37:29,841:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:37:30,541:INFO:No new players added to db from game ['20001']
+2018-09-01 23:38:14,660:INFO:Game Ids succesfully scraped
+2018-09-01 23:38:14,660:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:38:14,716:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:38:14,938:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:38:16,195:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:38:16,265:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:38:17,296:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:38:17,465:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:38:18,502:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:38:18,571:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:38:20,949:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:38:21,063:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:38:22,148:INFO:All games scrapped
+2018-09-01 23:38:22,148:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:38:22,965:INFO:No new players added to db from game ['20001']
+2018-09-01 23:40:29,525:INFO:Game Ids succesfully scraped
+2018-09-01 23:40:29,525:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:40:29,579:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:40:29,923:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:40:31,107:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:40:31,167:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:40:32,204:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:40:32,379:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-01 23:40:33,421:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:40:33,556:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:40:35,958:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:40:36,054:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:40:37,139:INFO:All games scrapped
+2018-09-01 23:40:37,139:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:40:37,936:INFO:No new players added to db from game ['20001']
+2018-09-01 23:44:09,250:INFO:Game Ids succesfully scraped
+2018-09-01 23:44:09,250:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:44:09,289:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:44:09,654:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:44:10,888:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:44:10,973:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:44:12,007:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:44:12,182:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-01 23:44:13,216:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:44:13,289:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:44:15,731:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:44:15,829:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:44:16,918:INFO:All games scrapped
+2018-09-01 23:44:16,919:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:44:17,714:INFO:No new players added to db from game ['20001']
+2018-09-01 23:45:13,571:INFO:Game Ids succesfully scraped
+2018-09-01 23:45:13,571:INFO:2018-08-31 NHL games: [2017020001]
+2018-09-01 23:45:13,576:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-01 23:45:13,870:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-01 23:45:15,122:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:45:15,196:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-01 23:45:16,228:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-01 23:45:16,435:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-01 23:45:17,467:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:45:17,565:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-01 23:45:20,104:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-01 23:45:20,201:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-01 23:45:21,293:INFO:All games scrapped
+2018-09-01 23:45:21,294:DEBUG:dict_keys(['2017020001'])
+2018-09-01 23:45:22,317:INFO:No new players added to db from game ['20001']
+2018-09-02 00:11:15,239:INFO:Game Ids succesfully scraped
+2018-09-02 00:11:15,240:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 00:11:15,329:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 00:11:15,598:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 00:11:16,726:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:11:16,816:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 00:11:17,846:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 00:11:17,932:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 00:11:18,957:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:11:19,039:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-02 00:11:21,714:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:11:21,809:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 00:11:22,921:INFO:All games scrapped
+2018-09-02 00:11:22,922:DEBUG:dict_keys(['2017020001'])
+2018-09-02 00:11:26,219:INFO:No new players added to db from game ['20001']
+2018-09-02 00:12:15,993:INFO:Game Ids succesfully scraped
+2018-09-02 00:12:15,993:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 00:12:15,997:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 00:12:16,086:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 00:12:17,314:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:12:17,374:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 00:12:18,407:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 00:12:18,522:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 00:12:19,554:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:12:19,624:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-02 00:12:22,032:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:12:22,230:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 00:12:23,314:INFO:All games scrapped
+2018-09-02 00:12:23,315:DEBUG:dict_keys(['2017020001'])
+2018-09-02 00:12:25,956:INFO:No new players added to db from game ['20001']
+2018-09-02 00:23:59,562:INFO:Game Ids succesfully scraped
+2018-09-02 00:23:59,562:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 00:23:59,607:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 00:23:59,796:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 00:24:00,959:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:24:01,022:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 00:24:02,056:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 00:24:02,187:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-02 00:24:03,220:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:24:03,381:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 None
+2018-09-02 00:24:05,773:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 00:24:05,857:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 00:24:06,945:INFO:All games scrapped
+2018-09-02 00:24:06,945:DEBUG:dict_keys(['2017020001'])
+2018-09-02 00:24:07,937:INFO:No new players added to db from game ['20001']
+2018-09-02 03:02:33,546:INFO:Game Ids succesfully scraped
+2018-09-02 03:02:33,547:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:02:33,588:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:02:33,860:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:02:35,103:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:02:35,307:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:02:36,343:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:02:36,426:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-02 03:02:37,452:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:02:37,896:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 None
+2018-09-02 03:02:40,339:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:02:40,516:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:02:41,624:INFO:All games scrapped
+2018-09-02 03:02:41,624:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:02:42,524:INFO:No new players added to db from game ['20001']
+2018-09-02 03:23:14,653:INFO:Game Ids succesfully scraped
+2018-09-02 03:23:14,655:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:23:14,767:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:23:14,956:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:23:16,107:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:23:16,321:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:23:17,350:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:23:17,431:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-02 03:23:18,463:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:23:18,561:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:23:21,018:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:23:21,184:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:23:22,294:INFO:All games scrapped
+2018-09-02 03:23:22,294:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:23:26,748:INFO:No new players added to db from game ['20001']
+2018-09-02 03:33:47,376:INFO:Game Ids succesfully scraped
+2018-09-02 03:33:47,378:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:33:47,430:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:33:47,622:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:33:48,829:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:33:48,927:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:33:49,960:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:33:50,051:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 03:33:51,082:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:33:51,188:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:33:53,779:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:33:53,909:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:33:55,013:INFO:All games scrapped
+2018-09-02 03:33:55,014:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:33:55,696:INFO:No new players added to db from game ['20001']
+2018-09-02 03:36:38,925:INFO:Game Ids succesfully scraped
+2018-09-02 03:36:38,926:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:36:38,982:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:36:39,171:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:36:40,478:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:36:40,579:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:36:41,611:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:36:41,706:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-02 03:36:42,734:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:36:42,936:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:36:45,365:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:36:45,500:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:36:46,635:INFO:All games scrapped
+2018-09-02 03:36:46,636:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:36:47,282:INFO:No new players added to db from game ['20001']
+2018-09-02 03:37:59,057:INFO:Game Ids succesfully scraped
+2018-09-02 03:37:59,059:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:37:59,100:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:37:59,188:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:38:00,363:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:38:00,464:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:38:01,498:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:38:01,637:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 03:38:02,682:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:38:02,781:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:38:05,348:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:38:05,486:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:38:06,588:INFO:All games scrapped
+2018-09-02 03:38:06,588:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:38:07,488:INFO:No new players added to db from game ['20001']
+2018-09-02 03:42:15,373:INFO:Game Ids succesfully scraped
+2018-09-02 03:42:15,375:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:42:15,415:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:42:15,608:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:42:16,737:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:42:16,837:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:42:17,870:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:42:17,943:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-02 03:42:18,975:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:42:19,070:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:42:21,627:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:42:24,771:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:42:25,942:INFO:All games scrapped
+2018-09-02 03:42:25,942:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:42:26,578:INFO:No new players added to db from game ['20001']
+2018-09-02 03:43:33,276:INFO:Game Ids succesfully scraped
+2018-09-02 03:43:33,277:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:43:33,392:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:43:33,512:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:43:34,729:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:43:34,831:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:43:35,860:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:43:35,943:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 03:43:36,974:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:43:37,073:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:43:39,664:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:43:39,801:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:43:40,910:INFO:All games scrapped
+2018-09-02 03:43:40,911:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:43:41,563:INFO:No new players added to db from game ['20001']
+2018-09-02 03:44:15,231:INFO:Game Ids succesfully scraped
+2018-09-02 03:44:15,231:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:44:15,235:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:44:15,419:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:44:16,544:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:44:16,600:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:44:17,633:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:44:17,810:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-02 03:44:18,841:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:44:18,893:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:44:21,385:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:44:21,554:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:44:22,661:INFO:All games scrapped
+2018-09-02 03:44:22,661:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:44:23,354:INFO:No new players added to db from game ['20001']
+2018-09-02 03:46:25,931:INFO:Game Ids succesfully scraped
+2018-09-02 03:46:25,932:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:46:26,044:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:46:26,245:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:46:27,652:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:46:27,754:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:46:28,788:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:46:28,872:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 03:46:29,901:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:46:30,027:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:46:32,492:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:46:32,621:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:46:33,732:INFO:All games scrapped
+2018-09-02 03:46:33,733:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:46:34,605:INFO:No new players added to db from game ['20001']
+2018-09-02 03:48:46,407:INFO:Game Ids succesfully scraped
+2018-09-02 03:48:46,408:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:48:46,482:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:48:46,809:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:48:47,989:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:48:48,086:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:48:49,120:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:48:49,218:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 03:48:50,248:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:48:50,348:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:48:52,745:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:48:52,937:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:48:54,033:INFO:All games scrapped
+2018-09-02 03:48:54,033:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:48:54,680:INFO:No new players added to db from game ['20001']
+2018-09-02 03:50:09,194:INFO:Game Ids succesfully scraped
+2018-09-02 03:50:09,195:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:50:09,239:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:50:09,329:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:50:10,571:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:50:10,743:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:50:11,773:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:50:11,839:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 03:50:12,872:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:50:12,972:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:50:15,389:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:50:15,537:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:50:16,641:INFO:All games scrapped
+2018-09-02 03:50:16,641:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:50:17,331:INFO:No new players added to db from game ['20001']
+2018-09-02 03:50:39,312:INFO:Game Ids succesfully scraped
+2018-09-02 03:50:39,312:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 03:50:39,316:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 03:50:39,415:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 03:50:40,508:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:50:40,561:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-02 03:50:41,595:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 03:50:41,661:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 03:50:42,691:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:50:42,742:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-02 03:50:45,248:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 03:50:45,376:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 03:50:46,478:INFO:All games scrapped
+2018-09-02 03:50:46,478:DEBUG:dict_keys(['2017020001'])
+2018-09-02 03:50:47,089:INFO:No new players added to db from game ['20001']
+2018-09-02 12:26:11,538:INFO:Game Ids succesfully scraped
+2018-09-02 12:26:11,538:INFO:2018-09-01 NHL games: [2017020001]
+2018-09-02 12:26:11,639:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-02 12:26:11,849:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-02 12:26:13,005:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 12:26:13,113:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 3184
+2018-09-02 12:26:14,146:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-02 12:26:14,227:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-02 12:26:15,259:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 12:26:15,337:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54123
+2018-09-02 12:26:17,821:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-02 12:26:17,930:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-02 12:26:19,020:INFO:All games scrapped
+2018-09-02 12:26:19,020:DEBUG:dict_keys(['2017020001'])
+2018-09-02 12:26:19,862:INFO:No new players added to db from game ['20001']
+2018-09-03 02:17:19,619:INFO:Game Ids succesfully scraped
+2018-09-03 02:17:19,619:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:17:19,765:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:17:20,037:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 02:17:21,183:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:17:21,352:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-03 02:17:22,380:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 02:17:22,474:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-03 02:17:23,506:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:17:23,607:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-03 02:17:26,083:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:17:26,392:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-03 02:17:30,757:INFO:All games scrapped
+2018-09-03 02:17:30,757:DEBUG:dict_keys(['2017020001'])
+2018-09-03 02:17:31,682:INFO:No new players added to db from game ['20001']
+2018-09-03 02:18:30,760:INFO:Game Ids succesfully scraped
+2018-09-03 02:18:30,760:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:18:30,772:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:18:30,867:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 02:18:32,015:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:18:32,118:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-03 02:18:33,148:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 02:18:33,235:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-03 02:18:34,269:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:18:34,398:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-03 02:18:36,859:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:18:36,991:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-03 02:18:38,102:INFO:All games scrapped
+2018-09-03 02:18:38,105:DEBUG:dict_keys(['2017020001'])
+2018-09-03 02:18:38,781:INFO:No new players added to db from game ['20001']
+2018-09-03 02:19:15,593:INFO:Game Ids succesfully scraped
+2018-09-03 02:19:15,593:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:19:15,600:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:19:15,690:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 02:19:16,864:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:19:16,920:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-03 02:19:17,955:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 02:19:18,051:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-03 02:19:19,082:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:19:19,134:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-03 02:19:21,581:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:19:21,711:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-03 02:19:22,817:INFO:All games scrapped
+2018-09-03 02:19:22,817:DEBUG:dict_keys(['2017020001'])
+2018-09-03 02:19:23,525:INFO:No new players added to db from game ['20001']
+2018-09-03 02:20:02,925:INFO:Game Ids succesfully scraped
+2018-09-03 02:20:02,925:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:20:02,973:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:20:03,178:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 02:20:04,340:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:20:04,448:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-03 02:20:05,478:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 02:20:05,558:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-03 02:20:06,590:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:20:06,782:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-03 02:20:09,232:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:20:09,363:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-03 02:20:10,472:INFO:All games scrapped
+2018-09-03 02:20:10,472:DEBUG:dict_keys(['2017020001'])
+2018-09-03 02:20:11,258:INFO:No new players added to db from game ['20001']
+2018-09-03 02:21:07,312:INFO:Game Ids succesfully scraped
+2018-09-03 02:21:07,312:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:21:07,324:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:21:07,431:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 02:21:08,805:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:21:08,905:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-03 02:21:09,937:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 02:21:10,036:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-03 02:21:11,071:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:21:11,171:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-03 02:21:13,634:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:21:13,765:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-03 02:21:14,874:INFO:All games scrapped
+2018-09-03 02:21:14,874:DEBUG:dict_keys(['2017020001'])
+2018-09-03 02:21:15,776:INFO:No new players added to db from game ['20001']
+2018-09-03 02:26:48,393:INFO:Game Ids succesfully scraped
+2018-09-03 02:26:48,394:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:26:48,509:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:27:05,595:INFO:Game Ids succesfully scraped
+2018-09-03 02:27:05,595:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:27:05,599:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:27:05,797:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 02:27:07,011:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:27:07,109:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-03 02:27:08,141:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 02:27:08,229:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 None
+2018-09-03 02:27:09,260:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:27:09,361:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-03 02:27:11,812:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:27:11,969:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-03 02:27:13,074:INFO:All games scrapped
+2018-09-03 02:27:13,074:DEBUG:dict_keys(['2017020001'])
+2018-09-03 02:27:13,719:INFO:No new players added to db from game ['20001']
+2018-09-03 02:27:49,467:INFO:Game Ids succesfully scraped
+2018-09-03 02:27:49,467:INFO:2018-09-02 NHL games: [2017020001]
+2018-09-03 02:27:49,471:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 02:27:49,570:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 02:27:50,677:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:27:50,734:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020001.HTM HTTP/1.1" 200 2772
+2018-09-03 02:27:51,767:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 02:27:51,852:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020001/feed/live HTTP/1.1" 200 29460
+2018-09-03 02:27:52,887:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:27:52,936:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020001.HTM HTTP/1.1" 200 54080
+2018-09-03 02:27:55,459:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 02:27:55,605:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020001 HTTP/1.1" 200 14627
+2018-09-03 02:27:56,706:INFO:All games scrapped
+2018-09-03 02:27:56,706:DEBUG:dict_keys(['2017020001'])
+2018-09-03 02:27:57,578:INFO:No new players added to db from game ['20001']
+2018-09-03 15:30:14,642:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 15:30:14,859:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 15:30:15,927:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 15:30:16,022:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020034.HTM HTTP/1.1" 200 2796
+2018-09-03 15:30:17,050:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 15:30:17,115:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020034/feed/live HTTP/1.1" 200 9170
+2018-09-03 15:30:18,131:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 15:30:18,195:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020034.HTM HTTP/1.1" 200 47657
+2018-09-03 15:30:20,807:DEBUG:Starting new HTTP connection (1): www.espn.com:80
+2018-09-03 15:30:20,840:DEBUG:http://www.espn.com:80 "GET /nhl/scoreboard?date=20171009 HTTP/1.1" 200 24594
+2018-09-03 15:30:22,450:DEBUG:Starting new HTTP connection (1): www.espn.com:80
+2018-09-03 15:30:22,717:DEBUG:http://www.espn.com:80 "GET /nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId=None HTTP/1.1" 200 46
+2018-09-03 15:30:23,728:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 15:30:27,482:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020034 HTTP/1.1" 200 13988
+2018-09-03 15:45:11,706:DEBUG:Starting new HTTPS connection (1): statsapi.web.nhl.com:443
+2018-09-03 15:45:11,892:DEBUG:https://statsapi.web.nhl.com:443 "GET /api/v1/schedule?startDate=2017-9-1&endDate=2018-7-1 HTTP/1.1" 200 None
+2018-09-03 15:45:13,044:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 15:45:13,128:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/RO020018.HTM HTTP/1.1" 200 2776
+2018-09-03 15:45:14,157:DEBUG:Starting new HTTP connection (1): statsapi.web.nhl.com:80
+2018-09-03 15:45:14,238:DEBUG:http://statsapi.web.nhl.com:80 "GET /api/v1/game/2017020018/feed/live HTTP/1.1" 200 9249
+2018-09-03 15:45:15,253:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 15:45:15,317:DEBUG:http://www.nhl.com:80 "GET /scores/htmlreports/20172018/PL020018.HTM HTTP/1.1" 200 61884
+2018-09-03 15:45:18,079:DEBUG:Starting new HTTP connection (1): www.espn.com:80
+2018-09-03 15:45:18,580:DEBUG:http://www.espn.com:80 "GET /nhl/scoreboard?date=20171007 HTTP/1.1" 200 None
+2018-09-03 15:45:20,526:DEBUG:Starting new HTTP connection (1): www.espn.com:80
+2018-09-03 15:45:20,633:DEBUG:http://www.espn.com:80 "GET /nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId=None HTTP/1.1" 200 46
+2018-09-03 15:45:21,644:DEBUG:Starting new HTTP connection (1): www.nhl.com:80
+2018-09-03 15:45:21,782:DEBUG:http://www.nhl.com:80 "GET /stats/rest/shiftcharts?cayenneExp=gameId=2017020018 HTTP/1.1" 200 13023

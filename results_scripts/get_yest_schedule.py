@@ -1,11 +1,13 @@
 import sys
 import os
+import datetime
 import requests
 import pandas as pd
 import psycopg2
 from sqlalchemy import create_engine
 
-def get_schedule(game_id):
+
+def get_yest_schedule(date):
     '''
     This function gets the NHL schedule from the NHL api and
     returns a dictionary
@@ -18,16 +20,17 @@ def get_schedule(game_id):
     schedule_dict - dictionary created from api JSON
     '''
 
-    api_url = f'http://statsapi.web.nhl.com/api/v1/game/{game_id}/feed/live'
-
+    api_url = ('https://statsapi.web.nhl.com/api/v1/schedule?'
+               'date={}').format(date)
     print(api_url)
+
     req = requests.get(api_url)
     schedule_dict = req.json()
 
     return schedule_dict
 
-'''
-def create_sched_df(schedule_dict):
+def get_game_ids(schedule_dict):
+    '''
     This function flatten out the API json into a flat table scructure
     with the relevant stats for the SQL table
 
@@ -36,38 +39,25 @@ def create_sched_df(schedule_dict):
 
     Outputs
     sched_df - pandas dataframe to be inserted into schedule table
+    '''
 
-    master_sched = []
+    game_ids = []
     for item in schedule_dict['dates']:
         games = item['games']
 
-        game_date = item['date']
         for game in games:
-            game_id = game['gamePk']
-            game_type = game['gameType']
-            season = game['season']
-            home_id = game['teams']['home']['team']['id']
-            home_team = game['teams']['home']['team']['name']
-            home_score = game['teams']['home']['score']
-            away_id = game['teams']['away']['team']['id']
-            away_team = game['teams']['away']['team']['name']
-            away_score = game['teams']['away']['score']
+            game_ids.append(game['gamePk'])
 
-            master_sched.append([game_id, game_type, season, game_date,
-                          home_id, home_team, home_score, away_id,
-                          away_team, away_score])
+    return game_ids
 
-    sched_df_columns = ['game_id', 'game_type', 'season', 'game_date',
-                        'home_team_id', 'home_team', 'home_score',
-                        'away_team_id',
-                        'away_team', 'away_score']
-    sched_df = pd.DataFrame(master_sched, columns=sched_df_columns)
+def sched_insert(df):
 
-    print('Dataframe created')
-    return sched_df
-'''
+    print('Inserting DataFrame to the Database')
+    engine = create_engine(os.environ.get('DEV_DB_CONNECT'))
+    df.to_sql('nhl_schedule', schema='nhl_tables', con=engine,
+              if_exists='append', index=False)
 
-def create_sched_df(pbp_dict):
+def create_sched_df(pbp_dict, date):
     '''
     this function takes a pbp JSON object and converts it into a list of values
     that will be compiled into a dataframe to be inserted into SQL table
@@ -85,7 +75,7 @@ def create_sched_df(pbp_dict):
     outcome.append(pbp_dict['gamePk'])
     outcome.append(pbp_dict['gameData']['game']['type'])
     outcome.append(pbp_dict['gameData']['game']['season'])
-    outcome.append(pbp_dict['gameData']['datetime']['dateTime'][:10])
+    outcome.append(date)
     outcome.append(pbp_dict['liveData']['linescore']['teams']['home']['team']['id'])
     outcome.append(pbp_dict['liveData']['linescore']['teams']['home']['team']['name'])
     outcome.append(pbp_dict['liveData']['linescore']['teams']['home']['goals'])
@@ -117,41 +107,56 @@ def create_sched_df(pbp_dict):
 
     return outcome
 
+def get_pbp(game_id):
+    '''
+    This function gets the NHL schedule from the NHL api and
+    returns a dictionary
 
-def sched_insert(df):
+    Inputs:
+    start_date - string of the first date to pass to the api url
+    end_date - string of the end date for the api url
 
-    print('Inserting DataFrame to the Database')
-    engine = create_engine(os.environ.get('DEV_DB_CONNECT'))
-    df.to_sql('nhl_schedule', schema='nhl_tables', con=engine,
-              if_exists='append', index=False)
+    Outputs:
+    schedule_dict - dictionary created from api JSON
+    '''
+
+    api_url = f'http://statsapi.web.nhl.com/api/v1/game/{game_id}/feed/live'
+
+    print(api_url)
+    req = requests.get(api_url)
+    schedule_dict = req.json()
+
+    return schedule_dict
 
 def main():
     '''
     This script pulls the schedule data of past games and the results
     of each game and inserts them into an Postgres table
     '''
+    date = (datetime.datetime.now() - datetime.timedelta(1)).strftime('%Y-%m-%d')
 
+    print(date)
     rows = []
-    years = [2015, 2016, 2017]
-    for year in years:
-        if year == 2017:
-            games = list(range(20001, 21272))
-        else:
-            games = list(range(20001, 21231))
+    schedule_dict = get_yest_schedule(date)
+    games = get_game_ids(schedule_dict)
+
+    if schedule_dict['totalItems'] == 0:
+        print("No Games Today")
+        return
+    else:
         for game in games:
-            print(f'{year}{game}')
-            game_json = get_schedule(f'{year}0{game}')
-            rows.append(create_sched_df(game_json))
+            pbp_dict = get_pbp(game)
+            rows.append(create_sched_df(pbp_dict, date))
 
-    sched_df_columns = ['game_id', 'game_type', 'season', 'game_date',
-                        'home_team_id', 'home_team', 'home_score',
-                        'away_team_id', 'away_team', 'away_score',
-                        'ot_flag', 'shootout_flag', 'seconds_in_ot',
-                        'home_win']
+            sched_df_columns = ['game_id', 'game_type', 'season', 'game_date',
+                                'home_team_id', 'home_team', 'home_score',
+                                'away_team_id', 'away_team', 'away_score',
+                                'ot_flag', 'shootout_flag', 'seconds_in_ot',
+                                'home_win']
 
-    sched_df = pd.DataFrame(rows, columns=sched_df_columns)
+            sched_df = pd.DataFrame(rows, columns=sched_df_columns)
 
-    sched_insert(sched_df)
+            sched_insert(sched_df)
 
 
 if __name__ == '__main__':
