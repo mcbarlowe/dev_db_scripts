@@ -86,10 +86,12 @@ def create_sched_df(pbp_dict, date):
         outcome.append(1)
     else:
         outcome.append(0)
+
     if pbp_dict['liveData']['linescore']['currentPeriod'] == 5:
         outcome.append(1)
     else:
         outcome.append(0)
+
     if pbp_dict['liveData']['linescore']['currentPeriod'] == 4:
         try:
             game_end_time = pbp_dict['liveData']['plays']['currentPlay']['about']['periodTime'].split(':')
@@ -98,8 +100,13 @@ def create_sched_df(pbp_dict, date):
         except KeyError:
             print('Error in NHL pbp')
             outcome.append(0)
+
+    elif pbp_dict['liveData']['linescore']['currentPeriod'] == 5:
+        outcome.append(300)
+
     else:
         outcome.append(0)
+
     if outcome[6] > outcome[9]:
         outcome.append(1)
     else:
