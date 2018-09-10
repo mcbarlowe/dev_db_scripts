@@ -6,6 +6,7 @@ import process_players
 import xg_prepare as xg
 import merge_shift_and_pbp as oi_matrix
 import clean_pbp
+import calc_adjusted_stats
 
 def get_yest_games(date):
     '''
@@ -106,9 +107,9 @@ def main():
 
 #TODO remove test date once script is fully functional
     #test_date = "2018-01-09"
-    #game_ids = get_yest_games(test_date)
+    game_ids = get_yest_games(date)
 
-    game_ids = [2017020001]
+    #game_ids = [2017020001]
     if game_ids == None:
         logging.info("No games played today")
         return
@@ -148,10 +149,12 @@ def main():
     #TODO adjust the coordinates of shots to adjust for rink bias add this later
     # if i have time
 
-    #TODO calc xg features and xg values for each fenwick envent
+    #calc xg features and xg values for each fenwick envent
         new_pbp_df = xg.create_stat_features(new_pbp_df)
 
-    #TODO calc all adjusted stat columns for corsi, fenwick and xg
+    #calc all adjusted stat columns for corsi, fenwick and xg
+        new_pbp_df = new_pbp_df.apply(calc_adjusted_stats.calc_adjusted_columns,
+                                      axis=1)
 
     #TODO calc all player individual, on-ice, and relative stats for all strengths
     #both adjusted and unadjusted

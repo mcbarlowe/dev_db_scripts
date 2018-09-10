@@ -1,12 +1,5 @@
-nhl_pbp20132014.csv
-nhl_pbp20142015.csv
-nhl_pbp20152016.csv
-nhl_pbp20162017.csv
-nhl_pbp20172018.csv
-nhl_shifts20132014.csv
-nhl_shifts20142015.csv
-nhl_shifts20152016.csv
-nhl_shifts20162017.csv
-nhl_shifts20172018.csv
+nhl_*.csv
 scraped_files/
-scraped_files/nhl_pbp20092010.csv scraped_files/nhl_pbp20102011.csv scraped_files/nhl_pbp20112012.csv scraped_files/nhl_pbp20122013.csv scraped_files/nhl_pbp20132014.csv scraped_files/nhl_pbp20142015.csv scraped_files/nhl_pbp20152016.csv scraped_files/nhl_pbp20162017.csv scraped_files/nhl_pbp20172018.csv scraped_files/nhl_shifts20092010.csv scraped_files/nhl_shifts20102011.csv scraped_files/nhl_shifts20112012.csv scraped_files/nhl_shifts20122013.csv scraped_files/nhl_shifts20132014.csv scraped_files/nhl_shifts20142015.csv scraped_files/nhl_shifts20152016.csv scraped_files/nhl_shifts20162017.csv scraped_files/nhl_shifts20172018.csv
+scraped_files/nhl_pbp*.csv
+__pycache__/
+*/__pycache/

@@ -31,8 +31,7 @@ def get_today_sched(date):
             today_games[game['gamePk']]['away_team'] = game['teams']['away']['team']['name']
             today_games[game['gamePk']]['away_team_id'] = game['teams']['away']['team']['id']
 
-    print(today_games)
-    #return today_games
+    return today_games
 
 def main():
     get_today_sched('2018-10-04')

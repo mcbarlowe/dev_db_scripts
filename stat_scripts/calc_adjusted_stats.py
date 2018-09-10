@@ -1,3 +1,6 @@
+import pandas as pd
+import numpy as np
+
 score_venue_adj_dic = {-3: {'home_weight': .850, 'away_weight': 1.214},
                        -2: {'home_weight': .882, 'away_weight': 1.154},
                        -1: {'home_weight': .915, 'away_weight': 1.103},
@@ -21,3 +24,36 @@ wght_shots_shot = {-3: {'home_weight': .163, 'away_weight': .237},
                    1: {'home_weight': .213, 'away_weight': .187},
                    2: {'home_weight': .221, 'away_weight': .179},
                    3: {'home_weight': .227, 'away_weight': .173}}
+
+def calc_adjusted_columns(row, adj_matrix=score_venue_adj_dic):
+    '''
+    This function creates adjusted columns for corsi, fenwick, and
+    xG
+
+    Inputs:
+    row - play by play dataframe row
+    adj_matrix - dictionary of home team goal differences amounts to adjust
+                 the events
+
+    Outputs:
+    row - play by play dataframe row with adjusted corsi, fenwick and xg columns
+             calculated
+    '''
+    print(row)
+    row['adj_corsi'] = np.where(row['is_home'] == 1,
+                                   row['is_corsi'] * adj_matrix[row.score_diff]['home_weight'],
+                                   row['is_corsi'] * adj_matrix[row.score_diff]['away_weight'])
+
+    row['adj_fenwick'] = np.where(row['is_home'] == 1,
+                                   row['is_corsi'] * adj_matrix[row.score_diff]['home_weight'],
+                                   row['is_corsi'] * adj_matrix[row.score_diff]['away_weight'])
+
+    row['adj_xg'] = np.where(row['is_home'] == 1,
+                             row['xg'] * .9468472,
+                             row['xg'] * 1.059477)
+
+    return row
+
+
+
+
