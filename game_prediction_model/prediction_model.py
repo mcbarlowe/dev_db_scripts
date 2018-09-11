@@ -127,7 +127,112 @@ def clean_results(results_df, team, date):
     cleaned_df = cleaned_df.sort_values(by=['game_date'], ascending=False).iloc[:83, :]
 
     return cleaned_df
+def monte_carlo_predict(home_results, away_results):
+    '''
+    taking the results of each team this function runs a monte carlo
+    simulation to predict goals scored using the poissson distribution
+    '''
 
+    results =[]
+
+#create the lambdas for the poisson distribution for regulation by adding the
+#home team's goals for and away teams goals against and average. I reverse the
+#process for the away team. This lambada is for the interval of one regulation
+#game therefore 60 minutes. These are then adjusted for home ice since the avg
+#home team wins 55% of the time I increase the home lambad by 5% to account for
+#that and decrase the away lambda.
+    home_lambda = ((home_results['non_ot_goals_for'].mean()
+                    + away_results['non_ot_goals_against'].mean()) / 2) * 1.05
+
+    away_lambda = ((home_results['non_ot_goals_against'].mean()
+                    + away_results['non_ot_goals_for'].mean()) / 2) / 1.05
+
+#This creates OT lambdas the same way as above but adjusts for a five minute
+#interval which is the length of OT in the NHL by dividing by the total seconds
+#in OT to get goal per second and then multiplyting by 300 to get goals per 5
+#minutes. I adjust for home and away with the same method as I do above for
+#regulation time
+    home_ot_lambda = ((((home_results['ot_goals'].sum()/home_results['seconds_in_ot'].sum()) * 300) + \
+                      (away_results['ot_goals_against'].sum()/away_results['seconds_in_ot'].sum())*300)/2) * 1.05
+
+    away_ot_lambda = ((((away_results['ot_goals'].sum()/away_results['seconds_in_ot'].sum()) * 300) + \
+                      (home_results['ot_goals_against'].sum()/home_results['seconds_in_ot'].sum())*300)/2) / 1.05
+
+#calculate home and away OT win percentages for the Terry-Bradley models that
+#determine the probabilites of the binomial flip in OT
+    home_ot_win_percent = np.where((home_results.ot_flag == 1) &
+                                   (home_results.shootout_flag == 0) &
+                                   (home_results.goals_for > home_results.goals_against), 1, 0)\
+                                   .sum()/home_results[(home_results.ot_flag == 1)
+                                                       & (home_results.shootout_flag == 0)].shape[0]
+
+    away_ot_win_percent = np.where((away_results.ot_flag == 1) &
+                                   (away_results.shootout_flag == 0) &
+                                   (away_results.goals_for >
+                                       away_results.goals_against), 1, 0)\
+                                   .sum()/away_results[(away_results.ot_flag == 1) &
+                                                       (away_results.shootout_flag == 0)].shape[0]
+
+#calculate shootout percentages for the Bradley-Terry models that determine the
+#winner of the Shootout Binomial flip
+    home_so_win_percent = np.where((home_results.shootout_flag == 1) &
+                                   (home_results.goals_for > home_results.goals_against),
+                                   1, 0).sum()/home_results[home_results.shootout_flag == 1].shape[0]
+
+    away_so_win_percent = np.where((away_results.shootout_flag == 1) &
+                                   (away_results.goals_for > away_results.goals_against),
+                                   1, 0).sum()/away_results[away_results.shootout_flag == 1].shape[0]
+
+#these lines fill any nan results from the OT and SO win percentage calculations
+#with an even coin flip
+    if math.isnan(home_ot_win_percent):
+        home_ot_win_percent = .5
+
+    if math.isnan(away_ot_win_percent):
+        away_ot_win_percent = .5
+
+    if math.isnan(home_so_win_percent):
+        home_so_win_percent = .5
+
+    if math.isnan(away_so_win_percent):
+        away_so_win_percent = .5
+
+#Here we draw a 10000 sample from the poisson distributions for home and away
+#teams using the lambdas calculated earlier for regulation goals scored
+    home_reg_goals = np.random.poisson(home_lambda, 10000)
+    away_reg_goals = np.random.poisson(away_lambda, 10000)
+
+#now I looop through both results and compare them. If the home team goals are
+#larger than the away then then I append a one else a zero. If they are tied
+#then it goes to an OT and if needed Shootout scenario that are binomial
+#distributions decided by home OT and Shootout probability determined by a
+#Bradley-Terry Model
+    for home, away in zip(home_reg_goals, away_reg_goals):
+        if home > away:
+            results.append(1)
+        elif away > home:
+            results.append(0)
+        else:
+            prob_of_zero_goals = (math.exp(-home_ot_lambda) * math.exp(-away_ot_lambda))
+
+            if np.random.binomial(1, prob_of_zero_goals) == 1:
+                try:
+                    prob_of_home_so_win = home_so_win_percent/(home_so_win_percent + away_so_win_percent)
+                except:
+                    prob_of_home_so_win = .5
+                results.append(np.random.binomial(1, prob_of_home_so_win))
+            else:
+                try:
+                    prob_of_home_ot_win = home_ot_win_percent/(home_ot_win_percent + away_ot_win_percent)
+                except:
+                    prob_of_home_ot_win = .5
+                results.append(np.random.binomial(1, prob_of_home_ot_win))
+
+#calculate the probability of the home team winning by averaging the wins and
+#losses as determined by the Poisson samples and return that probability
+    home_win_prob = sum(results)/len(results)
+
+    return home_win_prob
 def test_monte_carlo():
     '''
     This function will run the simulations on a test data set to see how they
