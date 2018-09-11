@@ -4,60 +4,71 @@ poisson distirbution and monte carlo sampling
 '''
 import os
 import datetime
+import multiprocessing as mp
 from get_today_schedule import get_today_sched
 import numpy as np
 import pandas as pd
 import psycopg2
 from sqlalchemy import create_engine
 
-def clean_results(results_df, team, date):
+
+def get_avg_df(df):
     '''
-    this function cleans the results dataframe and just strips out the wanted
-    team results and creates a column for OT goals as well
+    This is to create an average of the time frame of the past results. This
+    was only implemented because of Vegas who had no past results as an expansion
+    team. I'm hoping to use this most likely with the new Seatle expansion team
+    in the next couple years.
+
+    Inputs:
+    df - dataframe of past results
+
+    Outputs:
+    avg_df - a dataframe of avg results for games with no OT, OT and no Shootout,
+             and games that goto shootout
     '''
-    results_df = results_df[results_df.game_date < date]
-    cleaned_results = []
-    #looping through the results_df to pull out only the games the team variable played in.
-    for index, row in results_df.iterrows():
-        if row.home_team == team:
-            new_row = row[['game_id', 'game_type', 'season', 'game_date', 'home_team_id', 'home_team',
-                           'home_score', 'away_score', 'ot_flag', 'shootout_flag', 'seconds_in_ot']]
 
-            new_row.index = ['game_id', 'game_type', 'season', 'game_date', 'team_id', 'team',
-                           'goals_for', 'goals_against', 'ot_flag', 'shootout_flag', 'seconds_in_ot']
+#creates three different dataframes based on whether the game went to OT, SO,
+#or ended in regulation
+    reg = df[df.ot_flag != 1]
+    ot = df[(df.ot_flag == 1) & (df.shootout_flag != 1)]
+    shootout = df[df.shootout_flag == 1]
 
-            new_row['is_home'] = 1
+#creates averages for the results of the three dataframes which reduces them to
+#one row
+    reg_avg = reg[['home_score', 'away_score','seconds_in_ot']].mean()
+    ot_avg = ot[['home_score', 'away_score', 'seconds_in_ot']].mean()
+    shootout_avg = shootout[['home_score', 'away_score', 'seconds_in_ot']].mean()
 
-            cleaned_results.append(new_row)
+#creates the ot_flag and shootout_flag that is in the table the data is pulled
+#from. Will be neccesary for future calculations
+    reg_avg['ot_flag'] = 0
+    ot_avg['ot_flag'] = 1
+    shootout_avg['ot_flag'] = 1
 
-        elif row.away_team == team:
-            new_row = row[['game_id', 'game_type', 'season', 'game_date', 'away_team_id', 'away_team',
-                           'away_score', 'home_score', 'ot_flag', 'shootout_flag', 'seconds_in_ot']]
+    reg_avg['shootout_flag'] = 0
+    ot_avg['shootout_flag'] = 0
+    shootout_avg['shootout_flag'] = 1
 
-            new_row.index = ['game_id', 'game_type', 'season', 'game_date', 'team_id', 'team',
-                           'goals_for', 'goals_against', 'ot_flag', 'shootout_flag', 'seconds_in_ot']
+#combines the three series from average the three dataframes of the three types
+#of game outcomes: Regulation, Overtime, Shootout
+    avg_df = pd.concat([reg_avg, ot_avg, shootout_avg], axis=1).T
 
-            new_row['is_home'] = 0
+    #rename avg_df columns
+    avg_df.columns = ['goals_for', 'goals_against', 'seconds_in_ot', 'ot_flag', 'shootout_flag']
 
-            cleaned_results.append(new_row)
+#create columsn for ot and non ot_goals which will be used in the monte carlo
+#simulations
+    avg_df['non_ot_goals_for'] = np.where(((avg_df.shootout_flag == 1) | (avg_df.ot_flag == 1)) &
+                                              (avg_df.goals_for > avg_df.goals_against), avg_df.goals_for - 1,
+                                              avg_df.goals_for)
+    avg_df['non_ot_goals_against'] = np.where(((avg_df.shootout_flag == 1) | (avg_df.ot_flag == 1)) &
+                                              (avg_df.goals_for < avg_df.goals_against), avg_df.goals_against - 1,
+                                              avg_df.goals_against)
+    avg_df['ot_goals'] = np.where(avg_df.shootout_flag == 0,
+                                          avg_df.goals_for - avg_df.non_ot_goals_for, 0)
+    avg_df['ot_goals_against'] = np.where((avg_df.ot_flag == 1) & (avg_df.shootout_flag != 1), 1, 0)
 
-    cleaned_df = pd.concat(cleaned_results, axis=1).T
-
-    #calculating non ot goals by seeing if the game went to ot or shootout and if so whether the team won or not.
-    #if they did then they score one less goals than their final total if not then they scored their same goals for
-    #amount
-    cleaned_df['non_ot_goals'] = np.where(((cleaned_df.shootout_flag == 1) | (cleaned_df.ot_flag == 1)) &
-                                          (cleaned_df.goals_for > cleaned_df.goals_against), cleaned_df.goals_for - 1,
-                                          cleaned_df.goals_for)
-
-    cleaned_df['ot_goals'] = cleaned_df.goals_for - cleaned_df.non_ot_goals
-
-    cleaned_df = cleaned_df.reset_index(drop=True)
-
-    #only return the last two seasons of games
-    cleaned_df = cleaned_df.iloc[:164, :]
-
-    return cleaned_df
+    return avg_df
 
 def test_monte_carlo():
     '''
@@ -82,8 +93,12 @@ def main():
 #get daily schedule
     daily_sched = get_today_sched(date)
 
-#TODO write code to query the results database to return the past two years
-#of results for each team in each game
+#write code to query the results database to return past results
+
+    engine = create_engine(os.environ.get('DEV_DB_CONNECT'))
+    sql_query = 'SELECT * from nhl_tables.nhl_schedule'
+    df = pd.read_sql(sql_query, con=engine,
+                     parse_dates = {'game_date': '%Y-%m-%d'})
 
 #TODO sort the data and adjust scoring for non OT and get OT and shootout win
 #% for each team
