@@ -1,6 +1,7 @@
 import datetime
 import os
 import requests
+import pandas as pd
 
 
 def get_today_sched(date):
@@ -31,7 +32,13 @@ def get_today_sched(date):
             today_games[game['gamePk']]['away_team'] = game['teams']['away']['team']['name']
             today_games[game['gamePk']]['away_team_id'] = game['teams']['away']['team']['id']
 
-    return today_games
+#turn dictionary of daily games to a dataframe:
+    daily_games_df = pd.DataFrame.from_dict(today_games, orient='index')
+    daily_games_df = daily_games_df.reset_index()
+    daily_games_df.columns = ['game_id', 'date', 'home_team', 'home_team_id',
+                              'away_team', 'away_team_id']
+
+    return daily_games_df
 
 def main():
     get_today_sched('2018-10-04')
