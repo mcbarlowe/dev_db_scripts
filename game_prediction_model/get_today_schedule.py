@@ -23,6 +23,11 @@ def get_today_sched(date):
 
     today_games = {}
 
+#if there are no games exit the function with an empty dataframe
+    if not schedule_dict['dates']:
+        return pd.DataFrame()
+
+#parse the schedule to create a dataframe to feed to the prediction model
     for x in schedule_dict['dates']:
         for game in x['games']:
             today_games[game['gamePk']] = {}
@@ -35,7 +40,7 @@ def get_today_sched(date):
 #turn dictionary of daily games to a dataframe:
     daily_games_df = pd.DataFrame.from_dict(today_games, orient='index')
     daily_games_df = daily_games_df.reset_index()
-    daily_games_df.columns = ['game_id', 'date', 'home_team', 'home_team_id',
+    daily_games_df.columns = ['game_id', 'game_date', 'home_team', 'home_team_id',
                               'away_team', 'away_team_id']
 
     return daily_games_df

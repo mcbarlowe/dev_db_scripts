@@ -4,13 +4,22 @@ poisson distirbution and monte carlo sampling
 '''
 import os
 import datetime
+import time
+import math
 import multiprocessing as mp
 from get_today_schedule import get_today_sched
 import numpy as np
 import pandas as pd
-import psycopg2
 from sqlalchemy import create_engine
 
+
+
+def sched_insert(df):
+
+    print('Inserting DataFrame to the Database')
+    engine = create_engine(os.environ.get('DEV_DB_CONNECT'))
+    df.to_sql('predictions', schema='nhl_tables', con=engine,
+              if_exists='append', index=False)
 
 def get_avg_df(df):
     '''
@@ -275,27 +284,29 @@ def multi_proc_monte(home_results, away_results, iter=1000):
     return results
 
 
+#TODO abstract this to another function that takes date as a variable so I can loop
+#over a time frame and store my results
 def main():
 
 #gets todays date
     date = datetime.datetime.now().strftime('%Y-%m-%d')
-
 #get daily schedule
     daily_sched = get_today_sched(date)
 
 #if schedule is empty exit program
-    if not daily_sched:
+    if daily_sched.empty:
+        print('No Games Today')
         return
 
 #Query the results database to return past results
-
     engine = create_engine(os.environ.get('DEV_DB_CONNECT'))
     sql_query = 'SELECT * from nhl_tables.nhl_schedule'
     df = pd.read_sql(sql_query, con=engine,
                      parse_dates = {'game_date': '%Y-%m-%d'})
+    df = df[df.game_date < date]
 
-#TODO sort the data and adjust scoring for non OT and get OT and shootout win
-#% for each team
+
+
 
 #TODO run simulation using each teams distribution of goals scored in regulation
 #for ties determine probability of both teams not scoring in OT from their OT
@@ -304,6 +315,67 @@ def main():
 #model to determine probability of home team winning with another Bernoulli trial.
 #If the game is not decided in OT use another Bradley-Terry model with SO win %'s
 #to determine probability of home team winning shootout.
+    predictions = []
+
+    for index, row in daily_sched.iterrows():
+        game_id = row.game_id
+
+        home_team = row.home_team
+        away_team = row.away_team
+
+#getting the sample of results for the home and away teams the try and excepts
+#are incase there is an expansion team in the future i.e. Seattle
+        try:
+            home_results = clean_results(df, home_team, date)
+
+            #vegas bullshit
+            if home_results.shape[0] < 2:
+                home_results = get_avg_df(df)
+
+        except:
+            home_results = get_avg_df(df)
+
+        try:
+            away_results = clean_results(df, away_team, date)
+
+            #more vegas bullshit
+            if away_results.shape[0] < 2:
+                away_results = get_avg_df(df)
+
+        except:
+            away_results = get_avg_df(df)
+
+        #running the monte carlo simulation a 1,000 times
+        #and printing outputs for testing
+        print(f'{away_team} vs. {home_team}')
+        print(date)
+        print(row.game_id)
+
+        start_time = time.time()
+#runs the multi proc function to calculate home team win probs
+        home_win_probabilities = multi_proc_monte(home_results, away_results)
+        end_time = time.time()
+        time_to_run = end_time - start_time
+
+        print(f'Time for simulation to run: {time_to_run}')
+        print(sum(home_win_probabilities)/len(home_win_probabilities))
+
+#calculates final win probablilty by average all the probabilities from the
+#monte carlo sim
+        final_win_probs = sum(home_win_probabilities)/len(home_win_probabilities)
+
+#appends to the predictions list so I can
+        predictions.append([game_id, date, home_team,  away_team, final_win_probs])
+
+    predict_df = pd.DataFrame(predictions)
+    predict_df.columns = ['game_id', 'game_date', 'home_team', 'away_team', 'home_win_probs']
+
+    final_predict_df = daily_sched.merge(predict_df[['game_id', 'home_win_probs']],
+                                         on='game_id')
+
+    final_predict_df['home_win_pred'] = np.where(final_predict_df.home_win_probs > .5, 1, 0)
+
+    sched_insert(final_predict_df)
 
     return
 
