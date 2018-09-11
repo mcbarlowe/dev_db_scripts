@@ -127,10 +127,19 @@ def clean_results(results_df, team, date):
     cleaned_df = cleaned_df.sort_values(by=['game_date'], ascending=False).iloc[:83, :]
 
     return cleaned_df
+
 def monte_carlo_predict(home_results, away_results):
     '''
     taking the results of each team this function runs a monte carlo
     simulation to predict goals scored using the poissson distribution
+
+    Inputs:
+    home_results - results of the last 82 games of the home team
+    away_results - results of the last 82 games of the away team
+
+    Outputs:
+
+    home_win_prob - the probability of the home team winning said game
     '''
 
     results =[]
@@ -233,19 +242,37 @@ def monte_carlo_predict(home_results, away_results):
     home_win_prob = sum(results)/len(results)
 
     return home_win_prob
-def test_monte_carlo():
+
+def multi_proc_monte(home_results, away_results, iter=1000):
     '''
-    This function will run the simulations on a test data set to see how they
-    perform on last seasons data.
+    This creates a multiproccess function to use all four cores of my MacBook
+    I should add a function to pull a computer's core numbers variable to pass
+    to Pool.
+
+    Inputs:
+    home_results - home team results dataframe to pass to the monet_carlo_predict
+                   function
+
+    away_results - same as the home team but for the away team
+
+    Outputs:
+    results - a list of each probability returned by the monte_carlo_predict
+              function to be averaged later
     '''
 
-    engine = create_engine(os.environ.get('DEV_DB_CONNECT'))
+#creates the 4 processes this computer only has four cores so it maxes at four
+#change for the number of cores for your computer
+    pool =  mp.Pool(4)
+#creates a list of process results the length of the iter keyword. I.e. it runs
+#the monte_carlo_predict function the number of times as passed to the iter
+#keyword in this case it will be a 1000 times
+    pool_list = [pool.apply_async(monte_carlo_predict, args=(home_results, away_results)) for _ in range(iter)]
 
-    sql_query = 'SELECT * from nhl_tables.nhl_schedule'
-    df = pd.read_sql(sql_query, con=engine,
-                     parse_dates = {'game_date': '%Y-%m-%d'})
+#getting the results for each process after they are finished
+    results = [f.get() for f in pool_list]
+    pool.close()
 
-
+    return results
 
 
 def main():
