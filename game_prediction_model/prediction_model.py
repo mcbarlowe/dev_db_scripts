@@ -65,7 +65,7 @@ def tweet_results(home_team, away_team, date, final_win_probs, dist_plot_file_na
                       twitter_keys['Access Key'], twitter_keys['Access Secret Key'])
 
     tweet_string = f'{away_team} @ {home_team} {date}:\n'
-    tweet_string += f'\n{home_team}: {round(final_win_probs * 100, 2)}%\n{away_team}: {round((1-final_win_probs) * 100,2)}%\n'
+    tweet_string += f'\n{home_team}: {round(final_win_probs * 100, 1)}%\n{away_team}: {round((1-final_win_probs) * 100, 1)}%\n'
 
     photo = open(dist_plot_file_name, 'rb')
     response = twitter.upload_media(media=photo)
@@ -144,17 +144,17 @@ def clean_results(results_df, team, date):
     this function cleans the results dataframe and just strips out the wanted
     team results and creates a column for OT goals as well
     '''
-    results_df = results_df[results_df.game_date < date]
+    results_df = results_df[(results_df.game_date < date) & (results_df.game_type == 'R')]
     cleaned_results = []
     #looping through the results_df to pull out only the games the team variable played in.
     for index, row in results_df.iterrows():
         if row.home_team == team:
             #print(row)
-            new_row = row[['game_id', 'game_type', 'season', 'game_date', 'home_team_id', 'home_team',
+            new_row = row[['game_id', 'game_type', 'season', 'game_date', 'home_team_id', 'home_team', 'home_abbrev',
                            'home_score', 'away_score', 'ot_flag', 'shootout_flag', 'seconds_in_ot']]
 
             #print(new_row)
-            new_row.index = ['game_id', 'game_type', 'season', 'game_date', 'team_id', 'team',
+            new_row.index = ['game_id', 'game_type', 'season', 'game_date', 'team_id', 'team', 'team_abbrev',
                            'goals_for', 'goals_against', 'ot_flag', 'shootout_flag', 'seconds_in_ot']
 
             new_row['is_home'] = 1
@@ -163,10 +163,10 @@ def clean_results(results_df, team, date):
 
         elif row.away_team == team:
             #print(row)
-            new_row = row[['game_id', 'game_type', 'season', 'game_date', 'away_team_id', 'away_team',
+            new_row = row[['game_id', 'game_type', 'season', 'game_date', 'away_team_id', 'away_team', 'away_abbrev',
                            'away_score', 'home_score', 'ot_flag', 'shootout_flag', 'seconds_in_ot']]
             #print(new_row)
-            new_row.index = ['game_id', 'game_type', 'season', 'game_date', 'team_id', 'team',
+            new_row.index = ['game_id', 'game_type', 'season', 'game_date', 'team_id', 'team', 'team_abbrev',
                            'goals_for', 'goals_against', 'ot_flag', 'shootout_flag', 'seconds_in_ot']
 
             new_row['is_home'] = 0
@@ -312,7 +312,7 @@ def monte_carlo_predict(home_results, away_results):
 
     return home_win_prob
 
-def multi_proc_monte(home_results, away_results, iter=1000):
+def multi_proc_monte(home_results, away_results, iter=10000):
     '''
     This creates a multiproccess function to use all four cores of my MacBook
     I should add a function to pull a computer's core numbers variable to pass
@@ -350,7 +350,7 @@ def main():
 
 #gets todays date
     #date = datetime.datetime.now().strftime('%Y-%m-%d')
-    date = '2018-01-31'
+    date = '2018-02-13'
 #get daily schedule
     daily_sched = get_today_sched(date)
 
@@ -406,7 +406,7 @@ def main():
         except:
             away_results = get_avg_df(df)
 
-        #running the monte carlo simulation a 1,000 times
+        #running the monte carlo simulation a 10,000 times
         #and printing outputs for testing
         print(f'{away_team} vs. {home_team}')
         print(date)
@@ -426,10 +426,12 @@ def main():
         final_win_probs = sum(home_win_probabilities)/len(home_win_probabilities)
 
 #appends to the predictions list so I can
-        predictions.append([game_id, date, home_team,  away_team, final_win_probs])
+        predictions.append([game_id, date, home_team, home_results.team_abbrev.unique()[0], away_team, away_results.team_abbrev.unique()[0], final_win_probs])
 
+#plotting the distributions of the results from the monte carlo sim and saving
+#it to a file to tweet
         plt.figure()
-        sns.distplot(home_win_probabilities).set_title(f'Distribution of {home_team} vs. {away_team} on {date}')
+        sns.distplot(home_win_probabilities).set_title(f'Distribution of {home_results.team_abbrev.unique()[0]} vs. {away_results.team_abbrev.unique()[0]} on {date}')
         dist_plot_file_name = 'dist_plot.png'
         plt.savefig(dist_plot_file_name)
 
@@ -437,14 +439,20 @@ def main():
 
 
     predict_df = pd.DataFrame(predictions)
-    predict_df.columns = ['game_id', 'game_date', 'home_team', 'away_team', 'home_win_probs']
+    predict_df.columns = ['game_id', 'game_date', 'home_team', 'home_abbrev', 'away_team', 'away_abbrev', 'home_win_probs']
 
-    final_predict_df = daily_sched.merge(predict_df[['game_id', 'home_win_probs']],
+    final_predict_df = daily_sched.merge(predict_df[['game_id', 'home_win_probs', 'home_abbrev', 'away_abbrev']],
                                          on='game_id')
 
     final_predict_df['home_win_pred'] = np.where(final_predict_df.home_win_probs > .5, 1, 0)
 
-    #sched_insert(final_predict_df)
+    final_predict_df = final_predict_df[['game_id', 'game_date', 'home_team',
+                                         'home_abbrev', 'home_team_id',
+                                         'away_team', 'away_abbrev', 'away_team_id',
+                                         'home_win_probs', 'home_win_pred']]
+
+
+    sched_insert(final_predict_df)
 
 
     return
