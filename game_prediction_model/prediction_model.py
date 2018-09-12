@@ -3,14 +3,74 @@ This model will predict the probabilites of winners in NHL games by using the
 poisson distirbution and monte carlo sampling
 '''
 import os
+import sys
 import datetime
 import time
 import math
 import multiprocessing as mp
+import seaborn as sns
 from get_today_schedule import get_today_sched
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 from sqlalchemy import create_engine
+from twython import Twython
+
+
+def get_twitter_keys(key_file):
+    '''
+    Funciton to get the twitter bot's api keys from a text file
+
+    Input:
+    key_file - text file holding api auth keys
+
+    Output:
+    keys_dict - dictionary with key names mapped to keys
+    '''
+
+    twitter_keys = key_file
+    keys_dict = {}
+
+    with open(twitter_keys, 'r') as keys:
+        api_keys = []
+
+        for line in keys:
+            api_keys.append(line)
+
+        api_keys = list(map(str.strip, api_keys))
+
+        for key in api_keys:
+            name_list = key.split(':')
+            name_list = list(map(str.strip, name_list))
+            key_name, key_value = name_list[0], name_list[1]
+            keys_dict[key_name] = key_value
+        return keys_dict
+
+def tweet_results(home_team, away_team, date, final_win_probs, dist_plot_file_name):
+    '''
+    this function tweets out the results of the prediciton model
+
+    Inputs:
+    df - dataframe of the results of the prediction model
+
+    Outputs:
+    None
+    '''
+
+    #twitter_keys = get_twitter_keys(sys.argv[1])
+    twitter_keys = get_twitter_keys(sys.argv[1])
+
+    #set twitter API
+    twitter = Twython(twitter_keys['Consumer Key'], twitter_keys['Consumer Secret Key'],
+                      twitter_keys['Access Key'], twitter_keys['Access Secret Key'])
+
+    tweet_string = f'{away_team} @ {home_team} {date}:\n'
+    tweet_string += f'\n{home_team}: {round(final_win_probs * 100, 2)}%\n{away_team}: {round((1-final_win_probs) * 100,2)}%\n'
+
+    photo = open(dist_plot_file_name, 'rb')
+    response = twitter.upload_media(media=photo)
+    twitter.update_status(status=tweet_string, media_ids=[response['media_id']])
+    photo.close()
 
 
 
@@ -289,7 +349,8 @@ def multi_proc_monte(home_results, away_results, iter=1000):
 def main():
 
 #gets todays date
-    date = datetime.datetime.now().strftime('%Y-%m-%d')
+    #date = datetime.datetime.now().strftime('%Y-%m-%d')
+    date = '2018-01-31'
 #get daily schedule
     daily_sched = get_today_sched(date)
 
@@ -367,6 +428,14 @@ def main():
 #appends to the predictions list so I can
         predictions.append([game_id, date, home_team,  away_team, final_win_probs])
 
+        plt.figure()
+        sns.distplot(home_win_probabilities).set_title(f'Distribution of {home_team} vs. {away_team} on {date}')
+        dist_plot_file_name = 'dist_plot.png'
+        plt.savefig(dist_plot_file_name)
+
+        tweet_results(home_team, away_team, date, final_win_probs, dist_plot_file_name)
+
+
     predict_df = pd.DataFrame(predictions)
     predict_df.columns = ['game_id', 'game_date', 'home_team', 'away_team', 'home_win_probs']
 
@@ -375,7 +444,8 @@ def main():
 
     final_predict_df['home_win_pred'] = np.where(final_predict_df.home_win_probs > .5, 1, 0)
 
-    sched_insert(final_predict_df)
+    #sched_insert(final_predict_df)
+
 
     return
 
