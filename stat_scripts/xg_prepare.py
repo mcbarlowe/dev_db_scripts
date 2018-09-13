@@ -13,7 +13,7 @@ def fixed_seconds_elapsed(pbp_df):
     pbp_df - pbp_df with seconds_elapsed correctly calculated
     '''
 
-    pbp_df['seconds_elapsed'] = pbp_df.seconds_elapsed + (1200 * (pbp_df.period -1))
+    pbp_df.loc[:, 'seconds_elapsed'] = pbp_df.seconds_elapsed + (1200 * (pbp_df.period -1))
 
     return pbp_df
 

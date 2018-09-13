@@ -93,6 +93,17 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
 
     line_change_df = add_cols_to_shifts(line_change_df, pbp_df)
 
+    line_change_df[['awayplayer1_id', 'awayplayer2_id', 'awayplayer3_id',
+                                'awayplayer4_id', 'awayplayer5_id',
+                                'awayplayer6_id', 'homeplayer1_id',
+                                'homeplayer2_id','homeplayer3_id',
+                                'homeplayer4_id','homeplayer5_id',
+                                'homeplayer6_id']] = line_change_df[['awayplayer1_id', 'awayplayer2_id', 'awayplayer3_id',
+                                'awayplayer4_id', 'awayplayer5_id',
+                                'awayplayer6_id', 'homeplayer1_id',
+                                'homeplayer2_id','homeplayer3_id',
+                                'homeplayer4_id','homeplayer5_id',
+                                'homeplayer6_id']].astype(float)
 #merge pbp_df and line_change_df into one dataframe
     pbp_w_shifts = pd.merge(pbp_df, line_change_df, how='outer',
                             on=['seconds_elapsed', 'event', 'awayplayer1_id', 'period',
