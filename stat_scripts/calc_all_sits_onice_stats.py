@@ -42,19 +42,19 @@ def calc_toi(pbp_df):
 
     print(home_1.head())
 #making all the dataframes the same to that I can concat them
-    home_1.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    home_2.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    home_3.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    home_4.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    home_5.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    home_6.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    home_1.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    home_2.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    home_3.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    home_4.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    home_5.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    home_6.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
 
-    away_1.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    away_2.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    away_3.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    away_4.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    away_5.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
-    away_6.columns = ['season', 'game_id', 'date', 'player_id', 'player', 'toi']
+    away_1.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    away_2.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    away_3.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    away_4.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    away_5.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
+    away_6.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
 
 #joining all the seperate toi dataframes into one big dataframe that I will
 #group by and sum their TOI
@@ -63,13 +63,13 @@ def calc_toi(pbp_df):
     print(home_toi.dtypes)
     away_toi = pd.concat([away_1, away_2, away_3, away_4, away_5, away_6])
     print(away_toi.dtypes)
-    away_toi = away_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
-    home_toi = home_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player'])['toi'].sum().reset_index()
+    away_toi = away_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player_name'])['toi'].sum().reset_index()
+    home_toi = home_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player_name'])['toi'].sum().reset_index()
 
     toi_df = pd.concat([home_toi, away_toi])
 
-    toi_df = toi_df.groupby(['player_id', 'player'])['toi'].sum().reset_index()
-    toi_df.loc[:, ('toi')] = round(toi_df.toi/60, 2)
+    toi_df = toi_df.groupby(['player_id', 'player_name'])['toi'].sum().reset_index()
+    #toi_df.loc[:, ('toi')] = round(toi_df.toi/60, 2)
 
     return toi_df
 
@@ -774,6 +774,40 @@ def calc_on_ice_pens(pbp_df):
                                  'player_id', 'player_name', 'PENT', 'PEND']]
 
     return penalties_df
+
+def calc_onice_stats(pbp_df):
+    '''
+    this function combines all the onice stats for all situations into one
+    dataframe. These stats include shot metrics, TOI, and penalties taken and
+    drawn.
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    onice_df - dataframe of players onice statistics
+    '''
+    toi_df = calc_toi(pbp_df)
+    shots_df = calc_on_ice_shots(pbp_df)
+    pens_df = calc_on_ice_pens(pbp_df)
+
+    print(toi_df.columns)
+    print(shots_df.columns)
+    print(pens_df.columns)
+    on_ice_stats_df = shots_df.merge(toi_df,
+                                     on=['player_id', 'player_name'],
+                                     how='outer')
+
+    on_ice_stats_df = on_ice_stats_df.merge(pens_df,
+                                            on=['season', 'game_id', 'date',
+                                                'player_id', 'player_name',
+                                                'team'],
+                                            how='outer')
+
+    on_ice_stats_df.loc[:, ('toi')] = round(on_ice_stats_df.loc[:, ('toi')] / 60, 2)
+
+    return on_ice_stats_df
+
 
 def main():
 
