@@ -354,6 +354,23 @@ def calc_season(pbp_df):
 
     return pbp_df
 
+def fix_game_id(pbp_df):
+    '''
+    this fixes the game_id by putting it in the format that the NHL uses
+
+    Input:
+    pbp_df - pbp_df with out game_id fixed
+
+    Output:
+    pbp_df - pbp_df with game_id fixed
+    '''
+
+    new_season = pbp_df['season'] - 1
+    pbp_df.loc[:, ('game_id')] =  new_season.map(str)+ '0' + pbp_df['game_id'].map(str)
+    pbp_df.loc[:, ('game_id')] = pbp_df.loc[:, ('game_id')].astype(float).astype(int)
+
+    return pbp_df
+
 def create_stat_features(pbp_df):
     '''
     this function cleans the pbp_df and casts columns as the proper variable
@@ -373,6 +390,7 @@ def create_stat_features(pbp_df):
     pbp_df = calc_event_length(pbp_df)
     pbp_df = calc_shot_metrics(pbp_df)
     pbp_df = calc_season(pbp_df)
+    pbp_df = fix_game_id(pbp_df)
     pbp_df = calc_score_diff(pbp_df)
     pbp_df = calc_is_home(pbp_df)
     pbp_df = calc_is_penalty(pbp_df)
