@@ -806,7 +806,11 @@ def calc_onice_stats(pbp_df):
 
     on_ice_stats_df.loc[:, ('toi')] = round(on_ice_stats_df.loc[:, ('toi')] / 60, 2)
 
-    return on_ice_stats_df
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != 0]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+
+    return on_ice_stats_df.reset_index(drop=True)
 
 
 def main():

@@ -338,7 +338,11 @@ def calc_ind_metrics(pbp_df, calc_blk=calc_blocks, \
                          'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
 
 
-    return ind_stats_df
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+
+    return ind_stats_df.reset_index(drop=True)
 
 def main():
 
