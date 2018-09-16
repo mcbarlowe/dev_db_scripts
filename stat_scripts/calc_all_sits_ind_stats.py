@@ -329,7 +329,6 @@ def calc_ind_metrics(pbp_df, calc_blk=calc_blocks, \
                                       how='outer')
     ind_stats_df = ind_stats_df.fillna(0)
 
-    print(ind_stats_df)
     ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
                          'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
                          'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \

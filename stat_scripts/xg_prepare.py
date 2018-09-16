@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import pickle
 
 def fixed_seconds_elapsed(pbp_df):
     '''
@@ -371,6 +372,44 @@ def fix_game_id(pbp_df):
 
     return pbp_df
 
+def calc_xg(pbp_df):
+    '''
+    this function calculates the xg value of each shot, miss or block and then
+    joins it back to the main pbp_df
+
+    Inputs:
+    pbp_df - play by play data frame without xg calculations made
+
+    Outputs:
+    pbp_df_xg - play by play data frame with xg probabilities calculated
+    '''
+    with open('gbm_model', 'rb') as model:
+        gbm_model = pickle.load(model)
+
+    feature_columns = ['seconds_elapsed', 'xc', 'yc', 'time_diff', 'score_diff',
+                       'prior_x_coords', 'prior_y_coords', 'dist_to_prior',
+                       'distance', 'angle', 'is_rebound', 'rebound_angle',
+                       'is_rush', 'shooter_strength', 'type_BACKHAND',
+                       'type_DEFLECTED', 'type_SLAP SHOT', 'type_SNAP SHOT',
+                       'type_TIP-IN', 'type_WRIST SHOT']
+
+    fenwick_pbp = pd.get_dummies(pbp_df[pbp_df.event.isin(['SHOT', 'GOAL', 'MISS'])],
+                                     columns=['type'])
+
+    fenwick_pbp_nona = fenwick_pbp[~fenwick_pbp[feature_columns].isnull().any(axis=1)]
+
+    fenwick_pbp_nona['xg'] = gbm_model.predict_proba(fenwick_pbp_nona[feature_columns])[:, 1]
+
+    fenwick_pbp = fenwick_pbp.merge(fenwick_pbp_nona[['xg']], how = 'outer', left_index=True, right_index=True)
+
+    fenwick_pbp['xg'] = fenwick_pbp['xg'].fillna(fenwick_pbp['xg'].mean())
+
+    pbp_df_xg = pbp_df.merge(fenwick_pbp[['xg']], how='outer',left_index=True, right_index=True)
+
+    return pbp_df_xg
+
+
+
 def create_stat_features(pbp_df):
     '''
     this function cleans the pbp_df and casts columns as the proper variable
@@ -404,6 +443,7 @@ def create_stat_features(pbp_df):
     pbp_df = calc_rebound_angle(pbp_df)
     pbp_df = calc_rush_shot(pbp_df)
     pbp_df = calc_shooter_strength(pbp_df)
+    pbp_df = calc_xg(pbp_df)
 
     return pbp_df
 
