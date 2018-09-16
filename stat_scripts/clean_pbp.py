@@ -43,6 +43,7 @@ def clean_pbp(new_pbp):
     new_pbp.loc[:, ('p1_id')] = new_pbp.loc[:, ('p1_id')].fillna(0).astype(int)
     new_pbp.loc[:, ('p2_id')] = new_pbp.loc[:, ('p2_id')].fillna(0).astype(int)
     new_pbp.loc[:, ('p3_id')] = new_pbp.loc[:, ('p3_id')].fillna(0).astype(int)
+
     return new_pbp
 
 def main():
@@ -98,8 +99,9 @@ def clean_skaters(row):
     home_players = row[['homeplayer1', 'homeplayer2', 'homeplayer3',
                         'homeplayer4', 'homeplayer5', 'homeplayer6']]
 
-    row.away_players = len(away_players[away_players.nonzero()[0]])
-    row.home_players = len(home_players[home_players.nonzero()[0]])
+    if row.event in ['OFF', 'ON']:
+        row.away_players = len(away_players[away_players.nonzero()[0]])
+        row.home_players = len(home_players[home_players.nonzero()[0]])
 
     return row
 
