@@ -206,7 +206,7 @@ def calc_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
     home_onice_list = [home_onice_1, home_onice_2, home_onice_3, home_onice_4,
                        home_onice_5, home_onice_6]
 
-    home_metrics = pd.concat(home_onice_list)
+    home_metrics = pd.concat(home_onice_list, sort=False)
 
     home_metrics = home_metrics.groupby(['season', 'game_id', 'date',
                                          'player_id', 'player_name'])\
@@ -390,7 +390,7 @@ def calc_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
     away_onice_list = [away_onice_1, away_onice_2, away_onice_3, away_onice_4,
                        away_onice_5, away_onice_6]
 
-    away_metrics = pd.concat(away_onice_list)
+    away_metrics = pd.concat(away_onice_list, sort=False)
 
     away_metrics = away_metrics.groupby(['season', 'game_id', 'date',
                                          'player_id', 'player_name'])\
@@ -455,7 +455,6 @@ def calc_toi(pbp_df, first_skater_num, second_skater_num):
     away_6 = away_str_df.groupby(['season', 'game_id', 'date', 'awayplayer6_id',
                              'awayplayer6'])['event_length'].sum().reset_index()
 
-    print(home_1.head())
 #making all the dataframes the same to that I can concat them
     home_1.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
     home_2.columns = ['season', 'game_id', 'date', 'player_id', 'player_name', 'toi']
@@ -473,15 +472,13 @@ def calc_toi(pbp_df, first_skater_num, second_skater_num):
 
 #joining all the seperate toi dataframes into one big dataframe that I will
 #group by and sum their TOI
-    home_toi = pd.concat([home_1, home_2, home_3, home_4, home_5, home_6])
+    home_toi = pd.concat([home_1, home_2, home_3, home_4, home_5, home_6], sort=False)
 
-    print(home_toi.dtypes)
-    away_toi = pd.concat([away_1, away_2, away_3, away_4, away_5, away_6])
-    print(away_toi.dtypes)
+    away_toi = pd.concat([away_1, away_2, away_3, away_4, away_5, away_6], sort=False)
     away_toi = away_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player_name'])['toi'].sum().reset_index()
     home_toi = home_toi.groupby(['season', 'game_id', 'date', 'player_id', 'player_name'])['toi'].sum().reset_index()
 
-    toi_df = pd.concat([home_toi, away_toi])
+    toi_df = pd.concat([home_toi, away_toi], sort=False)
 
     toi_df = toi_df.groupby(['player_id', 'player_name'])['toi'].sum().reset_index()
 
@@ -636,7 +633,7 @@ def calc_on_ice_pens(pbp_df, first_skater_num, second_skater_num):
     home_oi_pens_list = [home_oi_pens_1, home_oi_pens_2, home_oi_pens_3, home_oi_pens_4,
                        home_oi_pens_5, home_oi_pens_6]
 
-    home_pens = pd.concat(home_oi_pens_list)
+    home_pens = pd.concat(home_oi_pens_list, sort=False)
 
     home_pens = home_pens.groupby(['season', 'game_id', 'date',
                                          'player_id', 'player_name'])\
@@ -777,7 +774,7 @@ def calc_on_ice_pens(pbp_df, first_skater_num, second_skater_num):
     away_oi_pens_list = [away_oi_pens_1, away_oi_pens_2, away_oi_pens_3, away_oi_pens_4,
                        away_oi_pens_5, away_oi_pens_6]
 
-    away_pens = pd.concat(away_oi_pens_list)
+    away_pens = pd.concat(away_oi_pens_list, sort=False)
 
     away_pens = away_pens.groupby(['season', 'game_id', 'date',
                                          'player_id', 'player_name'])\
@@ -812,9 +809,6 @@ def calc_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
     shots_df = calc_on_ice_shots(pbp_df, first_skater_num, second_skater_num)
     pens_df = calc_on_ice_pens(pbp_df, first_skater_num, second_skater_num)
 
-    print(toi_df.columns)
-    print(shots_df.columns)
-    print(pens_df.columns)
     on_ice_stats_df = shots_df.merge(toi_df,
                                      on=['player_id', 'player_name'],
                                      how='outer')
@@ -830,6 +824,11 @@ def calc_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != 0]
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+
+    on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
+                                       'player_id',
+                                       'player_name', 'toi', 'CF', 'CA', 'FF', 'FA',
+                                       'SF', 'SA', 'GF', 'GA', 'xgf', 'xga', 'PENT', 'PEND']]
 
     return on_ice_stats_df.reset_index(drop=True)
 
