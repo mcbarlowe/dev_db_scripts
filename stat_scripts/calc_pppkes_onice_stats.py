@@ -4,6 +4,411 @@ this function calculates the on ice stats of players at any given strength state
 import pandas as pd
 import numpy as np
 
+def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
+    '''
+    function to calculate on ice shot metrics for all situations
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    on_ice_shots_df - dataframe of on ice shot events while player was on ice
+    '''
+
+    corsi = ['SHOT', 'BLOCK', 'MISS', 'GOAL']
+    fenwick = ['SHOT', 'MISS', 'GOAL']
+    shot = ['SHOT', 'GOAL']
+
+    home_str_df = pbp_df[(pbp_df.home_players == first_skater_num) &
+                         (pbp_df.away_players == second_skater_num) &
+                         (~pbp_df.home_goalie.isna())]
+
+    away_str_df = pbp_df[(pbp_df.home_players == first_skater_num) &
+                         (pbp_df.away_players == second_skater_num) &
+                         (~pbp_df.away_goalie.isna())]
+
+    home_shots_for_1 = home_str_df[home_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer1_id', 'homeplayer1'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_against_1 = home_str_df[home_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer1_id', 'homeplayer1'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_for_2 = home_str_df[home_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer2_id', 'homeplayer2'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_against_2 = home_str_df[home_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer2_id', 'homeplayer2'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_for_3 = home_str_df[home_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer3_id', 'homeplayer3'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal','adj_xg'].sum().reset_index()
+
+    home_shots_against_3 = home_str_df[home_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer3_id', 'homeplayer3'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal','adj_xg'].sum().reset_index()
+
+    home_shots_for_4 = home_str_df[home_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer4_id', 'homeplayer4'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_against_4 = home_str_df[home_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer4_id', 'homeplayer4'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_for_5 = home_str_df[home_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer5_id', 'homeplayer5'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_against_5 = home_str_df[home_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer5_id', 'homeplayer5'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_for_6 = home_str_df[home_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer6_id', 'homeplayer6'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    home_shots_against_6 = home_str_df[home_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'homeplayer6_id', 'homeplayer6'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+#refactor this into a for loop and store all the dataframes into a list probably
+#can do the same with the code above
+    home_shots_for_1.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    home_shots_against_1.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    home_onice_1 = home_shots_for_1.merge(home_shots_against_1,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    home_onice_1 = home_onice_1.fillna(0)
+
+    home_onice_1.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_1\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    home_shots_for_2.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    home_shots_against_2.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    home_onice_2 = home_shots_for_2.merge(home_shots_against_2,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    home_onice_2 = home_onice_2.fillna(0)
+
+    home_onice_2.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_2\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    home_shots_for_3.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    home_shots_against_3.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+
+    home_onice_3 = home_shots_for_3.merge(home_shots_against_3,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    home_onice_3 = home_onice_3.fillna(0)
+
+    home_onice_3.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_3\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    home_shots_for_4.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    home_shots_against_4.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    home_onice_4 = home_shots_for_4.merge(home_shots_against_4,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    home_onice_4 = home_onice_4.fillna(0)
+
+    home_onice_4.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_4\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    home_shots_for_5.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    home_shots_against_5.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    home_onice_5 = home_shots_for_5.merge(home_shots_against_5,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    home_onice_5 = home_onice_5.fillna(0)
+
+    home_onice_5.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_5\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    home_shots_for_6.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    home_shots_against_6.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    home_onice_6 = home_shots_for_6.merge(home_shots_against_6,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    home_onice_6 = home_onice_6.fillna(0)
+
+    home_onice_6.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_6\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    home_onice_list = [home_onice_1, home_onice_2, home_onice_3, home_onice_4,
+                       home_onice_5, home_onice_6]
+
+    home_metrics = pd.concat(home_onice_list, sort=False)
+
+    home_metrics = home_metrics.groupby(['season', 'game_id', 'date',
+                                         'player_id', 'player_name'])\
+                                ['CF', 'CA', 'FF', 'FA', 'SF', 'SA', 'GF', 'GA', 'xgf', 'xga'].sum().reset_index()
+
+    away_shots_for_1 = away_str_df[away_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer1_id', 'awayplayer1'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_against_1 = away_str_df[away_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer1_id', 'awayplayer1'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_for_2 = away_str_df[away_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer2_id', 'awayplayer2'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_against_2 = away_str_df[away_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer2_id', 'awayplayer2'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_for_3 = away_str_df[away_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer3_id', 'awayplayer3'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_against_3 = away_str_df[away_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer3_id', 'awayplayer3'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_for_4 = away_str_df[away_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer4_id', 'awayplayer4'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_against_4 = away_str_df[away_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer4_id', 'awayplayer4'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_for_5 = away_str_df[away_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer5_id', 'awayplayer5'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_against_5 = away_str_df[away_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer5_id', 'awayplayer5'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_for_6 = away_str_df[away_str_df.is_home == 0]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer6_id', 'awayplayer6'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_against_6 = away_str_df[away_str_df.is_home == 1]\
+                          .groupby(['season', 'game_id', 'date',
+                                    'awayplayer6_id', 'awayplayer6'])\
+                                  ['adj_corsi', 'adj_fenwick',
+                                   'is_shot', 'is_goal', 'adj_xg'].sum().reset_index()
+
+    away_shots_for_1.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    away_shots_against_1.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    away_onice_1 = away_shots_for_1.merge(away_shots_against_1,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    away_onice_1 = away_onice_1.fillna(0)
+
+    away_onice_1.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_1\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    away_shots_for_2.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    away_shots_against_2.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    away_onice_2 = away_shots_for_2.merge(away_shots_against_2,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    away_onice_2 = away_onice_2.fillna(0)
+
+    away_onice_2.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_2\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    away_shots_for_3.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    away_shots_against_3.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+
+    away_onice_3 = away_shots_for_3.merge(away_shots_against_3,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    away_onice_3 = away_onice_3.fillna(0)
+
+    away_onice_3.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_3\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    away_shots_for_4.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    away_shots_against_4.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    away_onice_4 = away_shots_for_4.merge(away_shots_against_4,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    away_onice_4 = away_onice_4.fillna(0)
+
+    away_onice_4.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_4\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    away_shots_for_5.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    away_shots_against_5.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    away_onice_5 = away_shots_for_5.merge(away_shots_against_5,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    away_onice_5 = away_onice_5.fillna(0)
+
+    away_onice_5.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_5\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    away_shots_for_6.columns = ['season', 'game_id', 'date', 'player_id',
+                                'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
+    away_shots_against_6.columns = ['season', 'game_id', 'date', 'player_id',
+                                    'player_name', 'CA', 'FA', 'SA', 'GA', 'xga']
+
+    away_onice_6 = away_shots_for_6.merge(away_shots_against_6,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='outer')
+
+    away_onice_6 = away_onice_6.fillna(0)
+
+    away_onice_6.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_6\
+                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
+                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+
+    away_onice_list = [away_onice_1, away_onice_2, away_onice_3, away_onice_4,
+                       away_onice_5, away_onice_6]
+
+    away_metrics = pd.concat(away_onice_list, sort=False)
+
+    away_metrics = away_metrics.groupby(['season', 'game_id', 'date',
+                                         'player_id', 'player_name'])\
+                                ['CF', 'CA', 'FF', 'FA', 'SF', 'SA', 'GF', 'GA', 'xgf', 'xga'].sum().reset_index()
+
+    away_metrics['team'] = pbp_df.away_team
+    home_metrics['team'] = pbp_df.home_team
+
+    shot_metrics = [away_metrics, home_metrics]
+
+    shot_metrics_df = pd.concat(shot_metrics, sort=False)
+
+    shot_metrics_df = shot_metrics_df[['season', 'game_id', 'date', 'team',
+                                       'player_id',
+                                       'player_name', 'CF', 'CA', 'FF', 'FA',
+                                       'SF', 'SA', 'GF', 'GA', 'xgf', 'xga']]
+    return shot_metrics_df
+
 def calc_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
     '''
     function to calculate on ice shot metrics for all situations
@@ -792,6 +1197,45 @@ def calc_on_ice_pens(pbp_df, first_skater_num, second_skater_num):
 
     return penalties_df
 
+
+def calc_adj_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
+    '''
+    this function combines all the onice stats for all situations into one
+    dataframe. These stats include shot metrics, TOI, and penalties taken and
+    drawn.
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Outputs:
+    onice_df_str - dataframe of players onice statistics at a certain strength
+    '''
+    toi_df = calc_toi(pbp_df, first_skater_num, second_skater_num)
+    shots_df = calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num)
+    pens_df = calc_on_ice_pens(pbp_df, first_skater_num, second_skater_num)
+
+    on_ice_stats_df = shots_df.merge(toi_df,
+                                     on=['player_id', 'player_name'],
+                                     how='outer')
+
+    on_ice_stats_df = on_ice_stats_df.merge(pens_df,
+                                            on=['season', 'game_id', 'date',
+                                                'player_id', 'player_name',
+                                                'team'],
+                                            how='outer')
+
+    on_ice_stats_df.loc[:, ('toi')] = round(on_ice_stats_df.loc[:, ('toi')] / 60, 2)
+
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != 0]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+
+    on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
+                                       'player_id',
+                                       'player_name', 'toi', 'CF', 'CA', 'FF', 'FA',
+                                       'SF', 'SA', 'GF', 'GA', 'xgf', 'xga', 'PENT', 'PEND']]
+
+    return on_ice_stats_df.reset_index(drop=True)
 
 def calc_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
     '''

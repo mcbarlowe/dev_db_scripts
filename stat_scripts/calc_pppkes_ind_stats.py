@@ -12,6 +12,175 @@ import numpy as np
 import calc_all_sits_ind_stats as es_metrics
 
 
+def calc_adj_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
+    '''
+    function to calculate individual shot metrics and return a data
+    frame with them
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Ouputs:
+    ind_shots_df - df with calculated iSF, iCF, iFF need to add ixG to
+                   this later once xg model is finished
+    '''
+
+    corsi = ['SHOT', 'BLOCK', 'MISS', 'GOAL']
+    fenwick = ['SHOT', 'MISS', 'GOAL']
+    shot = ['SHOT', 'GOAL']
+
+    home_5v4_df = pbp_df[(pbp_df.home_players == pp_skaters_num) &
+                         (pbp_df.away_players == pk_skaters_num) &
+                         (~pbp_df.home_goalie.isna())]
+
+    away_5v4_df = pbp_df[(pbp_df.home_players == pk_skaters_num) &
+                         (pbp_df.away_players == pp_skaters_num) &
+                         (~pbp_df.away_goalie.isna())]
+
+    home_corsi = home_5v4_df[(home_5v4_df.event.isin(corsi)) &
+                             ((home_5v4_df.p1_id == home_5v4_df.homeplayer1_id) |
+                              (home_5v4_df.p1_id == home_5v4_df.homeplayer2_id) |
+                              (home_5v4_df.p1_id == home_5v4_df.homeplayer3_id) |
+                              (home_5v4_df.p1_id == home_5v4_df.homeplayer4_id) |
+                              (home_5v4_df.p1_id == home_5v4_df.homeplayer5_id) |
+                              (home_5v4_df.p1_id == home_5v4_df.homeplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['adj_corsi'].sum().reset_index()
+
+    home_fenwick = home_5v4_df[(home_5v4_df.event.isin(fenwick)) &
+                               ((home_5v4_df.p1_id == home_5v4_df.homeplayer1_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer2_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer3_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer4_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer5_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['adj_fenwick'].sum().reset_index()
+
+    home_xg = home_5v4_df[(home_5v4_df.event.isin(fenwick)) &
+                               ((home_5v4_df.p1_id == home_5v4_df.homeplayer1_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer2_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer3_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer4_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer5_id) |
+                                (home_5v4_df.p1_id == home_5v4_df.homeplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['adj_xg'].sum().reset_index()
+
+    home_shot = home_5v4_df[(home_5v4_df.event.isin(corsi)) &
+                            ((home_5v4_df.p1_id == home_5v4_df.homeplayer1_id) |
+                             (home_5v4_df.p1_id == home_5v4_df.homeplayer2_id) |
+                             (home_5v4_df.p1_id == home_5v4_df.homeplayer3_id) |
+                             (home_5v4_df.p1_id == home_5v4_df.homeplayer4_id) |
+                             (home_5v4_df.p1_id == home_5v4_df.homeplayer5_id) |
+                             (home_5v4_df.p1_id == home_5v4_df.homeplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['is_shot'].sum().reset_index()
+
+    home_corsi.columns = ['season', 'game_id', 'date',  'player_id',
+                          'player_name', 'iCF']
+
+    home_fenwick.columns = ['season', 'game_id', 'date',
+                            'player_id', 'player_name', 'iFF']
+
+    home_shot.columns = ['season', 'game_id', 'date',
+                         'player_id', 'player_name', 'iSF']
+
+    home_xg.columns = ['season', 'game_id', 'date',
+                       'player_id', 'player_name', 'ixg']
+
+    home_metrics_df = home_corsi.merge(home_fenwick,
+                                       on=['season', 'game_id', 'date',
+                                           'player_id', 'player_name'],
+                                       how='outer')
+
+    home_metrics_df = home_metrics_df.merge(home_shot,
+                                            on=['season', 'game_id', 'date',
+                                                'player_id', 'player_name'],
+                                            how='outer')
+
+    home_metrics_df = home_metrics_df.merge(home_xg,
+                                            on=['season', 'game_id', 'date',
+                                                'player_id', 'player_name'],
+                                            how='outer')
+
+    home_metrics_df = home_metrics_df.fillna(0)
+
+    away_corsi = away_5v4_df[(away_5v4_df.event.isin(corsi)) &
+                             ((away_5v4_df.p1_id == away_5v4_df.awayplayer1_id) |
+                              (away_5v4_df.p1_id == away_5v4_df.awayplayer2_id) |
+                              (away_5v4_df.p1_id == away_5v4_df.awayplayer3_id) |
+                              (away_5v4_df.p1_id == away_5v4_df.awayplayer4_id) |
+                              (away_5v4_df.p1_id == away_5v4_df.awayplayer5_id) |
+                              (away_5v4_df.p1_id == away_5v4_df.awayplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['is_corsi'].sum().reset_index()
+
+    away_fenwick = away_5v4_df[(away_5v4_df.event.isin(fenwick)) &
+                               ((away_5v4_df.p1_id == away_5v4_df.awayplayer1_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer2_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer3_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer4_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer5_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['is_fenwick'].sum().reset_index()
+
+    away_xg = away_5v4_df[(away_5v4_df.event.isin(fenwick)) &
+                               ((away_5v4_df.p1_id == away_5v4_df.awayplayer1_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer2_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer3_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer4_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer5_id) |
+                                (away_5v4_df.p1_id == away_5v4_df.awayplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['xg'].sum().reset_index()
+
+    away_shot = away_5v4_df[(away_5v4_df.event.isin(corsi)) &
+                            ((away_5v4_df.p1_id == away_5v4_df.awayplayer1_id) |
+                             (away_5v4_df.p1_id == away_5v4_df.awayplayer2_id) |
+                             (away_5v4_df.p1_id == away_5v4_df.awayplayer3_id) |
+                             (away_5v4_df.p1_id == away_5v4_df.awayplayer4_id) |
+                             (away_5v4_df.p1_id == away_5v4_df.awayplayer5_id) |
+                             (away_5v4_df.p1_id == away_5v4_df.awayplayer6_id))].\
+                 groupby(['season', 'game_id', 'date',
+                          'p1_id', 'p1_name'])['is_shot'].sum().reset_index()
+
+    away_corsi.columns = ['season', 'game_id', 'date',  'player_id',
+                          'player_name', 'iCF']
+
+    away_fenwick.columns = ['season', 'game_id', 'date',
+                            'player_id', 'player_name', 'iFF']
+
+    away_shot.columns = ['season', 'game_id', 'date',
+                         'player_id', 'player_name', 'iSF']
+
+    away_xg.columns = ['season', 'game_id', 'date',
+                         'player_id', 'player_name', 'ixg']
+
+    away_metrics_df = away_corsi.merge(away_fenwick,
+                                       on=['season', 'game_id', 'date',
+                                           'player_id', 'player_name'],
+                                       how='outer')
+
+    away_metrics_df = away_metrics_df.merge(away_shot,
+                                            on=['season', 'game_id', 'date',
+                                                'player_id', 'player_name'],
+                                            how='outer')
+
+    away_metrics_df = away_metrics_df.merge(away_xg,
+                                            on=['season', 'game_id', 'date',
+                                                'player_id', 'player_name'],
+                                            how='outer')
+
+    away_metrics_df = away_metrics_df.fillna(0)
+
+    metrics_df = pd.concat([away_metrics_df, home_metrics_df], sort=False)
+
+    metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')] = \
+        metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')].astype(int)
+
+    return metrics_df
 def calc_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
     '''
     function to calculate individual shot metrics and return a data
@@ -700,6 +869,91 @@ def calc_ppespk_ind_metrics(pbp_df, pp_skaters_num,
     player_df - individual player stats df
     '''
 
+#calculate each individual stats data frames and then join them all together
+#will pull in teams with the on ice measures
+    points_df = calc_points(pbp_df, pp_skaters_num, pk_skaters_num)
+    metrics_df = calc_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num)
+    penalty_df = calc_penalties(pbp_df, pp_skaters_num, pk_skaters_num)
+    hit_df = calc_hits(pbp_df, pp_skaters_num, pk_skaters_num)
+    gata_df = calc_gata(pbp_df, pp_skaters_num, pk_skaters_num)
+    fo_df = calc_fo(pbp_df, pp_skaters_num, pk_skaters_num)
+    blk_df = calc_blk(pbp_df, pp_skaters_num, pk_skaters_num)
+
+    ind_stats_df = metrics_df.merge(points_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                    how='outer')
+
+    ind_stats_df = ind_stats_df.merge(penalty_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(hit_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(gata_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(fo_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(blk_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.fillna(0)
+
+
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
+
+
+    ind_stats_df = ind_stats_df[['season', 'game_id', 'date', 'player_id', 'player_name',
+                                 'iCF', 'iFF', 'iSF', 'ixg', 'g',
+                                 'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                                 'iGA', 'iTA', 'FOW', 'FOL', 'BLK']]
+
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+
+    return ind_stats_df
+
+def calc_adj_ppespk_ind_metrics(pbp_df, pp_skaters_num,
+                                pk_skaters_num, calc_blk=calc_pp_blocks, \
+                                calc_fo=calc_pp_faceoffs,
+                                calc_points=calc_pp_ind_points,
+                                calc_penalties=calc_pp_penalties,
+                                calc_hits=calc_ind_hits,
+                                calc_shot_metrics=calc_adj_ind_shot_metrics,
+                                calc_gata=calc_pp_gata):
+    '''
+    this function calculates the individual metrics of each players
+    contribution during the game
+
+    Input:
+    pbp_df - play by play df
+    pp_skaters_num - the first number of the strength state wanted for 5v5
+                     would be 6 because of the scraper for 4v5 would be five
+    pk_skaters_num - the second number of the strength state wanted for 5v5
+                     would be 6 because of the scraper for 4v5 would be six
+
+    Output:
+    player_df - individual player stats df
+    '''
+
 
 
 
@@ -758,6 +1012,10 @@ def calc_ppespk_ind_metrics(pbp_df, pp_skaters_num,
                                  'iCF', 'iFF', 'iSF', 'ixg', 'g',
                                  'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
                                  'iGA', 'iTA', 'FOW', 'FOL', 'BLK']]
+
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
 
     return ind_stats_df
 

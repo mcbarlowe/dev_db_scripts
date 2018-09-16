@@ -55,6 +55,73 @@ def calc_ind_points(pbp_df):
 
     return points_df
 
+def calc_adj_ind_shot_metrics(pbp_df):
+    '''
+    function to calculate adjusted individual shot metrics and return a data
+    frame with them
+
+    Inputs:
+    pbp_df - play by play dataframe
+
+    Ouputs:
+    ind_shots_df - df with calculated iSF, iCF, iFF need to add ixG to
+                   this later once xg model is finished
+    '''
+
+    corsi = ['SHOT', 'BLOCK', 'MISS', 'GOAL']
+    fenwick = ['SHOT', 'MISS', 'GOAL']
+    shot = ['SHOT', 'GOAL']
+
+    corsi_df = pbp_df[pbp_df.event.isin(corsi)]\
+              .groupby(['season', 'game_id', 'date',
+                        'p1_id', 'p1_name'])['adj_corsi'].sum().reset_index()
+
+    fenwick_df = pbp_df[pbp_df.event.isin(fenwick)]\
+                 .groupby(['season', 'game_id', 'date',
+                           'p1_id', 'p1_name'])['adj_fenwick'].sum().reset_index()
+
+    shot_df = pbp_df[pbp_df.event.isin(shot)]\
+                 .groupby(['season', 'game_id', 'date',
+                           'p1_id', 'p1_name'])['is_shot'].sum().reset_index()
+
+    xg_df = pbp_df[pbp_df.event.isin(fenwick)]\
+                 .groupby(['season', 'game_id', 'date',
+                           'p1_id', 'p1_name'])['adj_xg'].sum().reset_index()
+
+    corsi_df.columns = ['season', 'game_id', 'date',  'player_id',
+                        'player_name', 'iCF']
+
+    fenwick_df.columns = ['season', 'game_id', 'date',
+                          'player_id', 'player_name', 'iFF']
+
+    shot_df.columns = ['season', 'game_id', 'date',
+                       'player_id', 'player_name', 'iSF']
+
+    xg_df.columns = ['season', 'game_id', 'date',
+                     'player_id', 'player_name', 'ixg']
+
+    metrics_df = corsi_df.merge(fenwick_df,
+                                on=['season', 'game_id', 'date',
+                                    'player_id', 'player_name'],
+                                how='outer')
+
+    metrics_df = metrics_df.merge(shot_df,
+                                  on=['season', 'game_id', 'date',
+                                      'player_id', 'player_name'],
+                                  how='outer')
+
+    metrics_df = metrics_df.merge(xg_df,
+                                  on=['season', 'game_id', 'date',
+                                      'player_id', 'player_name'],
+                                  how='outer')
+
+    metrics_df = metrics_df.fillna(0)
+
+    metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')] = \
+        metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')].astype(int)
+
+    return metrics_df
+
 def calc_ind_shot_metrics(pbp_df):
     '''
     function to calculate individual shot metrics and return a data
@@ -282,6 +349,78 @@ def calc_blocks(pbp_df):
                       'player_id', 'player_name', 'BLK']
     return blk_df
 
+def calc_adj_ind_metrics(pbp_df, calc_blk=calc_blocks, \
+                         calc_fo=calc_faceoffs,
+                         calc_points=calc_ind_points,
+                         calc_penalties=calc_ind_penalties,
+                         calc_hits=calc_ind_hits,
+                         calc_shot_metrics=calc_adj_ind_shot_metrics,
+                         calc_gata=calc_ind_gata):
+    '''
+    this function calculates the individual metrics of each players
+    contribution during the game
+
+    Input:
+    pbp_df - play by play df
+
+    Output:
+    player_df - individual player stats df
+    '''
+
+#calculate each individual stats data frames and then join them all together
+#will pull in teams with the on ice measures
+    points_df = calc_points(pbp_df)
+    metrics_df = calc_shot_metrics(pbp_df)
+    penalty_df = calc_penalties(pbp_df)
+    hit_df = calc_hits(pbp_df)
+    gata_df = calc_gata(pbp_df)
+    fo_df = calc_fo(pbp_df)
+    blk_df = calc_blk(pbp_df)
+
+    ind_stats_df = metrics_df.merge(points_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                    how='outer')
+
+    ind_stats_df = ind_stats_df.merge(penalty_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(hit_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(gata_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(fo_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+
+    ind_stats_df = ind_stats_df.merge(blk_df,
+                                      on=['season', 'game_id', 'date',
+                                          'player_id', 'player_name'],
+                                      how='outer')
+    ind_stats_df = ind_stats_df.fillna(0)
+
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \
+    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
+
+
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+
+    return ind_stats_df.reset_index()
 def calc_ind_metrics(pbp_df, calc_blk=calc_blocks, \
                      calc_fo=calc_faceoffs,
                      calc_points=calc_ind_points,
