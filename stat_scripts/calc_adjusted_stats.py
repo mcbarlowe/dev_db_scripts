@@ -51,6 +51,10 @@ def calc_adjusted_columns(row, adj_matrix=score_venue_adj_dic):
                              row['xg'] * .9468472,
                              row['xg'] * 1.059477)
 
+    row[['adj_corsi', 'adj_fenwick', 'adj_xg']] = row[['adj_corsi', 'adj_fenwick', 'adj_xg']].fillna(0)
+    row[['adj_corsi', 'adj_fenwick', 'adj_xg']] = row[['adj_corsi', 'adj_fenwick', 'adj_xg']].astype(float)
+
+
     return row
 
 
