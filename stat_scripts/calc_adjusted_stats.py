@@ -39,14 +39,13 @@ def calc_adjusted_columns(row, adj_matrix=score_venue_adj_dic):
     row - play by play dataframe row with adjusted corsi, fenwick and xg columns
              calculated
     '''
-    print(row)
     row['adj_corsi'] = np.where(row['is_home'] == 1,
-                                   row['is_corsi'] * adj_matrix[row.score_diff.values[0]]['home_weight'],
-                                   row['is_corsi'] * adj_matrix[row.score_diff.values[0]]['away_weight'])
+                                   row['is_corsi'] * adj_matrix[row.score_diff]['home_weight'],
+                                   row['is_corsi'] * adj_matrix[row.score_diff]['away_weight'])
 
     row['adj_fenwick'] = np.where(row['is_home'] == 1,
-                                   row['is_corsi'] * adj_matrix[row.score_diff.values[0]]['home_weight'],
-                                   row['is_corsi'] * adj_matrix[row.score_diff.values[0]]['away_weight'])
+                                   row['is_fenwick'] * adj_matrix[row.score_diff]['home_weight'],
+                                   row['is_fenwick'] * adj_matrix[row.score_diff]['away_weight'])
 
     row['adj_xg'] = np.where(row['is_home'] == 1,
                              row['xg'] * .9468472,

@@ -84,6 +84,10 @@ def calc_ind_shot_metrics(pbp_df):
                  .groupby(['season', 'game_id', 'date',
                            'p1_id', 'p1_name'])['is_shot'].sum().reset_index()
 
+    xg_df = pbp_df[pbp_df.event.isin(fenwick)]\
+                 .groupby(['season', 'game_id', 'date',
+                           'p1_id', 'p1_name'])['xg'].sum().reset_index()
+
     corsi_df.columns = ['season', 'game_id', 'date',  'player_id',
                         'player_name', 'iCF']
 
@@ -93,12 +97,20 @@ def calc_ind_shot_metrics(pbp_df):
     shot_df.columns = ['season', 'game_id', 'date',
                        'player_id', 'player_name', 'iSF']
 
+    xg_df.columns = ['season', 'game_id', 'date',
+                     'player_id', 'player_name', 'ixg']
+
     metrics_df = corsi_df.merge(fenwick_df,
                                 on=['season', 'game_id', 'date',
                                     'player_id', 'player_name'],
                                 how='outer')
 
     metrics_df = metrics_df.merge(shot_df,
+                                  on=['season', 'game_id', 'date',
+                                      'player_id', 'player_name'],
+                                  how='outer')
+
+    metrics_df = metrics_df.merge(xg_df,
                                   on=['season', 'game_id', 'date',
                                       'player_id', 'player_name'],
                                   how='outer')
@@ -341,7 +353,7 @@ def calc_ind_metrics(pbp_df, calc_blk=calc_blocks, \
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
 
-    return ind_stats_df.reset_index(drop=True)
+    return ind_stats_df.reset_index()
 
 def main():
 

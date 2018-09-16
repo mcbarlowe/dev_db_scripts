@@ -303,7 +303,7 @@ def get_game_length(game_df, game, teams):
 
     # If the last shift was an overtime shift, then extend the list of seconds by how fair into OT the game went
     if game_df['period'][game_df.shape[0] - 1] == 4:
-        seconds.extend(list(range(0, game_df['end'][game_df.shape[0] - 1] + 1)))
+        seconds.extend(list(range(0, game_df['end'][game_df.shape[0] - 1].astype(int) + 1)))
 
     # For Playoff Games
     # If the game went beyond 4 periods tack that on to

@@ -396,6 +396,10 @@ def calc_xg(pbp_df):
     fenwick_pbp = pd.get_dummies(pbp_df[pbp_df.event.isin(['SHOT', 'GOAL', 'MISS'])],
                                      columns=['type'])
 
+    for column in feature_columns:
+        if column not in fenwick_pbp.columns:
+            fenwick_pbp[column] = 0
+
     fenwick_pbp_nona = fenwick_pbp[~fenwick_pbp[feature_columns].isnull().any(axis=1)]
 
     fenwick_pbp_nona['xg'] = gbm_model.predict_proba(fenwick_pbp_nona[feature_columns])[:, 1]
