@@ -23,8 +23,8 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
                          (pbp_df.away_players == second_skater_num) &
                          (~pbp_df.home_goalie.isna())]
 
-    away_str_df = pbp_df[(pbp_df.home_players == first_skater_num) &
-                         (pbp_df.away_players == second_skater_num) &
+    away_str_df = pbp_df[(pbp_df.home_players == second_skater_num) &
+                         (pbp_df.away_players == first_skater_num) &
                          (~pbp_df.away_goalie.isna())]
 
     home_shots_for_1 = home_str_df[home_str_df.is_home == 1]\
@@ -113,10 +113,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     home_onice_1 = home_onice_1.fillna(0)
 
-    home_onice_1.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_1\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    home_onice_1.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = home_onice_1\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF','SA', 'GA')].astype(int)
 
     home_shots_for_2.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -130,10 +130,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     home_onice_2 = home_onice_2.fillna(0)
 
-    home_onice_2.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_2\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    home_onice_2.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'GA')] = home_onice_2\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF','SA', 'GA')].astype(int)
 
     home_shots_for_3.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -148,10 +148,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     home_onice_3 = home_onice_3.fillna(0)
 
-    home_onice_3.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_3\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    home_onice_3.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF','SA', 'GA')] = home_onice_3\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
     home_shots_for_4.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
     home_shots_against_4.columns = ['season', 'game_id', 'date', 'player_id',
@@ -164,10 +164,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     home_onice_4 = home_onice_4.fillna(0)
 
-    home_onice_4.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_4\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    home_onice_4.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF','SA', 'GA')] = home_onice_4\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     home_shots_for_5.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -181,10 +181,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     home_onice_5 = home_onice_5.fillna(0)
 
-    home_onice_5.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_5\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    home_onice_5.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = home_onice_5\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     home_shots_for_6.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -198,10 +198,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     home_onice_6 = home_onice_6.fillna(0)
 
-    home_onice_6.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = home_onice_6\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    home_onice_6.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = home_onice_6\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     home_onice_list = [home_onice_1, home_onice_2, home_onice_3, home_onice_4,
                        home_onice_5, home_onice_6]
@@ -296,10 +296,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     away_onice_1 = away_onice_1.fillna(0)
 
-    away_onice_1.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_1\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    away_onice_1.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = away_onice_1\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     away_shots_for_2.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -313,10 +313,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     away_onice_2 = away_onice_2.fillna(0)
 
-    away_onice_2.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_2\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    away_onice_2.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = away_onice_2\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     away_shots_for_3.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -331,10 +331,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     away_onice_3 = away_onice_3.fillna(0)
 
-    away_onice_3.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_3\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    away_onice_3.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = away_onice_3\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     away_shots_for_4.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -348,10 +348,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     away_onice_4 = away_onice_4.fillna(0)
 
-    away_onice_4.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_4\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    away_onice_4.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF','SA', 'GA')] = away_onice_4\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     away_shots_for_5.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -365,10 +365,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     away_onice_5 = away_onice_5.fillna(0)
 
-    away_onice_5.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_5\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    away_onice_5.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = away_onice_5\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     away_shots_for_6.columns = ['season', 'game_id', 'date', 'player_id',
                                 'player_name', 'CF', 'FF', 'SF', 'GF', 'xgf']
@@ -382,10 +382,10 @@ def calc_adj_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
 
     away_onice_6 = away_onice_6.fillna(0)
 
-    away_onice_6.loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                         'GF', 'CA', 'FA', 'SA', 'GA')] = away_onice_6\
-                    .loc[:, ('season', 'game_id', 'player_id', 'CF', 'FF', 'SF',
-                             'GF', 'CA', 'FA', 'SA', 'GA')].astype(int)
+    away_onice_6.loc[:, ('season', 'game_id', 'player_id', 'SF',
+                         'GF', 'SA', 'GA')] = away_onice_6\
+                    .loc[:, ('season', 'game_id', 'player_id', 'SF',
+                             'GF', 'SA', 'GA')].astype(int)
 
     away_onice_list = [away_onice_1, away_onice_2, away_onice_3, away_onice_4,
                        away_onice_5, away_onice_6]
@@ -428,8 +428,8 @@ def calc_on_ice_shots(pbp_df, first_skater_num, second_skater_num):
                          (pbp_df.away_players == second_skater_num) &
                          (~pbp_df.home_goalie.isna())]
 
-    away_str_df = pbp_df[(pbp_df.home_players == first_skater_num) &
-                         (pbp_df.away_players == second_skater_num) &
+    away_str_df = pbp_df[(pbp_df.home_players == second_skater_num) &
+                         (pbp_df.away_players == first_skater_num) &
                          (~pbp_df.away_goalie.isna())]
 
     home_shots_for_1 = home_str_df[home_str_df.is_home == 1]\
@@ -829,8 +829,8 @@ def calc_toi(pbp_df, first_skater_num, second_skater_num):
                          (pbp_df.away_players == second_skater_num) &
                          (~pbp_df.home_goalie.isna())]
 
-    away_str_df = pbp_df[(pbp_df.home_players == first_skater_num) &
-                         (pbp_df.away_players == second_skater_num) &
+    away_str_df = pbp_df[(pbp_df.home_players == second_skater_num) &
+                         (pbp_df.away_players == first_skater_num) &
                          (~pbp_df.away_goalie.isna())]
 #compiling toi for each player column in the pbp_df to make sure that every
 #player is accounted for as the player columns are not any set position
@@ -898,8 +898,8 @@ def calc_on_ice_pens(pbp_df, first_skater_num, second_skater_num):
                          (pbp_df.away_players == second_skater_num) &
                          (~pbp_df.home_goalie.isna())]
 
-    away_str_df = pbp_df[(pbp_df.home_players == first_skater_num) &
-                         (pbp_df.away_players == second_skater_num) &
+    away_str_df = pbp_df[(pbp_df.home_players == second_skater_num) &
+                         (pbp_df.away_players == first_skater_num) &
                          (~pbp_df.away_goalie.isna())]
 
     home_pens_drawn_1 = home_str_df[home_str_df.is_home == 0]\

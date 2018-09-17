@@ -7,6 +7,10 @@ import xg_prepare as xg
 import merge_shift_and_pbp as oi_matrix
 import clean_pbp
 import calc_adjusted_stats
+from calc_all_sits_ind_stats import calc_ind_metrics, calc_adj_ind_metrics
+from calc_all_sits_onice_stats import calc_onice_stats, calc_adj_onice_stats
+from calc_pppkes_ind_stats import calc_ppespk_ind_metrics, calc_adj_ppespk_ind_metrics
+from calc_pppkes_onice_stats import calc_onice_str_stats, calc_adj_onice_str_stats
 
 def get_yest_games(date):
     '''
@@ -158,6 +162,187 @@ def main():
 
     #TODO calc all player individual, on-ice, and relative stats for all strengths
     #both adjusted and unadjusted
+        as_ind_stats = calc_ind_metrics(new_pbp_df)
+        as_onice_stats = calc_onice_stats(new_pbp_df)
+        as_adj_ind_stats = calc_adj_ind_metrics(new_pbp_df)
+        as_adj_onice_stats = calc_adj_onice_stats(new_pbp_df)
+
+        ind_stats_5v5 = calc_ppespk_ind_metrics(new_pbp_df, 6, 6)
+        onice_stats_5v5 = calc_onice_str_stats(new_pbp_df, 6, 6)
+        ind_stats_5v5_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 6, 6)
+        onice_stats_5v5_adj = calc_adj_onice_str_stats(new_pbp_df, 6, 6)
+
+        ind_stats_4v4 = calc_ppespk_ind_metrics(new_pbp_df, 5, 5)
+        onice_stats_4v4 = calc_onice_str_stats(new_pbp_df, 5, 5)
+        ind_stats_4v4_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 5, 5)
+        onice_stats_4v4_adj = calc_adj_onice_str_stats(new_pbp_df, 5, 5)
+
+        ind_stats_3v3 = calc_ppespk_ind_metrics(new_pbp_df, 4, 4)
+        onice_stats_3v3 = calc_onice_str_stats(new_pbp_df, 4, 4)
+        ind_stats_3v3_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 4, 4)
+        onice_stats_3v3_adj = calc_adj_onice_str_stats(new_pbp_df, 4, 4)
+
+        ind_stats_5v4 = calc_ppespk_ind_metrics(new_pbp_df, 6, 5)
+        onice_stats_5v4 = calc_onice_str_stats(new_pbp_df, 6, 5)
+        ind_stats_5v4_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 6, 5)
+        onice_stats_5v4_adj = calc_adj_onice_str_stats(new_pbp_df, 6, 5)
+
+        ind_stats_4v5 = calc_ppespk_ind_metrics(new_pbp_df, 5, 6)
+        onice_stats_4v5 = calc_onice_str_stats(new_pbp_df, 5, 6)
+        ind_stats_4v5_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 5, 6)
+        onice_stats_4v5_adj = calc_adj_onice_str_stats(new_pbp_df, 5, 6)
+
+        ind_stats_4v3 = calc_ppespk_ind_metrics(new_pbp_df, 5, 4)
+        onice_stats_4v3 = calc_onice_str_stats(new_pbp_df, 5, 4)
+        ind_stats_4v3_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 5, 4)
+        onice_stats_4v3_adj = calc_adj_onice_str_stats(new_pbp_df, 5, 4)
+
+        ind_stats_3v4 = calc_ppespk_ind_metrics(new_pbp_df, 4, 5)
+        onice_stats_3v4 = calc_onice_str_stats(new_pbp_df, 4, 5)
+        ind_stats_3v4_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 4, 5)
+        onice_stats_3v4_adj = calc_adj_onice_str_stats(new_pbp_df, 4, 5)
+
+        ind_stats_5v3 = calc_ppespk_ind_metrics(new_pbp_df, 6, 4)
+        onice_stats_5v3 = calc_onice_str_stats(new_pbp_df, 6, 4)
+        ind_stats_5v3_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 6, 4)
+        onice_stats_5v3_adj = calc_adj_onice_str_stats(new_pbp_df, 6, 4)
+
+        ind_stats_3v5 = calc_ppespk_ind_metrics(new_pbp_df, 4, 6)
+        onice_stats_3v5 = calc_onice_str_stats(new_pbp_df, 4, 6)
+        ind_stats_3v5_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 4, 6)
+        onice_stats_3v5_adj = calc_adj_onice_str_stats(new_pbp_df, 4, 6)
+
+        as_stats = as_onice_stats.merge(as_ind_stats,
+                                        on=['season', 'game_id', 'date',
+                                            'player_id', 'player_name'],
+                                        how='left')
+        as_stats = as_stats.fillna(0)
+
+        as_stats_adj = as_adj_onice_stats.merge(as_adj_ind_stats,
+                                               on=['season', 'game_id', 'date',
+                                                   'player_id', 'player_name'],
+                                               how='left')
+        as_stats_adj = as_stats_adj.fillna(0)
+
+        stats_5v5 = onice_stats_5v5.merge(ind_stats_5v5,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+        stats_5v5 = stats_5v5.fillna(0)
+
+        stats_5v5_adj = onice_stats_5v5_adj.merge(ind_stats_5v5_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_5v5_adj = stats_5v5_adj.fillna(0)
+
+        stats_4v4 = onice_stats_4v4.merge(ind_stats_4v4,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_4v4 = stats_4v4.fillna(0)
+
+        stats_4v4_adj = onice_stats_4v4_adj.merge(ind_stats_4v4_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_4v4_adj = stats_4v4_adj.fillna(0)
+
+        stats_4v3 = onice_stats_4v3.merge(ind_stats_4v3,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_4v3 = stats_4v3.fillna(0)
+
+        stats_4v3_adj = onice_stats_4v3_adj.merge(ind_stats_4v3_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_4v3_adj = stats_4v3_adj.fillna(0)
+
+        stats_3v4 = onice_stats_3v4.merge(ind_stats_3v4,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_3v4 = stats_3v4.fillna(0)
+
+        stats_3v4_adj = onice_stats_3v4_adj.merge(ind_stats_3v4_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_3v4_adj = stats_3v4_adj.fillna(0)
+
+        stats_3v3 = onice_stats_3v3.merge(ind_stats_3v3,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_3v3 = stats_3v3.fillna(0)
+
+        stats_3v3_adj = onice_stats_3v3_adj.merge(ind_stats_3v3_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_3v3_adj = stats_3v3_adj.fillna(0)
+
+        stats_5v4 = onice_stats_5v4.merge(ind_stats_5v4,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_5v4 = stats_5v4.fillna(0)
+
+        stats_5v4_adj = onice_stats_5v4_adj.merge(ind_stats_5v4_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_5v4_adj = stats_5v4_adj.fillna(0)
+
+        stats_4v5 = onice_stats_4v5.merge(ind_stats_4v5,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+        stats_4v5 = stats_4v5.fillna(0)
+
+        stats_4v5_adj = onice_stats_4v5_adj.merge(ind_stats_4v5_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+
+        stats_4v5_adj = stats_4v5_adj.fillna(0)
+
+        stats_5v3 = onice_stats_5v3.merge(ind_stats_5v3,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+        stats_5v3 = stats_5v3.fillna(0)
+
+        stats_5v3_adj = onice_stats_5v3_adj.merge(ind_stats_5v3_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+        stats_5v3_adj = stats_5v3_adj.fillna(0)
+
+        stats_3v5 = onice_stats_3v5.merge(ind_stats_3v5,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+        stats_3v5 = stats_3v5.fillna(0)
+
+        stats_3v5_adj = onice_stats_3v5_adj.merge(ind_stats_3v5_adj,
+                                          on=['season', 'game_id', 'date',
+                                              'player_id', 'player_name'],
+                                          how='left')
+        stats_3v5_adj = stats_3v5_adj.fillna(0)
 
     #TODO calc team stats for all strengths adjusted/unadjusted
 

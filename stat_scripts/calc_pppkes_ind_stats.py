@@ -114,7 +114,7 @@ def calc_adj_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
                               (away_5v4_df.p1_id == away_5v4_df.awayplayer5_id) |
                               (away_5v4_df.p1_id == away_5v4_df.awayplayer6_id))].\
                  groupby(['season', 'game_id', 'date',
-                          'p1_id', 'p1_name'])['is_corsi'].sum().reset_index()
+                          'p1_id', 'p1_name'])['adj_corsi'].sum().reset_index()
 
     away_fenwick = away_5v4_df[(away_5v4_df.event.isin(fenwick)) &
                                ((away_5v4_df.p1_id == away_5v4_df.awayplayer1_id) |
@@ -124,7 +124,7 @@ def calc_adj_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
                                 (away_5v4_df.p1_id == away_5v4_df.awayplayer5_id) |
                                 (away_5v4_df.p1_id == away_5v4_df.awayplayer6_id))].\
                  groupby(['season', 'game_id', 'date',
-                          'p1_id', 'p1_name'])['is_fenwick'].sum().reset_index()
+                          'p1_id', 'p1_name'])['adj_fenwick'].sum().reset_index()
 
     away_xg = away_5v4_df[(away_5v4_df.event.isin(fenwick)) &
                                ((away_5v4_df.p1_id == away_5v4_df.awayplayer1_id) |
@@ -134,7 +134,7 @@ def calc_adj_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
                                 (away_5v4_df.p1_id == away_5v4_df.awayplayer5_id) |
                                 (away_5v4_df.p1_id == away_5v4_df.awayplayer6_id))].\
                  groupby(['season', 'game_id', 'date',
-                          'p1_id', 'p1_name'])['xg'].sum().reset_index()
+                          'p1_id', 'p1_name'])['adj_xg'].sum().reset_index()
 
     away_shot = away_5v4_df[(away_5v4_df.event.isin(corsi)) &
                             ((away_5v4_df.p1_id == away_5v4_df.awayplayer1_id) |
@@ -928,6 +928,8 @@ def calc_ppespk_ind_metrics(pbp_df, pp_skaters_num,
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
     return ind_stats_df
 
@@ -1016,6 +1018,8 @@ def calc_adj_ppespk_ind_metrics(pbp_df, pp_skaters_num,
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
+    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
     return ind_stats_df
 
