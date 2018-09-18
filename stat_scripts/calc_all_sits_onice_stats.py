@@ -1161,6 +1161,7 @@ def calc_on_ice_pens(pbp_df):
 
     penalties_df = penalties_df[['season', 'game_id', 'date', 'team',
                                  'player_id', 'player_name', 'PENT', 'PEND']]
+    penalties_df[['game_id']] = penalties_df[['game_id']].astype(int)
 
     return penalties_df
 
@@ -1200,7 +1201,8 @@ def calc_adj_onice_stats(pbp_df):
 
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id', 'player_name', 'toi', 'CF',
-                                       'CA', 'FF', 'FA', 'SF', 'SA', 'GF', 'xga', 'xgf']]
+                                       'CA', 'FF', 'FA', 'SF', 'SA', 'GF',
+                                       'GA', 'xga', 'xgf']]
 
     return on_ice_stats_df.reset_index(drop=True)
 
@@ -1240,7 +1242,8 @@ def calc_onice_stats(pbp_df):
 
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id', 'player_name', 'toi', 'CF',
-                                       'CA', 'FF', 'FA', 'SF', 'SA', 'GF', 'xga', 'xgf']]
+                                       'CA', 'FF', 'FA', 'SF', 'SA', 'GF',
+                                       'GA', 'xga', 'xgf']]
 
     return on_ice_stats_df.reset_index(drop=True)
 

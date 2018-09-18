@@ -1195,6 +1195,8 @@ def calc_on_ice_pens(pbp_df, first_skater_num, second_skater_num):
     penalties_df = penalties_df[['season', 'game_id', 'date', 'team',
                                  'player_id', 'player_name', 'PENT', 'PEND']]
 
+    penalties_df.loc[:, ('game_id')] = penalties_df.loc[:, ('game_id')].astype(int)
+
     return penalties_df
 
 
@@ -1229,6 +1231,8 @@ def calc_adj_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != 0]
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id',
@@ -1268,6 +1272,8 @@ def calc_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != 0]
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
+    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id',

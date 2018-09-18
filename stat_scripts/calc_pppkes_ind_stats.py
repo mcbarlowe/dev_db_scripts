@@ -177,8 +177,8 @@ def calc_adj_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
 
     metrics_df = pd.concat([away_metrics_df, home_metrics_df], sort=False)
 
-    metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')] = \
-        metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')].astype(int)
+    metrics_df.loc[:, ('player_id', 'game_id','iCF', 'iFF', 'iSF')] = \
+        metrics_df.loc[:, ('player_id', 'game_id', 'iCF', 'iFF', 'iSF')].astype(int)
 
     return metrics_df
 def calc_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
@@ -346,8 +346,8 @@ def calc_ind_shot_metrics(pbp_df, pp_skaters_num, pk_skaters_num):
 
     metrics_df = pd.concat([away_metrics_df, home_metrics_df], sort=False)
 
-    metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')] = \
-        metrics_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF')].astype(int)
+    metrics_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF')] = \
+        metrics_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF')].astype(int)
 
     return metrics_df
 
@@ -931,7 +931,7 @@ def calc_ppespk_ind_metrics(pbp_df, pp_skaters_num,
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
-    return ind_stats_df
+    return ind_stats_df.reset_index(drop=True)
 
 def calc_adj_ppespk_ind_metrics(pbp_df, pp_skaters_num,
                                 pk_skaters_num, calc_blk=calc_pp_blocks, \
@@ -1002,10 +1002,10 @@ def calc_adj_ppespk_ind_metrics(pbp_df, pp_skaters_num,
     ind_stats_df = ind_stats_df.fillna(0)
 
 
-    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+    ind_stats_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF', 'g',
                          'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
                          'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \
-    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+    ind_stats_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF', 'g',
                          'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
                          'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
 
@@ -1021,7 +1021,7 @@ def calc_adj_ppespk_ind_metrics(pbp_df, pp_skaters_num,
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
-    return ind_stats_df
+    return ind_stats_df.reset_index(drop=True)
 
 def main():
 

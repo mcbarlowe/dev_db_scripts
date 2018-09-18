@@ -409,6 +409,17 @@ def calc_adj_ind_metrics(pbp_df, calc_blk=calc_blocks, \
     ind_stats_df = ind_stats_df.fillna(0)
 
 
+    ind_stats_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \
+    ind_stats_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF', 'g',
+                         'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                         'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
+
+    ind_stats_df = ind_stats_df[['season', 'game_id', 'date', 'player_id', 'player_name',
+                                 'iCF', 'iFF', 'iSF', 'ixg', 'g',
+                                 'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                                 'iGA', 'iTA', 'FOW', 'FOL', 'BLK']]
 
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
@@ -416,7 +427,7 @@ def calc_adj_ind_metrics(pbp_df, calc_blk=calc_blocks, \
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
-    return ind_stats_df.reset_index()
+    return ind_stats_df.reset_index(drop=True)
 
 def calc_ind_metrics(pbp_df, calc_blk=calc_blocks, \
                      calc_fo=calc_faceoffs,
@@ -477,13 +488,18 @@ def calc_ind_metrics(pbp_df, calc_blk=calc_blocks, \
                                       how='outer')
     ind_stats_df = ind_stats_df.fillna(0)
 
-    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+    ind_stats_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF', 'g',
                          'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
                          'iGA', 'iTA', 'FOW', 'FOL', 'BLK')] = \
-    ind_stats_df.loc[:, ('player_id', 'iCF', 'iFF', 'iSF', 'g',
+    ind_stats_df.loc[:, ('game_id', 'player_id', 'iCF', 'iFF', 'iSF', 'g',
                          'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
                          'iGA', 'iTA', 'FOW', 'FOL', 'BLK')].astype(int)
 
+
+    ind_stats_df = ind_stats_df[['season', 'game_id', 'date', 'player_id', 'player_name',
+                                 'iCF', 'iFF', 'iSF', 'ixg', 'g',
+                                 'a1', 'a2', 'iPENT', 'iPEND', 'iHF', 'iHA',
+                                 'iGA', 'iTA', 'FOW', 'FOL', 'BLK']]
 
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
@@ -491,7 +507,7 @@ def calc_ind_metrics(pbp_df, calc_blk=calc_blocks, \
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
 
-    return ind_stats_df.reset_index()
+    return ind_stats_df.reset_index(drop=True)
 
 def main():
 

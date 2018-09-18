@@ -6,6 +6,41 @@ strength states and whether goalies where on the ice
 import pandas as pd
 import numpy as np
 
+def final_pbp_clean(pbp):
+    '''
+    this is the final cleaning step for the pbp before stats are calculated
+    and the pbp is inserted into the sql database
+
+    Input:
+    pbp - pbp dataframe to be cleaned
+
+    Output:
+    pbp - play by play that has been cleaned and is ready for SQL insertion
+    '''
+
+    pbp[['date']] = pbp[['date']].astype('datetime64[ns]')
+
+    pbp[['game_id', 'description', 'time_elapsed', 'strength',
+                   'ev_zone', 'type', 'ev_team', 'home_zone', 'away_team',
+                   'home_team', 'p1_name', 'p2_name', 'p3_name', 'awayplayer1',
+                   'awayplayer2', 'awayplayer3', 'awayplayer4', 'awayplayer5',
+                   'awayplayer6', 'homeplayer1', 'homeplayer2', 'homeplayer3',
+                   'homeplayer4', 'homeplayer5', 'homeplayer6', 'away_goalie',
+                   'home_goalie', 'home_coach', 'away_coach' ]] = \
+    pbp[['game_id', 'description', 'time_elapsed', 'strength',
+                   'ev_zone', 'type', 'ev_team', 'home_zone', 'away_team',
+                   'home_team', 'p1_name', 'p2_name', 'p3_name', 'awayplayer1',
+                   'awayplayer2', 'awayplayer3', 'awayplayer4', 'awayplayer5',
+                   'awayplayer6', 'homeplayer1', 'homeplayer2', 'homeplayer3',
+                   'homeplayer4', 'homeplayer5', 'homeplayer6', 'away_goalie',
+                   'home_goalie', 'home_coach', 'away_coach' ]].astype(str)
+
+    pbp[['adj_corsi', 'adj_fenwick', 'adj_xg']] = \
+            pbp[['adj_corsi', 'adj_fenwick', 'adj_xg']].astype(float)
+
+    return pbp
+
+
 def clean_pbp(new_pbp):
     '''
     this function cleans the new_pbp and gets it ready for xg and stat
