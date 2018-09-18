@@ -191,8 +191,8 @@ def create_shifts_df(player_matrix, home_team, away_team):
                 home_on.extend([(0, 0)] * (6-len(home_on)))
 
 #combines the home/away off and on to form one row of a shift change
-            off_shift = away_off + home_off
-            on_shift = away_on + home_on
+            off_shift = away_off[:6] + home_off[:6]
+            on_shift = away_on[:6] + home_on[:6]
 
 #adding the event types showing whether players are coming on or leaving the ice
             off_shift.insert(0, 'OFF')
@@ -302,14 +302,14 @@ def get_game_length(game_df, game, teams):
     seconds = list(range(0, 1201)) * 3
 
     # If the last shift was an overtime shift, then extend the list of seconds by how fair into OT the game went
-    if game_df['period'][game_df.shape[0] - 1] == 4:
+    if game_df['period'].iloc[game_df.shape[0] - 1] == 4:
         seconds.extend(list(range(0, game_df['end'][game_df.shape[0] - 1].astype(int) + 1)))
 
     # For Playoff Games
     # If the game went beyond 4 periods tack that on to
     if int(game) >= 30000:
         # Go from beyond period 4 because done above
-        for i in range(game_df['period'][game_df.shape[0] - 1] - 4):
+        for i in range(game_df['period'].iloc[game_df.shape[0] - 1] - 4):
             seconds.extend(list(range(0, 1201)))
 
         seconds.extend(list(range(0, game_df['end'][game_df.shape[0] - 1] + 1)))
