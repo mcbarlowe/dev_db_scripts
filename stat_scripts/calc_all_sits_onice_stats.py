@@ -1202,7 +1202,7 @@ def calc_adj_onice_stats(pbp_df):
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id', 'player_name', 'toi', 'CF',
                                        'CA', 'FF', 'FA', 'SF', 'SA', 'GF',
-                                       'GA', 'xga', 'xgf']]
+                                       'GA', 'xga', 'xgf', 'PENT', 'PEND']]
 
     return on_ice_stats_df.reset_index(drop=True)
 
@@ -1243,7 +1243,7 @@ def calc_onice_stats(pbp_df):
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id', 'player_name', 'toi', 'CF',
                                        'CA', 'FF', 'FA', 'SF', 'SA', 'GF',
-                                       'GA', 'xga', 'xgf']]
+                                       'GA', 'xga', 'xgf', 'PENT', 'PEND']]
 
     return on_ice_stats_df.reset_index(drop=True)
 
