@@ -1274,6 +1274,85 @@ def create_tables(cursor, connection):
                ff_adj float,
                fa_adj float)
                """)
+    cursor.execute("""
+           CREATE TABLE nhl_tables.goalie_allsits(
+           season integer,
+           game_id integer,
+           date date,
+           team text,
+           toi float,
+           CA integer,
+           FA integer,
+           SA integer,
+           GA integer,
+           xga float)
+           """)
+    cursor.execute("""
+               CREATE TABLE nhl_tables.goalie_5v5(
+               season integer,
+               game_id integer,
+               date date,
+               team text,
+               toi float,
+               CA integer,
+               FA integer,
+               SA integer,
+               GA integer,
+               xga float)
+               """)
+    cursor.execute("""
+               CREATE TABLE nhl_tables.goalie_5v4(
+               season integer,
+               game_id integer,
+               date date,
+               team text,
+               toi float,
+               CA integer,
+               FA integer,
+               SA integer,
+               GA integer,
+               xga float)
+               """)
+
+    cursor.execute("""
+               CREATE TABLE nhl_tables.goalie_4v5(
+               season integer,
+               game_id integer,
+               date date,
+               team text,
+               toi float,
+               CA integer,
+               FA integer,
+               SA integer,
+               GA integer,
+               xga float)
+               """)
+    cursor.execute("""
+               CREATE TABLE nhl_tables.goalie_5v3(
+               season integer,
+               game_id integer,
+               date date,
+               team text,
+               toi float,
+               CA integer,
+               FA integer,
+               SA integer,
+               GA integer,
+               xga float)
+               """)
+    cursor.execute("""
+               CREATE TABLE nhl_tables.goalie_3v5(
+               season integer,
+               game_id integer,
+               date date,
+               team text,
+               toi float,
+               CA integer,
+               FA integer,
+               SA integer,
+               GA integer,
+               xga float)
+               """)
 #TODO create tables to store team stats
 def main():
 
