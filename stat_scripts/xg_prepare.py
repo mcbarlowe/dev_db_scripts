@@ -318,13 +318,14 @@ def calc_is_penalty(pbp_df):
     pbp_df - play by play df with is_penalty column created
     '''
 
-    pbp_df['is_penalty'] = np.where((pbp_df.event == 'PENL') &
-                                    (~pbp_df.description.str.\
-                                     contains('ps \\-|match|fighting|major',
-                                              case=False).fillna(0)),
-                                    1, 0)
-
-    pbp_df['is_penalty'] = np.where((pbp_df.event == 'PENL') &
+    pbp_df.loc[:, 'is_penalty'] = np.where((pbp_df.event == 'PENL'), 1, 0)
+    pbp_df.loc[:, 'is_penalty'] = np.where((pbp_df.event == 'PENL') &
+                                    (pbp_df.description.str.contains('fighting', regex=False, case=False)), 0, pbp_df.is_penalty)
+    pbp_df.loc[:, 'is_penalty'] = np.where((pbp_df.event == 'PENL') &
+                                    (pbp_df.description.str.contains('maj', regex=False, case=False)), 0, pbp_df.is_penalty)
+    pbp_df.loc[:, 'is_penalty'] = np.where((pbp_df.event == 'PENL') &
+                                    (pbp_df.description.str.contains('misconduct', regex=False, case=False)), 0, pbp_df.is_penalty)
+    pbp_df.loc[:, 'is_penalty'] = np.where((pbp_df.event == 'PENL') &
                                     (pbp_df.description.str.\
                                            contains('double minor',
                                                     case=False)),
@@ -409,6 +410,8 @@ def calc_xg(pbp_df):
     fenwick_pbp['xg'] = fenwick_pbp['xg'].fillna(fenwick_pbp['xg'].mean())
 
     pbp_df_xg = pbp_df.merge(fenwick_pbp[['xg']], how='outer',left_index=True, right_index=True)
+
+    pbp_df_xg['xg'] = pbp_df_xg['xg'].fillna(0)
 
     return pbp_df_xg
 
