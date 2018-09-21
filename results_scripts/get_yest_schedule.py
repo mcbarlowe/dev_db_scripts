@@ -142,41 +142,35 @@ def main():
     This script pulls the schedule data of past games and the results
     of each game and inserts them into an Postgres table
     '''
-    #date = (datetime.datetime.now() - datetime.timedelta(1)).strftime('%Y-%m-%d')
+    date = (datetime.datetime.now() - datetime.timedelta(1)).strftime('%Y-%m-%d')
 
-    season_start = '2016-02-01'
-    season_end = '2018-06-07'
-    startdate = datetime.strptime(season_start, '%Y-%m-%d')
-    enddate = datetime.strptime(season_end, '%Y-%m-%d')
-    date_list = [date.fromordinal(i) for i in range(startdate.toordinal(), enddate.toordinal()+1)]
 
-    for dates in date_list:
-        rows = []
-        schedule_dict = get_yest_schedule(dates)
-        games = get_game_ids(schedule_dict)
+    rows = []
+    schedule_dict = get_yest_schedule(date)
+    games = get_game_ids(schedule_dict)
 
-        if schedule_dict['totalItems'] == 0:
-            print("No Games Today")
-            continue
-            #return
-        else:
-            for game in games:
-                try:
-                    pbp_dict = get_pbp(game)
-                    rows.append(create_sched_df(pbp_dict, dates))
-                except:
-                    continue
+    if schedule_dict['totalItems'] == 0:
+        print("No Games Today")
+        continue
+        #return
+    else:
+        for game in games:
+            try:
+                pbp_dict = get_pbp(game)
+                rows.append(create_sched_df(pbp_dict, dates))
+            except:
+                continue
 
-        sched_df_columns = ['game_id', 'game_type', 'season', 'game_date',
-                            'home_team_id', 'home_team', 'home_abbrev', 'home_score',
-                            'away_team_id', 'away_team', 'away_abbrev', 'away_score',
-                            'ot_flag', 'shootout_flag', 'seconds_in_ot',
-                            'home_win']
+    sched_df_columns = ['game_id', 'game_type', 'season', 'game_date',
+                        'home_team_id', 'home_team', 'home_abbrev', 'home_score',
+                        'away_team_id', 'away_team', 'away_abbrev', 'away_score',
+                        'ot_flag', 'shootout_flag', 'seconds_in_ot',
+                        'home_win']
 
-        sched_df = pd.DataFrame(rows, columns=sched_df_columns)
-        print(sched_df.head())
+    sched_df = pd.DataFrame(rows, columns=sched_df_columns)
+    print(sched_df.head())
 
-        sched_insert(sched_df)
+    sched_insert(sched_df)
 
 
 if __name__ == '__main__':
