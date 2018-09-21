@@ -42,8 +42,8 @@ def calc_team_metrics(pbp_df, first_skaters, second_skaters):
 
     pbp_df['home_xg'] = np.where(pbp_df['is_home'] == 1, pbp_df['xg'], 0)
 
-    pbp_df['home_pen'] = np.where((pbp_df['is_penalty'] == 1) &
-                                (pbp_df['is_home'] == 1), 1, 0)
+    pbp_df['home_pen'] = np.where((pbp_df['is_penalty'].isin([1,2])) &
+                                (pbp_df['is_home'] == 1), pbp_df['is_penalty'], 0)
 
     pbp_df['home_blk'] = np.where((pbp_df['event'] == 'BLOCK') &
                                 (pbp_df['is_home'] == 1), 1, 0)
@@ -81,8 +81,8 @@ def calc_team_metrics(pbp_df, first_skaters, second_skaters):
 
     pbp_df['away_xg'] = np.where(pbp_df['is_home'] == 0, pbp_df['xg'], 0)
 
-    pbp_df['away_pen'] = np.where((pbp_df['is_penalty'] == 1) &
-                                (pbp_df['is_home'] == 0), 1, 0)
+    pbp_df['away_pen'] = np.where((pbp_df['is_penalty'].isin([1,2])) &
+                                (pbp_df['is_home'] == 0), pbp_df['is_penalty'], 0)
 
     pbp_df['away_blk'] = np.where((pbp_df['event'] == 'BLOCK') &
                                 (pbp_df['is_home'] == 0), 1, 0)
@@ -108,12 +108,12 @@ def calc_team_metrics(pbp_df, first_skaters, second_skaters):
                                     (pbp_df['is_home'] == 0), pbp_df['adj_fenwick'], 0)
 
     home_str_df = pbp_df[(pbp_df.home_players.isin(first_skaters)) &
-                         (pbp_df.away_players.isin(second_skaters)) &
-                         (~pbp_df.home_goalie.isna())]
+                         (pbp_df.away_players.isin(second_skaters))
+                         ]
 
     away_str_df = pbp_df[(pbp_df.home_players.isin(second_skaters)) &
-                         (pbp_df.away_players.isin(first_skaters)) &
-                         (~pbp_df.away_goalie.isna())]
+                         (pbp_df.away_players.isin(first_skaters))
+                         ]
 
     home_stats = home_str_df.groupby(['season', 'game_id', 'date', 'home_team'])\
             ['event_length', 'home_corsi', 'away_corsi', 'home_fenwick', 'away_fenwick',
