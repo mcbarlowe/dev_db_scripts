@@ -115,14 +115,10 @@ def clean_goalie(row, away_goalie, away_goalie_id, home_goalie, home_goalie_id):
     for goalie, goalie_id in zip(away_goalie, away_goalie_id):
         if np.where(row[['awayplayer1', 'awayplayer2', 'awayplayer3', 'awayplayer4', 'awayplayer5', 'awayplayer6']].isin([goalie]), 1, 0).sum() > 0:
             row.loc[('away_goalie', 'away_goalie_id')] = goalie, int(goalie_id)
-        else:
-            row.loc[('away_goalie', 'away_goalie_id')] = np.nan, np.nan
 
     for goalie, goalie_id in zip(home_goalie, home_goalie_id):
         if np.where(row[['homeplayer1', 'homeplayer2', 'homeplayer3', 'homeplayer4', 'homeplayer5', 'homeplayer6']].isin([goalie]), 1, 0).sum() > 0:
             row.loc[('home_goalie', 'home_goalie_id')] = goalie, int(goalie_id)
-        else:
-            row.loc[('home_goalie', 'home_goalie_id')] = np.nan, np.nan
 
     return row
 
