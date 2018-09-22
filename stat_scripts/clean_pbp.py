@@ -25,15 +25,15 @@ def final_pbp_clean(pbp):
                    'home_team', 'p1_name', 'p2_name', 'p3_name', 'awayplayer1',
                    'awayplayer2', 'awayplayer3', 'awayplayer4', 'awayplayer5',
                    'awayplayer6', 'homeplayer1', 'homeplayer2', 'homeplayer3',
-                   'homeplayer4', 'homeplayer5', 'homeplayer6', 'away_goalie',
-                   'home_goalie', 'home_coach', 'away_coach' ]] = \
+                   'homeplayer4', 'homeplayer5', 'homeplayer6',
+                   'home_coach', 'away_coach' ]] = \
     pbp[['game_id', 'description', 'time_elapsed', 'strength',
                    'ev_zone', 'type', 'ev_team', 'home_zone', 'away_team',
                    'home_team', 'p1_name', 'p2_name', 'p3_name', 'awayplayer1',
                    'awayplayer2', 'awayplayer3', 'awayplayer4', 'awayplayer5',
                    'awayplayer6', 'homeplayer1', 'homeplayer2', 'homeplayer3',
-                   'homeplayer4', 'homeplayer5', 'homeplayer6', 'away_goalie',
-                   'home_goalie', 'home_coach', 'away_coach' ]].astype(str)
+                   'homeplayer4', 'homeplayer5', 'homeplayer6',
+                    'home_coach', 'away_coach' ]].astype(str)
 
     pbp[['adj_corsi', 'adj_fenwick', 'adj_xg']] = \
             pbp[['adj_corsi', 'adj_fenwick', 'adj_xg']].astype(float)
@@ -115,10 +115,14 @@ def clean_goalie(row, away_goalie, away_goalie_id, home_goalie, home_goalie_id):
     for goalie, goalie_id in zip(away_goalie, away_goalie_id):
         if np.where(row[['awayplayer1', 'awayplayer2', 'awayplayer3', 'awayplayer4', 'awayplayer5', 'awayplayer6']].isin([goalie]), 1, 0).sum() > 0:
             row.loc[('away_goalie', 'away_goalie_id')] = goalie, int(goalie_id)
+        else:
+            row.loc[('away_goalie', 'away_goalie_id')] = np.nan, np.nan
 
     for goalie, goalie_id in zip(home_goalie, home_goalie_id):
         if np.where(row[['homeplayer1', 'homeplayer2', 'homeplayer3', 'homeplayer4', 'homeplayer5', 'homeplayer6']].isin([goalie]), 1, 0).sum() > 0:
             row.loc[('home_goalie', 'home_goalie_id')] = goalie, int(goalie_id)
+        else:
+            row.loc[('home_goalie', 'home_goalie_id')] = np.nan, np.nan
 
     return row
 
