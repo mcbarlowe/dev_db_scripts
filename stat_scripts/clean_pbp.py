@@ -71,10 +71,16 @@ def clean_pbp(new_pbp):
 
     #clean home and away skaters
     new_pbp = new_pbp.apply(clean_skaters, axis=1)
-
 #cast columns to the appropirate values
-    new_pbp['seconds_elapsed'] = new_pbp['seconds_elapsed'].astype(int)
+
+#added fillna here to catch any na in seconds elapsed from a shift or something
+#I don't know what
+    new_pbp['seconds_elapsed'] = new_pbp['seconds_elapsed'].fillna(0).astype(int)
+    new_pbp['game_id'] = new_pbp['game_id'].fillna(new_pbp.game_id.unique()[~np.isnan(new_pbp.game_id.unique())][0])
     new_pbp['game_id'] = new_pbp['game_id'].astype(int)
+#added in because some shifts are only 0 to 0 seconds and come in before the period start
+#and cause a date NaN
+    new_pbp['date'] = new_pbp['date'].fillna(new_pbp.date.unique()[pd.notna(new_pbp.date.unique())][0])
     new_pbp.loc[:, ('p1_id')] = new_pbp.loc[:, ('p1_id')].fillna(0).astype(int)
     new_pbp.loc[:, ('p2_id')] = new_pbp.loc[:, ('p2_id')].fillna(0).astype(int)
     new_pbp.loc[:, ('p3_id')] = new_pbp.loc[:, ('p3_id')].fillna(0).astype(int)

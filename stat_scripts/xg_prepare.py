@@ -351,9 +351,10 @@ def calc_season(pbp_df):
     Outputs - pbp_df with the season of the game calculated
     '''
 
+
     pbp_df.loc[:, ('season')] = np.where(pbp_df.date.dt.month.isin([10, 11, 12]),
                                         pbp_df.date.dt.year + 1, pbp_df.date.dt.year)
-
+    print(pbp_df.head())
     return pbp_df
 
 def fix_game_id(pbp_df):
