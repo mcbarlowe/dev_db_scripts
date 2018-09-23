@@ -104,6 +104,18 @@ def merge_pbp_and_shifts(line_change_df, pbp_df):
                                 'homeplayer2_id','homeplayer3_id',
                                 'homeplayer4_id','homeplayer5_id',
                                 'homeplayer6_id']].astype(float)
+
+    pbp_df[['awayplayer1_id', 'awayplayer2_id', 'awayplayer3_id',
+                                'awayplayer4_id', 'awayplayer5_id',
+                                'awayplayer6_id', 'homeplayer1_id',
+                                'homeplayer2_id','homeplayer3_id',
+                                'homeplayer4_id','homeplayer5_id',
+                                'homeplayer6_id']] = pbp_df[['awayplayer1_id', 'awayplayer2_id', 'awayplayer3_id',
+                                'awayplayer4_id', 'awayplayer5_id',
+                                'awayplayer6_id', 'homeplayer1_id',
+                                'homeplayer2_id','homeplayer3_id',
+                                'homeplayer4_id','homeplayer5_id',
+                                'homeplayer6_id']].replace('', np.nan).astype(float)
 #merge pbp_df and line_change_df into one dataframe
     pbp_w_shifts = pd.merge(pbp_df, line_change_df, how='outer',
                             on=['seconds_elapsed', 'event', 'awayplayer1_id', 'period',
@@ -272,9 +284,15 @@ def add_toi(row, onice_matrix):
     end = row['end']
     team = row['team']
 
+#this checks for OT shifts that have an end point of 0 or 1200 which is common
+#for shifts at the end of OT which fucks everything up and changes them to the
+#end value of OT itself
+    if row['period'] == 4 and (end == 0.0 or end == 1200.0):
+        end = 300
+
     if row['period'] != 1:
-        start += (1200 * (row['period'] - 1))
-        end += (1200 * (row['period'] - 1))
+        start += (1200 * (int(row['period']) - 1))
+        end += (1200 * (int(row['period']) - 1))
 
     for x in range(int(start), int(end) + 1):
         if x == end:
@@ -303,7 +321,14 @@ def get_game_length(game_df, game, teams):
 
     # If the last shift was an overtime shift, then extend the list of seconds by how fair into OT the game went
     if game_df['period'].iloc[game_df.shape[0] - 1] == 4:
-        seconds.extend(list(range(0, game_df['end'][game_df.shape[0] - 1].astype(int) + 1)))
+#again this checks for shifts that end in zero at the end of OT and replaces
+#them with 300 and extends the matrix by that much because the NHL is stupid
+#and doesn't assert values and allows TOI greater than 5 minutes or actually
+#negative minutes
+        if game_df['end'][game_df.shape[0] - 1] == 0:
+            seconds.extend(list(range(0, 301)))
+        else:
+            seconds.extend(list(range(0, game_df['end'][game_df.shape[0] - 1].astype(int) + 1)))
 
     # For Playoff Games
     # If the game went beyond 4 periods tack that on to

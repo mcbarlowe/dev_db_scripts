@@ -1239,7 +1239,7 @@ def create_tables(cursor, connection):
                ca_adj float,
                ff_adj float,
                fa_adj float)
-               """)
+              """)
 
     cursor.execute("""
                CREATE TABLE nhl_tables.team_3v5(

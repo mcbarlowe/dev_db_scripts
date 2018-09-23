@@ -76,7 +76,7 @@ def clean_pbp(new_pbp):
 #added fillna here to catch any na in seconds elapsed from a shift or something
 #I don't know what
     new_pbp['seconds_elapsed'] = new_pbp['seconds_elapsed'].fillna(0).astype(int)
-    new_pbp['game_id'] = new_pbp['game_id'].fillna(new_pbp.game_id.unique()[~np.isnan(new_pbp.game_id.unique())][0])
+    new_pbp['game_id'] = new_pbp['game_id'].fillna(new_pbp.game_id.unique()[pd.notna(new_pbp.game_id.unique())][0])
     new_pbp['game_id'] = new_pbp['game_id'].astype(int)
 #added in because some shifts are only 0 to 0 seconds and come in before the period start
 #and cause a date NaN

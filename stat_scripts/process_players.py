@@ -103,7 +103,7 @@ def process_players(df):
     player_df = pd.read_sql_table('nhl_players', engine, schema='nhl_tables')
 
     # Get list of id's for players in scraped games
-    df = df[np.isfinite(df['player_id'])]
+    df = df[df['player_id'].notnull()]
     scraped_players = set(x for x in df['player_id'].tolist())
     scraped_players = [int(x) for x in scraped_players if x != np.nan]
 

@@ -151,9 +151,3 @@ def calc_team_metrics(pbp_df, first_skaters, second_skaters):
     team_stats = pd.concat([home_stats, away_stats])
 
     return team_stats
-
-
-
-
-
-
