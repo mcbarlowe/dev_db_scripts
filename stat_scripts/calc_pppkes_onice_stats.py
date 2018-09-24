@@ -1229,10 +1229,8 @@ def calc_adj_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
     on_ice_stats_df.loc[:, ('toi')] = round(on_ice_stats_df.loc[:, ('toi')] / 60, 2)
 
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != 0]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
+    on_ice_stats_df = on_ice_stats_df[~on_ice_stats_df.player_id.isin(pbp_df.home_goalie_id.unique())]
+    on_ice_stats_df = on_ice_stats_df[~on_ice_stats_df.player_id.isin(pbp_df.away_goalie_id.unique())]
 
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id',
@@ -1270,10 +1268,8 @@ def calc_onice_str_stats(pbp_df, first_skater_num, second_skater_num):
     on_ice_stats_df.loc[:, ('toi')] = round(on_ice_stats_df.loc[:, ('toi')] / 60, 2)
 
     on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != 0]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
-    on_ice_stats_df = on_ice_stats_df[on_ice_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
+    on_ice_stats_df = on_ice_stats_df[~on_ice_stats_df.player_id.isin(pbp_df.home_goalie_id.unique())]
+    on_ice_stats_df = on_ice_stats_df[~on_ice_stats_df.player_id.isin(pbp_df.away_goalie_id.unique())]
 
     on_ice_stats_df = on_ice_stats_df[['season', 'game_id', 'date', 'team',
                                        'player_id',

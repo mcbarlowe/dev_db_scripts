@@ -106,6 +106,9 @@ def clean_goalie(row, away_goalie, away_goalie_id, home_goalie, home_goalie_id):
     Output:
     row - row with Goalie on ice calculated
     '''
+#get rid of empty strings
+    away_goalie_id[away_goalie_id == ''] = 0
+    home_goalie_id[home_goalie_id == ''] = 0
 
     away_goalie = away_goalie[~pd.isnull(away_goalie)]
     away_goalie_id = away_goalie_id[~pd.isnull(away_goalie_id)].astype(int)

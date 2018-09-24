@@ -320,12 +320,12 @@ def get_game_length(game_df, game, teams):
     seconds = list(range(0, 1201)) * 3
 
     # If the last shift was an overtime shift, then extend the list of seconds by how fair into OT the game went
-    if game_df['period'].iloc[game_df.shape[0] - 1] == 4:
+    if int(game_df['period'].iloc[game_df.shape[0] - 1]) == 4:
 #again this checks for shifts that end in zero at the end of OT and replaces
 #them with 300 and extends the matrix by that much because the NHL is stupid
 #and doesn't assert values and allows TOI greater than 5 minutes or actually
 #negative minutes
-        if game_df['end'][game_df.shape[0] - 1] == 0:
+        if int(game_df['end'][game_df.shape[0] - 1]) == 0:
             seconds.extend(list(range(0, 301)))
         else:
             seconds.extend(list(range(0, game_df['end'][game_df.shape[0] - 1].astype(int) + 1)))

@@ -1,3 +1,5 @@
+import os
+import sys
 import requests
 import datetime
 import logging
@@ -7,13 +9,12 @@ import xg_prepare as xg
 import merge_shift_and_pbp as oi_matrix
 import clean_pbp
 import calc_adjusted_stats
+import parse_players
+from sqlalchemy import create_engine
 from calc_all_sits_ind_stats import calc_ind_metrics, calc_adj_ind_metrics
 from calc_all_sits_onice_stats import calc_onice_stats, calc_adj_onice_stats
-from calc_pppkes_ind_stats import calc_ppespk_ind_metrics, calc_adj_ppespk_ind_metrics
-from calc_pppkes_onice_stats import calc_onice_str_stats, calc_adj_onice_str_stats
 from calc_goalie_stats import calc_goalie_metrics
 from calc_team_stats import calc_team_metrics
-from sqlalchemy import create_engine
 
 def sched_insert(df, table_name):
 
@@ -48,7 +49,9 @@ def get_yest_games(date):
 
     for date in schedule_dict['dates']:
         for game in date['games']:
+            print(game['gamePk'])
             game_ids.append(game['gamePk'])
+
 
     return game_ids
 
@@ -89,7 +92,6 @@ def scrape_daily_games(game_id_list):
         if scraped_data['errors']:
             error_games.append(game)
             logging.debug(f"Errors are {scraped_data['errors']}")
-            del games_dict[str(game)]
 
     logging.info("All games scrapped")
     logging.debug(games_dict.keys())
@@ -121,6 +123,7 @@ def main():
 #TODO remove test date once script is fully functional
     #test_date = "2018-01-09"
     game_ids = get_yest_games(date)
+    print(game_ids)
 
     #game_ids = [2017020001]
     if game_ids == None:
@@ -132,346 +135,162 @@ def main():
 
     games_dict, error_games = scrape_daily_games(game_ids)
 
-
-    for key, value in games_dict.items():
-        process_players.process_players(value['shifts'])
-
     for key, value in games_dict.items():
 
-#TODO insert code to insert raw pbp into a rawpbptable in the database to create
-#CDF for rink coordinates for the rink adjustment functions if i have time
-
+        print(key)
 #pulling pbp and shifts data for each game out of the dictionary
-        pbp_df = value['pbp']
-        shifts_df = value['shifts']
+            pbp_df = value['pbp']
+            shifts_df = value['shifts']
 
 #change all columns to lower case
-        pbp_df.columns = map(str.lower, pbp_df.columns)
-        shifts_df.columns = map(str.lower, shifts_df.columns)
+            pbp_df.columns = map(str.lower, pbp_df.columns)
+            shifts_df.columns = map(str.lower, shifts_df.columns)
 
 #fixing the seconds elapsed column
-        pbp_df = xg.fixed_seconds_elapsed(pbp_df)
+            pbp_df = xg.fixed_seconds_elapsed(pbp_df)
 
 #merging the shifts and pbp dataframes
-        new_pbp_df = oi_matrix.return_pbp_w_shifts(pbp_df, shifts_df)
+            new_pbp_df = oi_matrix.return_pbp_w_shifts(pbp_df, shifts_df)
 
-    #clean the pbp and fix block shots and calc columns to be used to calc
-    #other stats
-        new_pbp_df = clean_pbp.clean_pbp(new_pbp_df)
+        #clean the pbp and fix block shots and calc columns to be used to calc
+        #other stats
+            new_pbp_df = clean_pbp.clean_pbp(new_pbp_df)
 
-    #TODO adjust the coordinates of shots to adjust for rink bias add this later
-    # if i have time
+        #calc xg features and xg values for each fenwick envent
+            new_pbp_df = xg.create_stat_features(new_pbp_df)
 
-    #calc xg features and xg values for each fenwick envent
-        new_pbp_df = xg.create_stat_features(new_pbp_df)
+        #calc all adjusted stat columns for corsi, fenwick and xg
+            new_pbp_df = new_pbp_df.apply(calc_adjusted_stats.calc_adjusted_columns,
+                                          axis=1)
 
-    #calc all adjusted stat columns for corsi, fenwick and xg
-        new_pbp_df = new_pbp_df.apply(calc_adjusted_stats.calc_adjusted_columns,
-                                      axis=1)
+            process_players.process_players(shifts_df)
+        #calc all player individual and on-ice stats for all strengths
+        #both adjusted and unadjusted
 
-    #calc all player individual and on-ice stats for all strengths
-    #both adjusted and unadjusted
-        print(f'Calculating {key} player stats')
-        as_ind_stats = calc_ind_metrics(new_pbp_df)
-        as_onice_stats = calc_onice_stats(new_pbp_df)
-        as_adj_ind_stats = calc_adj_ind_metrics(new_pbp_df)
-        as_adj_onice_stats = calc_adj_onice_stats(new_pbp_df)
+#calculating all situation stats
+            print(f'Calculating {key} player stats')
+            as_ind_stats = calc_ind_metrics(new_pbp_df)
+            as_onice_stats = calc_onice_stats(new_pbp_df)
+            as_adj_ind_stats = calc_adj_ind_metrics(new_pbp_df)
+            as_adj_onice_stats = calc_adj_onice_stats(new_pbp_df)
 
-        ind_stats_5v5 = calc_ppespk_ind_metrics(new_pbp_df, 6, 6)
-        onice_stats_5v5 = calc_onice_str_stats(new_pbp_df, 6, 6)
-        ind_stats_5v5_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 6, 6)
-        onice_stats_5v5_adj = calc_adj_onice_str_stats(new_pbp_df, 6, 6)
-
-        try:
-            ind_stats_4v4 = calc_ppespk_ind_metrics(new_pbp_df, 5, 5)
-            onice_stats_4v4 = calc_onice_str_stats(new_pbp_df, 5, 5)
-            ind_stats_4v4_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 5, 5)
-            onice_stats_4v4_adj = calc_adj_onice_str_stats(new_pbp_df, 5, 5)
-        except ValueError:
-            ind_stats_4v4 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_4v4 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_4v4_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_4v4_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-        try:
-            ind_stats_3v3 = calc_ppespk_ind_metrics(new_pbp_df, 4, 4)
-            onice_stats_3v3 = calc_onice_str_stats(new_pbp_df, 4, 4)
-            ind_stats_3v3_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 4, 4)
-            onice_stats_3v3_adj = calc_adj_onice_str_stats(new_pbp_df, 4, 4)
-        except ValueError:
-            ind_stats_3v3 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_3v3 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_3v3_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_3v3_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-
-        try:
-            ind_stats_5v4 = calc_ppespk_ind_metrics(new_pbp_df, 6, 5)
-            onice_stats_5v4 = calc_onice_str_stats(new_pbp_df, 6, 5)
-            ind_stats_5v4_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 6, 5)
-            onice_stats_5v4_adj = calc_adj_onice_str_stats(new_pbp_df, 6, 5)
-        except ValueError:
-            ind_stats_5v4 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_5v4 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_5v4_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_5v4_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-        try:
-            ind_stats_4v5 = calc_ppespk_ind_metrics(new_pbp_df, 5, 6)
-            onice_stats_4v5 = calc_onice_str_stats(new_pbp_df, 5, 6)
-            ind_stats_4v5_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 5, 6)
-            onice_stats_4v5_adj = calc_adj_onice_str_stats(new_pbp_df, 5, 6)
-        except ValueError:
-            ind_stats_4v5 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_4v5 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_4v5_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_4v5_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-
-        try:
-            ind_stats_4v3 = calc_ppespk_ind_metrics(new_pbp_df, 5, 4)
-            onice_stats_4v3 = calc_onice_str_stats(new_pbp_df, 5, 4)
-            ind_stats_4v3_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 5, 4)
-            onice_stats_4v3_adj = calc_adj_onice_str_stats(new_pbp_df, 5, 4)
-        except ValueError:
-            ind_stats_4v3 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_4v3 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_4v3_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_4v3_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-        try:
-            ind_stats_3v4 = calc_ppespk_ind_metrics(new_pbp_df, 4, 5)
-            onice_stats_3v4 = calc_onice_str_stats(new_pbp_df, 4, 5)
-            ind_stats_3v4_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 4, 5)
-            onice_stats_3v4_adj = calc_adj_onice_str_stats(new_pbp_df, 4, 5)
-        except ValueError:
-            ind_stats_3v4 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_3v4 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_3v4_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_3v4_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-        try:
-            ind_stats_5v3 = calc_ppespk_ind_metrics(new_pbp_df, 6, 4)
-            onice_stats_5v3 = calc_onice_str_stats(new_pbp_df, 6, 4)
-            ind_stats_5v3_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 6, 4)
-            onice_stats_5v3_adj = calc_adj_onice_str_stats(new_pbp_df, 6, 4)
-        except ValueError:
-            ind_stats_5v3 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_5v3 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_5v3_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_5v3_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-        try:
-            ind_stats_3v5 = calc_ppespk_ind_metrics(new_pbp_df, 4, 6)
-            onice_stats_3v5 = calc_onice_str_stats(new_pbp_df, 4, 6)
-            ind_stats_3v5_adj = calc_adj_ppespk_ind_metrics(new_pbp_df, 4, 6)
-            onice_stats_3v5_adj = calc_adj_onice_str_stats(new_pbp_df, 4, 6)
-        except ValueError:
-            ind_stats_3v5 = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_3v5 = pd.DataFrame(columns=list(as_onice_stats.columns))
-            ind_stats_3v5_adj = pd.DataFrame(columns=list(as_ind_stats.columns))
-            onice_stats_3v5_adj = pd.DataFrame(columns=list(as_onice_stats.columns))
-
-        as_stats = as_onice_stats.merge(as_ind_stats,
-                                        on=['season', 'game_id', 'date',
-                                            'player_id', 'player_name'],
-                                        how='left')
-        as_stats = as_stats.fillna(0)
-
-        as_stats_adj = as_adj_onice_stats.merge(as_adj_ind_stats,
-                                               on=['season', 'game_id', 'date',
-                                                   'player_id', 'player_name'],
-                                               how='left')
-        as_stats_adj = as_stats_adj.fillna(0)
-
-        stats_5v5 = onice_stats_5v5.merge(ind_stats_5v5,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-        stats_5v5 = stats_5v5.fillna(0)
-
-        stats_5v5_adj = onice_stats_5v5_adj.merge(ind_stats_5v5_adj,
+            as_df = as_onice_stats.merge(as_ind_stats,
                                           on=['season', 'game_id', 'date',
                                               'player_id', 'player_name'],
                                           how='left')
 
-        stats_5v5_adj = stats_5v5_adj.fillna(0)
+            as_df = as_df.fillna(0)
 
-        stats_4v4 = onice_stats_4v4.merge(ind_stats_4v4,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+            as_adj_df = as_adj_onice_stats.merge(as_adj_ind_stats,
+                                                  on=['season', 'game_id', 'date',
+                                                      'player_id', 'player_name'],
+                                                  how='left')
 
-        stats_4v4 = stats_4v4.fillna(0)
+            as_adj_df = as_adj_df.fillna(0)
+#calculate all strength states for players
+            stats_5v5, stats_5v5_adj = parse_players.get_player_dfs(new_pbp_df, 6, 6, list(as_df.columns))
+            stats_4v4, stats_4v4_adj = parse_players.get_player_dfs(new_pbp_df, 5, 5, list(as_df.columns))
+            stats_3v3, stats_3v3_adj = parse_players.get_player_dfs(new_pbp_df, 4, 4, list(as_df.columns))
+            stats_5v4, stats_5v4_adj = parse_players.get_player_dfs(new_pbp_df, 6, 5, list(as_df.columns))
+            stats_4v5, stats_4v5_adj = parse_players.get_player_dfs(new_pbp_df, 5, 6, list(as_df.columns))
+            stats_5v3, stats_5v3_adj = parse_players.get_player_dfs(new_pbp_df, 6, 4, list(as_df.columns))
+            stats_3v5, stats_3v5_adj = parse_players.get_player_dfs(new_pbp_df, 4, 6, list(as_df.columns))
+            stats_4v3, stats_4v3_adj = parse_players.get_player_dfs(new_pbp_df, 5, 4, list(as_df.columns))
+            stats_3v4, stats_3v4_adj = parse_players.get_player_dfs(new_pbp_df, 4, 5, list(as_df.columns))
 
-        stats_4v4_adj = onice_stats_4v4_adj.merge(ind_stats_4v4_adj,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+            data = [stats_3v3, stats_3v3_adj, stats_3v4, stats_3v4_adj, stats_3v5,
+                    stats_3v5_adj, stats_4v3, stats_4v3_adj, stats_4v4, stats_4v4_adj,
+                    stats_4v5, stats_4v5_adj, stats_5v3, stats_5v3_adj, stats_5v4,
+                    stats_5v4_adj, stats_5v5, stats_5v5_adj, as_df, as_adj_df]
 
-        stats_4v4_adj = stats_4v4_adj.fillna(0)
+            tables = ['player_3v3', 'player_3v3_adj', 'player_3v4', 'player_3v4_adj',
+                      'player_3v5', 'player_3v5_adj', 'player_4v3', 'player_4v3_adj',
+                      'player_4v4', 'player_4v4_adj', 'player_4v5', 'player_4v5_adj',
+                      'player_5v3', 'player_5v3_adj', 'player_5v4', 'player_5v4_adj',
+                      'player_5v5', 'player_5v5_adj', 'player_allsits',
+                      'player_allsits_adj']
 
-        stats_4v3 = onice_stats_4v3.merge(ind_stats_4v3,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+            print(as_df.head())
 
-        stats_4v3 = stats_4v3.fillna(0)
+#insert player stats into the database
+            '''
+            for df, table in zip(data, tables):
+                print(df.head())
+                if df['toi'].sum() > 0:
+                    print(f'Inserting data into {table}')
+                    df.columns = list(map(str.lower, df.columns))
+                    sched_insert(df[df.toi > 0], table)
+                    '''
 
-        stats_4v3_adj = onice_stats_4v3_adj.merge(ind_stats_4v3_adj,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+        #calculating all team stats for all strengths adjusted/unadjusted
 
-        stats_4v3_adj = stats_4v3_adj.fillna(0)
+            team_allsits = calc_team_metrics(new_pbp_df, [6,5,4,3], [6,5,4,3])
+            team_5v5 = calc_team_metrics(new_pbp_df, [6], [6])
+            team_4v4 = calc_team_metrics(new_pbp_df, [5], [5])
+            team_3v3 = calc_team_metrics(new_pbp_df, [4], [4])
+            team_5v4 = calc_team_metrics(new_pbp_df, [6], [5])
+            team_4v5 = calc_team_metrics(new_pbp_df, [5], [6])
+            team_5v3 = calc_team_metrics(new_pbp_df, [6], [4])
+            team_3v5 = calc_team_metrics(new_pbp_df, [4], [6])
+            team_4v3 = calc_team_metrics(new_pbp_df, [5], [4])
+            team_3v4 = calc_team_metrics(new_pbp_df, [4], [5])
 
-        stats_3v4 = onice_stats_3v4.merge(ind_stats_3v4,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+            team_tables = ['team_3v3', 'team_3v3_adj', 'team_3v4', 'team_3v4_adj',
+                           'team_3v5', 'team_3v5_adj', 'team_4v3', 'team_4v3_adj',
+                           'team_4v4', 'team_4v4_adj', 'team_4v5', 'team_4v5_adj',
+                           'team_5v3', 'team_5v3_adj', 'team_5v4', 'team_5v4_adj',
+                           'team_5v5', 'team_5v5_adj', 'team_allsits',
+                           'team_allsits_adj']
 
-        stats_3v4 = stats_3v4.fillna(0)
+            team_data = [team_3v3, team_3v4, team_3v5,
+                         team_4v3, team_4v4, team_4v5,
+                         team_5v3, team_5v4, team_5v5,
+                         team_allsits]
 
-        stats_3v4_adj = onice_stats_3v4_adj.merge(ind_stats_3v4_adj,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+#inserting team tables into the database
+            '''
+            for df, table in zip(team_data, team_tables):
+                if df.toi.sum() > 0:
+                    print(f'Inserting data into {table}')
+                    df.columns = list(map(str.lower, df.columns))
+                    sched_insert(df[df.toi > 0], table)
+                    '''
 
-        stats_3v4_adj = stats_3v4_adj.fillna(0)
+#calculate all the goalie stats for all strength states and then inserting
+#them into the table
+            goalie_allsits = calc_goalie_metrics(new_pbp_df, [6,5,4,3], [6,5,4,3])
+            goalie_5v5 = calc_goalie_metrics(new_pbp_df, [6], [6])
+            goalie_4v4 = calc_goalie_metrics(new_pbp_df, [5], [5])
+            goalie_3v3 = calc_goalie_metrics(new_pbp_df, [4], [4])
+            goalie_5v4 = calc_goalie_metrics(new_pbp_df, [6], [5])
+            goalie_4v5 = calc_goalie_metrics(new_pbp_df, [5], [6])
+            goalie_5v3 = calc_goalie_metrics(new_pbp_df, [6], [4])
+            goalie_3v5 = calc_goalie_metrics(new_pbp_df, [4], [6])
 
-        stats_3v3 = onice_stats_3v3.merge(ind_stats_3v3,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+            goalie_tables = ['goalie_3v3', 'goalie_3v5',
+                             'goalie_4v4', 'goalie_4v5',
+                             'goalie_5v3', 'goalie_5v4',
+                             'goalie_5v5',  'goalie_allsits']
 
-        stats_3v3 = stats_3v3.fillna(0)
+            goalie_data = [goalie_3v3, goalie_3v5, goalie_4v4, goalie_4v5,
+                           goalie_5v3, goalie_5v4, goalie_5v5,  goalie_allsits]
 
-        stats_3v3_adj = onice_stats_3v3_adj.merge(ind_stats_3v3_adj,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
+#inserting goalie stats into the database
+            '''
+            for df, table in zip(goalie_data, goalie_tables):
+                if df.toi.sum() > 0:
+                    print(f'Inserting data into {table}')
+                    print(df[df.toi >0].head())
+                    df.columns = list(map(str.lower, df.columns))
+                    sched_insert(df[df.toi > 0], table)
+                    '''
 
-        stats_3v3_adj = stats_3v3_adj.fillna(0)
-
-        stats_5v4 = onice_stats_5v4.merge(ind_stats_5v4,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-
-        stats_5v4 = stats_5v4.fillna(0)
-
-        stats_5v4_adj = onice_stats_5v4_adj.merge(ind_stats_5v4_adj,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-
-        stats_5v4_adj = stats_5v4_adj.fillna(0)
-
-        stats_4v5 = onice_stats_4v5.merge(ind_stats_4v5,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-        stats_4v5 = stats_4v5.fillna(0)
-
-        stats_4v5_adj = onice_stats_4v5_adj.merge(ind_stats_4v5_adj,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-
-        stats_4v5_adj = stats_4v5_adj.fillna(0)
-
-        stats_5v3 = onice_stats_5v3.merge(ind_stats_5v3,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-        stats_5v3 = stats_5v3.fillna(0)
-
-        stats_5v3_adj = onice_stats_5v3_adj.merge(ind_stats_5v3_adj,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-        stats_5v3_adj = stats_5v3_adj.fillna(0)
-
-        stats_3v5 = onice_stats_3v5.merge(ind_stats_3v5,
-                                          on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-        stats_3v5 = stats_3v5.fillna(0)
-
-        stats_3v5_adj = onice_stats_3v5_adj.merge(ind_stats_3v5_adj,
-                 on=['season', 'game_id', 'date',
-                                              'player_id', 'player_name'],
-                                          how='left')
-        stats_3v5_adj = stats_3v5_adj.fillna(0)
-
-        tables = ['player_3v3', 'player_3v3_adj', 'player_3v4', 'player_3v4_adj',
-                  'player_3v5', 'player_3v5_adj', 'player_4v3', 'player_4v3_adj',
-                  'player_4v4', 'player_4v4_adj', 'player_4v5', 'player_4v5_adj',
-                  'player_5v3', 'player_5v3_adj', 'player_5v4', 'player_5v4_adj',
-                  'player_5v5', 'player_5v5_adj', 'player_allsits',
-                  'player_allsits_adj']
-
-        data = [stats_3v3, stats_3v3_adj, stats_3v4, stats_3v4_adj, stats_3v5,
-                stats_3v5_adj, stats_4v3, stats_4v3_adj, stats_4v4, stats_4v4_adj,
-                stats_4v5, stats_4v5_adj, stats_5v3, stats_5v3_adj, stats_5v4,
-                stats_5v4_adj, stats_5v5, stats_5v5_adj, as_stats, as_stats_adj]
-
-        for df, table in zip(data, tables):
-            if df.toi.sum() > 0:
-                print(f'Inserting data into {table}')
-                df.columns = list(map(str.lower, df.columns))
-                sched_insert(df[df.toi > 0], table)
-
-    #TODO calc team stats for all strengths adjusted/unadjusted
-
-        team_tables = ['team_3v3', 'team_3v3_adj', 'team_3v4', 'team_3v4_adj',
-                       'team_3v5', 'team_3v5_adj', 'team_4v3', 'team_4v3_adj',
-                       'team_4v4', 'team_4v4_adj', 'team_4v5', 'team_4v5_adj',
-                       'team_5v3', 'team_5v3_adj', 'team_5v4', 'team_5v4_adj',
-                       'team_5v5', 'team_5v5_adj', 'team_allsits',
-                       'team_allsits_adj']
-
-        team_data = [team_stats_3v3, team_stats_3v3_adj, team_stats_3v4,
-                     team_stats_3v4_adj, team_stats_3v5, team_stats_3v5_adj,
-                     team_stats_4v3, team_stats_4v3_adj, team_stats_4v4,
-                     team_stats_4v4_adj, team_stats_4v5, team_stats_4v5_adj,
-                     team_stats_5v3, team_stats_5v3_adj, team_stats_5v4,
-                     team_stats_5v4_adj, team_stats_5v5, team_stats_5v5_adj,
-                     as_team_stats, as_team_stats_adj]
-
-        for df, table in zip(team_data, team_tables):
-            if df.toi.sum() > 0:
-                print(f'Inserting data into {table}')
-                df.columns = list(map(str.lower, df.columns))
-                sched_insert(df[df.toi > 0], table)
-
-        goalie_allsits = calc_goalie_metrics(new_pbp_df, [6,5,4,3], [6,5,4,3])
-        goalie_5v5 = calc_goalie_metrics(new_pbp_df, [6], [6])
-        goalie_4v4 = calc_goalie_metrics(new_pbp_df, [5], [5])
-        goalie_3v3 = calc_goalie_metrics(new_pbp_df, [4], [4])
-        goalie_5v4 = calc_goalie_metrics(new_pbp_df, [6], [5])
-        goalie_4v5 = calc_goalie_metrics(new_pbp_df, [5], [6])
-        goalie_5v3 = calc_goalie_metrics(new_pbp_df, [6], [4])
-        goalie_3v5 = calc_goalie_metrics(new_pbp_df, [4], [6])
-
-        goalie_tables = ['goalie_3v3', 'goalie_3v5',
-                         'goalie_4v4', 'goalie_4v5',
-                         'goalie_5v3', 'goalie_5v4',
-                         'goalie_5v5',  'goalie_allsits']
-
-        goalie_data = [goalie_3v3, goalie_3v5, goalie_4v4, goalie_4v5,
-                       goalie_5v3, goalie_5v4, goalie_5v5,  goalie_allsits]
-
-        for df, table in zip(goalie_data, goalie_tables):
-            if df.toi.sum() > 0:
-                print(f'Inserting data into {table}')
-                print(df[df.toi >0].head())
-                df.columns = list(map(str.lower, df.columns))
-                sched_insert(df[df.toi > 0], table)
+        except (AttributeError, ValueError) as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            logging.exception
 
     #TODO write code to write all the games with erros to a file that another
     #script will rescrape periodically until all data is clean
-    return new_pbp_df
 
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ from calc_all_sits_onice_stats import calc_onice_stats, calc_adj_onice_stats
 from calc_pppkes_ind_stats import calc_ppespk_ind_metrics, calc_adj_ppespk_ind_metrics
 from calc_pppkes_onice_stats import calc_onice_str_stats, calc_adj_onice_str_stats
 from sqlalchemy import create_engine
+from calc_team_stats import calc_team_metrics
 
 def sched_insert(df, table_name):
 

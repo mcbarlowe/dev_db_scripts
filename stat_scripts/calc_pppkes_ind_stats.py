@@ -926,10 +926,8 @@ def calc_ppespk_ind_metrics(pbp_df, pp_skaters_num,
                                  'iGA', 'iTA', 'FOW', 'FOL', 'BLK']]
 
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
+    ind_stats_df = ind_stats_df[~ind_stats_df.player_id.isin(pbp_df.home_goalie_id.unique())]
+    ind_stats_df = ind_stats_df[~ind_stats_df.player_id.isin(pbp_df.away_goalie_id.unique())]
 
     return ind_stats_df.reset_index(drop=True)
 
@@ -1016,10 +1014,8 @@ def calc_adj_ppespk_ind_metrics(pbp_df, pp_skaters_num,
                                  'iGA', 'iTA', 'FOW', 'FOL', 'BLK']]
 
     ind_stats_df = ind_stats_df[ind_stats_df.player_id != 0]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[0]]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[0]]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.home_goalie_id.unique()[-1]]
-    ind_stats_df = ind_stats_df[ind_stats_df.player_id != pbp_df.away_goalie_id.unique()[-1]]
+    ind_stats_df = ind_stats_df[~ind_stats_df.player_id.isin(pbp_df.home_goalie_id.unique())]
+    ind_stats_df = ind_stats_df[~ind_stats_df.player_id.isin(pbp_df.away_goalie_id.unique())]
 
     return ind_stats_df.reset_index(drop=True)
 
